@@ -1,21 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:GoClassUnibe/constants/Fonts.dart';
+import 'package:flutter/services.dart';
+import 'package:GoClassUnibe/widgets/screens/homeApp/FirstHome.dart';
 
-void main() => runApp(MyApp());
+void main(){
+  SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(
+          systemNavigationBarColor: Colors.white,
+          systemNavigationBarIconBrightness: Brightness.dark
+      )
+  );
+  runApp(MyApp());
 
+}
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'MyApp',
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('Welcome to MyApp'),
-        ),
-        body: Center(
-          child: Text('Hello World'),
-        ),
-      ),
+      home: FirstHome(),
     );
   }
 }
