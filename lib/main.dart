@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:GoClassUnibe/constants/Fonts.dart';
 import 'package:flutter/services.dart';
 import 'package:GoClassUnibe/widgets/screens/homeApp/FirstHome.dart';
-import 'package:GoClassUnibe/widgets/generics/homeApp/ButtonFirst.dart';
-import 'package:GoClassUnibe/constants/Colors.dart';
 
 void main(){
   SystemChrome.setSystemUIOverlayStyle(
