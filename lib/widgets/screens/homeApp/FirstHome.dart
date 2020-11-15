@@ -13,10 +13,10 @@ class FirstHome extends StatelessWidget {
           children: [
             Scaffold(
               body: Center(
-                  child: Background(
-                      color1: colorButtonPurpleLight1,
-                      color2: colorInputBlueLight,
-                  ),
+                child: Background(
+                  color1: colorButtonPurpleLight1,
+                  color2: colorInputBlueLight,
+                ),
               ),
             ),
             Scaffold(
