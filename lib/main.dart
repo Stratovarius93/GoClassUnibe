@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:GoClassUnibe/widgets/screens/homeApp/FirstHome.dart';
+import 'package:GoClassUnibe/widgets/generics/homeApp/Login.dart';
+import 'package:GoClassUnibe/widgets/generics/homeApp/PrincipalPage.dart';
 
 void main(){
   SystemChrome.setSystemUIOverlayStyle(
@@ -21,9 +22,10 @@ class MyApp extends StatelessWidget {
       //home: FirstHome(),
       home: Scaffold(
           body: Center(
-              child: FirstHome(),
+              child: PrincipalPage(),
           ),
       )
     );
   }
+
 }
