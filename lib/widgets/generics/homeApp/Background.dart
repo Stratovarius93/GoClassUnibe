@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-Color color11;
+Color color1;
 Color _color2;
 double imageSize;
 
 class Background extends StatelessWidget {
   final Color color1;
   final Color color2;
-  const Background({Key key, this.color1, this.color2}): super(key: key);
+  const Background({Key key, this.color1, this.color2}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     imageSize = MediaQuery.of(context).size.height * 0.20;
@@ -18,10 +18,10 @@ class Background extends StatelessWidget {
         //appBar: AppBar(
         //title: Text('Prueba CustomP'),
         //),
-          body: CustomPAnimated1(
-              color1: color1,
-              color2: color2,
-          ),
+        body: CustomPAnimated1(
+          color1: color1,
+          color2: color2,
+        ),
       ),
     );
   }
@@ -98,7 +98,7 @@ class MyPainter2 extends CustomPainter {
 class CustomPAnimated1 extends StatefulWidget {
   final Color color1;
   final Color color2;
-  const CustomPAnimated1({Key key, this.color1, this.color2}):super(key: key);
+  const CustomPAnimated1({Key key, this.color1, this.color2}) : super(key: key);
   @override
   _CustomPAnimated1State createState() => _CustomPAnimated1State();
 }
@@ -135,7 +135,8 @@ class _CustomPAnimated1State extends State<CustomPAnimated1>
                     width: imageSize + (10 * _controller.value),
                     //color: Colors.black12,
                     child: CustomPaint(
-                      painter: MyPainter([widget.color1, widget.color2, widget.color1],
+                      painter: MyPainter(
+                          [widget.color1, widget.color2, widget.color1],
                           [0.0, _controller.value, 1.0]),
                     )),
               ),
@@ -151,7 +152,8 @@ class _CustomPAnimated1State extends State<CustomPAnimated1>
                     width: imageSize + (10 * _controller.value),
                     //color: Colors.black12,
                     child: CustomPaint(
-                      painter: MyPainter2([widget.color1, _color2, widget.color1],
+                      painter: MyPainter2(
+                          [widget.color1, _color2, widget.color1],
                           [0.0, _controller.value, 1.0]),
                     )),
               )

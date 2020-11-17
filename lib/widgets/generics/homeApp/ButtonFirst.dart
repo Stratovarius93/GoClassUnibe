@@ -57,6 +57,7 @@ class _ButtonFirstState extends State<ButtonFirst> {
   Widget build(BuildContext context) {
     return GestureDetector(
       child: Container(
+          margin: const EdgeInsets.only(top: 40.0),
           height: 60.0,
           width: (MediaQuery.of(context).size.width) * 0.55,
           decoration: BoxDecoration(

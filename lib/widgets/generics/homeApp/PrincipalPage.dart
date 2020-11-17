@@ -1,9 +1,11 @@
+import 'package:GoClassUnibe/widgets/generics/homeApp/Background.dart';
 import 'package:GoClassUnibe/widgets/generics/homeApp/ButtonFirst.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:GoClassUnibe/constants/Colors.dart';
 import 'package:GoClassUnibe/widgets/generics/homeApp/Title.dart';
-import 'package:GoClassUnibe/widgets/generics/homeApp/MiniText.dart';
+import 'package:GoClassUnibe/widgets/generics/homeApp/SecondText.dart';
+import 'package:flutter/widgets.dart';
 
 
 
@@ -17,7 +19,8 @@ class PrincipalPage extends StatelessWidget {
             colorText: colorAppPurple,
             Title: "GoClass UNIB.E",
           ),
-          CreateMiniText(
+          Image.asset('images/go.png',height: 150.0, width: 150.0,),
+          SecondMiniText(
             colorText: colorAppTextDark,
             Title: "Consulta tu información académica, crea tu horario y más desde un solo lugar",
           ),

@@ -25,7 +25,7 @@ class MainTitle extends StatelessWidget {
             style: TextStyle(
               fontFamily: fontApp,
               fontWeight: FontWeight.bold,
-              fontSize: 20,
+              fontSize: 25.0,
               color: colorText,
             ),
           ),
