@@ -12,9 +12,9 @@ class SecondMiniText extends StatelessWidget {
   }) : super(key: key);
   Widget build(BuildContext context) {
     return Container(
-        padding: EdgeInsets.only(top: 32),
+        padding: EdgeInsets.only(top: 30.0,left:12.0,right: 12.0),
         child:  Text((Title),
           textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 25.0,color: colorText,fontFamily: fontApp),
+          style: TextStyle(fontSize: 18.0,color: colorText,fontFamily: fontApp),
         ));}
 }

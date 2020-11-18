@@ -63,12 +63,12 @@ class _ButtonFirstState extends State<ButtonFirst> {
           decoration: BoxDecoration(
               color: _tapInProgress ? widget.color2 : widget.color1,
               borderRadius: BorderRadius.circular(30),
-              boxShadow: [
+              /*boxShadow: [
                 BoxShadow(
                     color: widget.color1,
                     offset: new Offset(2.0, 2.0),
                     blurRadius: _tapInProgress ? 10.0 : _blurRadius)
-              ]),
+              ]*/),
           child: Center(
               child: Text(
             widget.title,
