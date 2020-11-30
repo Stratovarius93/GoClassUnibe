@@ -19,13 +19,14 @@ class CreateLoginButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.only(top: 50.0, right: 50.0, left: 50.0),
-      height: 90.0,
+      padding: const EdgeInsets.only(top:10.0,left: 40.0,right: 40.0,bottom: 20.0),
+      height: 80.0,
+      width: MediaQuery.of(context).size.width * 0.80,
       child: RaisedButton(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
-            Text((Title),style: TextStyle(fontSize: 20.0, fontFamily: fontApp, fontWeight: FontWeight.bold,),),
+            Text((Title),style: TextStyle(fontSize: 17.0, fontFamily: fontApp, fontWeight: FontWeight.bold,),),
             Icon( Icons.arrow_forward, size: 20.0,
             ),
           ],

@@ -19,7 +19,7 @@ class CreatePasswordInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 50.0,right: 50.0,),
+      padding: const EdgeInsets.only(left: 40.0,right: 40.0,bottom: 20.0),
       child: TextFormField(
         decoration: InputDecoration(
             prefixIcon: icon,

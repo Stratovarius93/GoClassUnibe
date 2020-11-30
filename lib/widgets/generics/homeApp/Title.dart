@@ -18,13 +18,13 @@ class MainTitle extends StatelessWidget {
       child: Column(
         children: <Widget>[
           SizedBox(
-            height: 8,
+            height: 6,
           ),
           Text(Title,
             style: TextStyle(
               fontFamily: fontApp,
               fontWeight: FontWeight.bold,
-              fontSize: 25.0,
+              fontSize: 20.0,
               color: colorText,
             ),
           ),

@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 
-Color color1;
+Color color11;
 Color _color2;
 double imageSize;
 
 class Background extends StatelessWidget {
   final Color color1;
   final Color color2;
+
   const Background({Key key, this.color1, this.color2}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     imageSize = MediaQuery.of(context).size.height * 0.20;
@@ -30,7 +32,9 @@ class Background extends StatelessWidget {
 class MyPainter extends CustomPainter {
   final List<Color> colorG;
   final List<double> stopsG;
+
   const MyPainter(this.colorG, this.stopsG);
+
   @override
   void paint(Canvas canvas, Size size) {
     final rect = Offset.zero & size;
@@ -65,6 +69,7 @@ class MyPainter extends CustomPainter {
 class MyPainter2 extends CustomPainter {
   final List<Color> colorG;
   final List<double> stopsG;
+
   const MyPainter2(this.colorG, this.stopsG);
 
   @override
@@ -98,7 +103,9 @@ class MyPainter2 extends CustomPainter {
 class CustomPAnimated1 extends StatefulWidget {
   final Color color1;
   final Color color2;
+
   const CustomPAnimated1({Key key, this.color1, this.color2}) : super(key: key);
+
   @override
   _CustomPAnimated1State createState() => _CustomPAnimated1State();
 }
@@ -106,6 +113,7 @@ class CustomPAnimated1 extends StatefulWidget {
 class _CustomPAnimated1State extends State<CustomPAnimated1>
     with SingleTickerProviderStateMixin {
   AnimationController _controller;
+
   @override
   void initState() {
     super.initState();
@@ -153,7 +161,7 @@ class _CustomPAnimated1State extends State<CustomPAnimated1>
                     //color: Colors.black12,
                     child: CustomPaint(
                       painter: MyPainter2(
-                          [widget.color1, _color2, widget.color1],
+                          [widget.color1, widget.color2, widget.color1],
                           [0.0, _controller.value, 1.0]),
                     )),
               )

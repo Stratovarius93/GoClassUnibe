@@ -19,7 +19,7 @@ class CreateEmailInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 14.0,left: 50.0,right: 50.0),
+      padding: const EdgeInsets.only(top:80.0,left: 40.0,right: 40.0,bottom: 20.0),
       child: TextFormField(
         maxLength: 10,
         keyboardType: TextInputType.number,
