@@ -4,14 +4,19 @@ import 'package:GoClassUnibe/widgets/screens/mainApp/DasshboardScreen.dart';
 import 'package:GoClassUnibe/widgets/screens/mainApp/RecordScreen.dart';
 import 'package:GoClassUnibe/widgets/screens/mainApp/RatingsScreen.dart';
 import 'package:GoClassUnibe/widgets/screens/mainApp/SettingsScreen.dart';
-import 'package:GoClassUnibe/constants/Shadows.dart';
 import 'package:GoClassUnibe/constants/Colors.dart';
+import 'package:provider/provider.dart';
+import 'package:GoClassUnibe/services/serviceStudent.dart';
+import 'package:colorful_safe_area/colorful_safe_area.dart';
 
 class IndexScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: HomeMenu(),
+    return ChangeNotifierProvider(
+      create: (_) => StudentData(),
+      child: Container(
+        child: HomeMenu(),
+      ),
     );
   }
 }
@@ -25,15 +30,15 @@ class _HomeMenuState extends State<HomeMenu> {
   double _iconSize = 0;
   int _currentIndex = 0;
   final tabs = [
-    DasshboardScreen(),
-    RecordScreen(),
-    ScheduleScreen(),
-    RatingsScreen(),
-    SettingsScreen()
+    ColorfulSafeArea(color: colorAppBackground, child: DasshboardScreen()),
+    ColorfulSafeArea(color: colorAppBackground, child: RecordScreen()),
+    ColorfulSafeArea(color: colorAppBackground, child: ScheduleScreen()),
+    ColorfulSafeArea(color: colorAppBackground, child: RatingsScreen()),
+    ColorfulSafeArea(color: colorAppBackground, child: SettingsScreen()),
   ];
   @override
   Widget build(BuildContext context) {
-    _iconSize = MediaQuery.of(context).size.width*0.08;
+    _iconSize = MediaQuery.of(context).size.width * 0.08;
     return Scaffold(
       body: tabs[_currentIndex],
       bottomNavigationBar: Container(
@@ -60,28 +65,27 @@ class _HomeMenuState extends State<HomeMenu> {
             elevation: 6.0,
             items: [
               BottomNavigationBarItem(
-
-                  icon: Icon(Icons.home, size:_iconSize),
+                icon: Icon(Icons.home, size: _iconSize),
                 title: Text("Inicio"),
                 //backgroundColor: Colors.blue
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.format_list_bulleted, size:_iconSize),
+                icon: Icon(Icons.format_list_bulleted, size: _iconSize),
                 title: Text("Récord"),
                 //backgroundColor: Colors.blue
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.date_range, size:_iconSize),
+                icon: Icon(Icons.date_range, size: _iconSize),
                 title: Text("Horario"),
                 //backgroundColor: Colors.blue
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.assignment, size:_iconSize),
+                icon: Icon(Icons.assignment, size: _iconSize),
                 title: Text("Notas"),
                 //backgroundColor: Colors.blue
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.account_circle, size:_iconSize),
+                icon: Icon(Icons.account_circle, size: _iconSize),
                 title: Text("Cuenta"),
                 //backgroundColor: Colors.blue
               )

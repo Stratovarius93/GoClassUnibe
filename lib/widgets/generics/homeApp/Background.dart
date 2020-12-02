@@ -153,7 +153,7 @@ class _CustomPAnimated1State extends State<CustomPAnimated1>
                     //color: Colors.black12,
                     child: CustomPaint(
                       painter: MyPainter2(
-                          [widget.color1, _color2, widget.color1],
+                          [widget.color1, widget.color2, widget.color1],
                           [0.0, _controller.value, 1.0]),
                     )),
               )
