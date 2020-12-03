@@ -2,7 +2,6 @@ import 'package:GoClassUnibe/widgets/screens/homeApp/FirstHome.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 //import 'package:GoClassUnibe/widgets/screens/homeApp/FirstHome.dart';
-import 'package:GoClassUnibe/widgets/screens/mainApp/SettingsScreen.dart';
 import 'package:GoClassUnibe/widgets/screens/mainApp/IndexScreen.dart';
 //import 'package:GoClassUnibe/constants/Colors.dart';
 
