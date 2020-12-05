@@ -9,6 +9,7 @@ import 'package:GoClassUnibe/widgets/generics/mainApp/BigTitle.dart';
 
 import 'package:GoClassUnibe/constants/Colors.dart';
 import 'package:provider/provider.dart';
+import 'package:scroll_glow_color/widget/scroll_glow_color.dart';
 
 class RecordScreen extends StatefulWidget {
   @override
@@ -25,32 +26,35 @@ class _RecordScreenState extends State<RecordScreen> {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         backgroundColor: colorAppBackground,
-        body: ListView(
-          children: [
-            Container(
-              padding: EdgeInsets.only(
-                  top: titlePaddingTop(context),
-                  left: 16,
-                  right: 16,
-                  bottom: 0),
-              child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    BigTitle(
-                      title: "Récord Académico",
-                    ),
-                    CategoryText(
-                      title: studentData.getCareer,
-                    )
-                  ]),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: MainCard(
-                childCard: _listItems(),
+        body: ScrollGlowColor(
+          color: colorGlow,
+          child: ListView(
+            children: [
+              Container(
+                padding: EdgeInsets.only(
+                    top: titlePaddingTop(context),
+                    left: 16,
+                    right: 16,
+                    bottom: 0),
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      BigTitle(
+                        title: "Récord Académico",
+                      ),
+                      CategoryText(
+                        title: studentData.getCareer,
+                      )
+                    ]),
               ),
-            )
-          ],
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: MainCard(
+                  childCard: _listItems(),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

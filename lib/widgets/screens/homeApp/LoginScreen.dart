@@ -16,7 +16,7 @@ class LoginScreen extends StatelessWidget {
         children: <Widget>[
           Background(
             color1: colorAppBackground,
-            color2: colorInputBlueLight,
+            color2: colorInput,
           ),
           Container(
             child: Column(
@@ -31,7 +31,7 @@ class LoginScreen extends StatelessWidget {
                   width: 150.0,
                 ),
                 CreateEmailInput(
-                  color: colorInputBlueLight,
+                  color: colorInput,
                   colorText: colorButtonBlueDark1,
                   Title: "Ingrese su cédula",
                   icon: new Icon(
@@ -40,7 +40,7 @@ class LoginScreen extends StatelessWidget {
                   ),
                 ),
                 CreatePasswordInput(
-                  color: colorInputBlueLight,
+                  color: colorInput,
                   colorText: colorButtonBlueDark1,
                   icon: new Icon(
                     Icons.vpn_key,
@@ -50,7 +50,7 @@ class LoginScreen extends StatelessWidget {
                 ),
                 CreateLoginButton(
                   color: colorButtonBlueDark1,
-                  colorText: colorInputBlueLight,
+                  colorText: colorInput,
                   icon: new Icon(Icons.arrow_forward),
                   Title: "Iniciar Sesión",
                 ),

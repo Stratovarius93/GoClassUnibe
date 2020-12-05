@@ -13,8 +13,8 @@ class HomeScreen extends StatelessWidget {
     return Stack(
       children: <Widget>[
         Background(
-          color1: colorButtonPurpleLight1,
-          color2: colorButtonPurpleLight1,
+          color1: colorButtonBlueDark1,
+          color2: colorButtonBlueDark1,
         ),
         Container(
           child: Column(
@@ -25,7 +25,7 @@ class HomeScreen extends StatelessWidget {
                 width: 320.0,
               ),
               MainTitle(
-                colorText: colorAppPurple,
+                colorText: colorAppYellow,
                 Title: "GoClass UNIB.E",
               ),
               SecondMiniText(
@@ -34,17 +34,17 @@ class HomeScreen extends StatelessWidget {
                     "Consulta tu información académica, crea tu horario y más desde un solo lugar",
               ),
               ButtonFirst(
-                color1: colorButtonPurpleLight1,
-                color2: colorButtonPurpleDark2,
-                colorText1: colorButtonPurpleDark1,
+                color1: colorButtonBlueDark1,
+                color2: colorButtonBlueDark2,
+                colorText1: colorButtonBlueDark1,
                 colorText2: colorAppBackground,
                 title: "Iniciar Sesión",
               ),
               ButtonFirst(
-                color1: colorButtonPurpleDark2,
-                color2: colorButtonPurpleLight1,
+                color1: colorButtonBlueDark2,
+                color2: colorButtonBlueDark1,
                 colorText1: colorAppBackground,
-                colorText2: colorButtonPurpleDark2,
+                colorText2: colorButtonBlueDark2,
                 title: "Registrarse",
               ),
             ],

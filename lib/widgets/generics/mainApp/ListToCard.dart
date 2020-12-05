@@ -9,10 +9,11 @@ class ListToCard extends StatelessWidget {
   //ListToCard({Key key, this.elements}):super(key: key);
   List<Elements> elements = [
     Elements(
-        title: 'Página web de la UNIB.E',
-        subtitle: 'unibe.edu.ec',
-        url: 'https://www.unibe.edu.ec',
-        color: colorAppGreen),
+      title: 'Página web de la UNIB.E',
+      subtitle: 'unibe.edu.ec',
+      url: 'https://www.unibe.edu.ec',
+      color: colorAppBlue,
+    ),
     //Elements(
     //title: 'Plataforma virtual de aprendizaje',
     //subtitle: 'moodle.unibe.edu.ec',

@@ -7,6 +7,7 @@ import 'package:GoClassUnibe/widgets/generics/mainApp/BigTitle.dart';
 import 'package:intl/intl.dart';
 import 'package:GoClassUnibe/constants/Colors.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:scroll_glow_color/widget/scroll_glow_color.dart';
 
 class ScheduleScreen extends StatefulWidget {
   @override
@@ -48,24 +49,27 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         backgroundColor: colorAppBackground,
-        body: ListView(children: [
-          Container(
-              padding: EdgeInsets.only(
-                  top: titlePaddingTop(context),
-                  left: 16,
-                  right: 16,
-                  bottom: 0),
-              child: BigTitle(
-                title: "Horario",
-              )),
-          _toggleButtonsDay(),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: CategoryText(
-              title: _dayList[_index],
+        body: ScrollGlowColor(
+          color: colorGlow,
+          child: ListView(children: [
+            Container(
+                padding: EdgeInsets.only(
+                    top: titlePaddingTop(context),
+                    left: 16,
+                    right: 16,
+                    bottom: 0),
+                child: BigTitle(
+                  title: "Horario",
+                )),
+            _toggleButtonsDay(),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: CategoryText(
+                title: _dayList[_index],
+              ),
             ),
-          ),
-        ]),
+          ]),
+        ),
       ),
     );
   }
@@ -85,7 +89,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
             child: CircleAvatar(
                 radius: (MediaQuery.of(context).size.width * 0.15) / 2,
                 backgroundColor:
-                    _daySelected[subIndex] ? colorTextBlue : Colors.white,
+                    _daySelected[subIndex] ? colorAppBlue : Colors.white,
                 child: Text(
                   val[0].toUpperCase(),
                   style: TextStyle(

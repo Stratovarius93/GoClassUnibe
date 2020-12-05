@@ -29,6 +29,7 @@ dependencies:
   intl: ^0.16.1
   colorful_safe_area: ^0.2.1
   ionicons: ^0.0.3
+  scroll_glow_color: ^0.1.2
   #flutter_localizations: # Add this line
     #sdk: flutter # Add this line
   # The following adds the Cupertino Icons font to your application.

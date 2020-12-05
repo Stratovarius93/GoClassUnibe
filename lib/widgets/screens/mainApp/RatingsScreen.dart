@@ -2,12 +2,14 @@ import 'package:GoClassUnibe/constants/Shadows.dart';
 import 'package:GoClassUnibe/constants/Title.dart';
 import 'package:GoClassUnibe/services/serviceStudent.dart';
 import 'package:GoClassUnibe/widgets/generics/mainApp/CategoryText.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:GoClassUnibe/widgets/generics/mainApp/BigTitle.dart';
 
 import 'package:GoClassUnibe/constants/Fonts.dart';
 import 'package:GoClassUnibe/constants/Colors.dart';
 import 'package:provider/provider.dart';
+import 'package:scroll_glow_color/widget/scroll_glow_color.dart';
 
 class RatingsScreen extends StatefulWidget {
   @override
@@ -27,38 +29,41 @@ class _RatingsScreenState extends State<RatingsScreen> {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         backgroundColor: colorAppBackground,
-        body: ListView(children: [
-          Container(
-              padding: EdgeInsets.only(
-                  top: titlePaddingTop(context),
-                  left: 16,
-                  right: 16,
-                  bottom: 16),
-              child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    BigTitle(
-                      title: "Calificaciones",
-                    ),
-                    CategoryText(
-                      title: studentData.getCareer,
-                    ),
-                    SizedBox(
-                      height: 16,
-                    ),
-                    _ratingsCard1(),
-                    SizedBox(
-                      height: 16,
-                    ),
-                    CategoryText(
-                      title: "IDIOMAS",
-                    ),
-                    SizedBox(
-                      height: 16,
-                    ),
-                    _ratingsCard1(),
-                  ])),
-        ]),
+        body: ScrollGlowColor(
+          color: colorGlow,
+          child: ListView(children: [
+            Container(
+                padding: EdgeInsets.only(
+                    top: titlePaddingTop(context),
+                    left: 16,
+                    right: 16,
+                    bottom: 16),
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      BigTitle(
+                        title: "Calificaciones",
+                      ),
+                      CategoryText(
+                        title: studentData.getCareer,
+                      ),
+                      SizedBox(
+                        height: 16,
+                      ),
+                      _ratingsCard1(),
+                      SizedBox(
+                        height: 16,
+                      ),
+                      CategoryText(
+                        title: "IDIOMAS",
+                      ),
+                      SizedBox(
+                        height: 16,
+                      ),
+                      _ratingsCard1(),
+                    ])),
+          ]),
+        ),
       ),
     );
   }
@@ -96,11 +101,12 @@ class _RatingsScreenState extends State<RatingsScreen> {
               subtitle: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
+                  AutoSizeText(
                     "30/08/2020 -- 28/02/2021",
+                    presetFontSizes: [13, 12, 11, 10, 8, 6, 4],
+                    maxLines: 2,
                     style: TextStyle(
                       color: colorAppTextLight,
-                      fontSize: 16,
                       fontFamily: fontApp,
                     ),
                   ),
@@ -110,12 +116,11 @@ class _RatingsScreenState extends State<RatingsScreen> {
                     decoration: BoxDecoration(
                         color: Colors.green.shade100,
                         borderRadius: BorderRadius.circular(16)),
-                    child: Text(
+                    child: AutoSizeText(
                       "8.5",
+                      presetFontSizes: [16, 15, 14, 13, 12, 11, 10, 8, 6, 4],
                       style: TextStyle(
-                          color: Colors.green.shade800,
-                          fontSize: 18,
-                          fontFamily: fontApp),
+                          color: Colors.green.shade800, fontFamily: fontApp),
                     ),
                   )
                 ],
