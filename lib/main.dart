@@ -1,6 +1,7 @@
 import 'package:GoClassUnibe/widgets/generics/homeApp/Background.dart';
 import 'package:GoClassUnibe/widgets/generics/homeApp/Login.dart';
 import 'package:GoClassUnibe/widgets/generics/homeApp/PrincipalPage.dart';
+import 'package:GoClassUnibe/widgets/generics/homeApp/Validation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
         //home: FirstHome(),
         home: Scaffold(
           body: Center(
-            child:PrincipalPage(),
+            child: LoginPage(),
           ),
         )
     );
