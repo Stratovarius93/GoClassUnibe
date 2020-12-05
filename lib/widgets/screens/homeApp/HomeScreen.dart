@@ -7,7 +7,7 @@ import 'package:GoClassUnibe/widgets/generics/homeApp/Title.dart';
 import 'package:GoClassUnibe/widgets/generics/homeApp/SecondText.dart';
 import 'package:flutter/widgets.dart';
 
-class PrincipalPage extends StatelessWidget {
+class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Stack(
