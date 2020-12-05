@@ -30,7 +30,9 @@ class Background extends StatelessWidget {
 class MyPainter extends CustomPainter {
   final List<Color> colorG;
   final List<double> stopsG;
+
   const MyPainter(this.colorG, this.stopsG);
+
   @override
   void paint(Canvas canvas, Size size) {
     final rect = Offset.zero & size;
@@ -65,6 +67,7 @@ class MyPainter extends CustomPainter {
 class MyPainter2 extends CustomPainter {
   final List<Color> colorG;
   final List<double> stopsG;
+
   const MyPainter2(this.colorG, this.stopsG);
 
   @override
@@ -106,6 +109,7 @@ class CustomPAnimated1 extends StatefulWidget {
 class _CustomPAnimated1State extends State<CustomPAnimated1>
     with SingleTickerProviderStateMixin {
   AnimationController _controller;
+
   @override
   void initState() {
     super.initState();
