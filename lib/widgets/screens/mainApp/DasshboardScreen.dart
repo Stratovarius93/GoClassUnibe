@@ -1,6 +1,7 @@
 import 'package:GoClassUnibe/constants/Title.dart';
 import 'package:GoClassUnibe/widgets/generics/mainApp/CategoryText.dart';
 import 'package:GoClassUnibe/widgets/generics/mainApp/MainCard2.dart';
+import 'package:GoClassUnibe/widgets/generics/mainApp/Modal.dart';
 import 'package:flutter/material.dart';
 import 'package:GoClassUnibe/widgets/generics/mainApp/BigTitle.dart';
 import 'package:GoClassUnibe/constants/Colors.dart';
@@ -23,6 +24,12 @@ class _DasshboardScreenState extends State<DasshboardScreen> {
     Absence('Matematicas', '40 inasistencias'),
   ];
 
+  List<Rating> rating = [
+    Rating("Matematicas", "8.1", "8.2", "8.3", "8.2"),
+    Rating("Matematicas", "8.1", "8.2", "8.3", "8.2"),
+    Rating("Matematicas", "8.1", "8.2", "8.3", "8.2"),
+    Rating("Matematicas", "8.1", "8.2", "8.3", "8.2"),
+  ];
   @override
   Widget build(BuildContext context) {
     final studentData = Provider.of<StudentData>(context);
@@ -33,6 +40,7 @@ class _DasshboardScreenState extends State<DasshboardScreen> {
         body: ScrollGlowColor(
           color: colorGlow,
           child: ListView(
+            physics: BouncingScrollPhysics(),
             children: [
               Container(
                 padding: EdgeInsets.only(
@@ -54,6 +62,7 @@ class _DasshboardScreenState extends State<DasshboardScreen> {
                 ),
               ),
               SingleChildScrollView(
+                  physics: BouncingScrollPhysics(),
                   scrollDirection: Axis.horizontal,
                   child: Row(children: [
                     Padding(
@@ -61,11 +70,17 @@ class _DasshboardScreenState extends State<DasshboardScreen> {
                           top: 20.0, bottom: 20.0, left: 16.0, right: 8.0),
                       child: Align(
                         alignment: Alignment.topLeft,
-                        child: Card1Dashboard(
-                          subject: "Matetmaticas",
-                          teacherName: "Dra. Yoisi Perez",
-                          subjectTime: "7:00 - 9:00 AM",
-                          classRoom: "Aula A1",
+                        child: InkWell(
+                          onTap: () {
+                            showModal(context, "Matetmaticas", "8.1", "8.2",
+                                "8.3", "8.3", "1", "2", "3", "6");
+                          },
+                          child: Card1Dashboard(
+                            subject: "Matetmaticas",
+                            teacherName: "Dra. Yoisi Perez",
+                            subjectTime: "7:00 - 9:00 AM",
+                            classRoom: "Aula A1",
+                          ),
                         ),
                       ),
                     ),
@@ -119,6 +134,7 @@ class _DasshboardScreenState extends State<DasshboardScreen> {
 
   Widget _careerOption() {
     return SingleChildScrollView(
+      physics: BouncingScrollPhysics(),
       scrollDirection: Axis.horizontal,
       child: Row(
         children: [
@@ -131,7 +147,9 @@ class _DasshboardScreenState extends State<DasshboardScreen> {
               highlightElevation: 0,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(16)),
-              onPressed: () {},
+              onPressed: () {
+                showModalRatings();
+              },
               elevation: 0,
               child: Container(
                 height: 60,
@@ -215,7 +233,7 @@ class _DasshboardScreenState extends State<DasshboardScreen> {
         Expanded(
           child: InkWell(
             onTap: () {
-              print(signature);
+              showModalAbsence(context, signature, "1", "2", "3", "6");
             },
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -279,10 +297,155 @@ class _DasshboardScreenState extends State<DasshboardScreen> {
       ],
     );
   }
+
+  void showModalRatings() {
+    showModalBottomSheet(
+        context: context,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        builder: (context) {
+          return Container(
+            padding: EdgeInsets.all(16),
+            decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(16),
+                    topRight: Radius.circular(16))),
+            child: ListView.builder(
+              physics: NeverScrollableScrollPhysics(),
+              itemCount: rating.length,
+              itemBuilder: (context, index) {
+                return _ratingsItem(
+                  rating[index].signature,
+                  rating[index].ap1,
+                  rating[index].ap2,
+                  rating[index].ap3,
+                  rating[index].finalRating,
+                );
+              },
+            ),
+          );
+        });
+  }
+
+  Widget _ratingsItem(String signature, String ap1, String ap2, String ap3,
+      String finalRating) {
+    final TextStyle _textStyle1 =
+        TextStyle(fontSize: 30, fontFamily: fontApp, color: colorAppTextLight);
+    final TextStyle _subTextStyle1 = TextStyle(
+        fontSize: 16,
+        fontFamily: fontApp,
+        color: colorAppTextLight,
+        fontWeight: FontWeight.bold);
+    final TextStyle _textStyleColor1 = TextStyle(
+        fontSize: 30,
+        fontFamily: fontApp,
+        color: colorAppBlue,
+        fontWeight: FontWeight.bold);
+    final TextStyle _subTextStyleColor1 = TextStyle(
+        fontSize: 16,
+        fontFamily: fontApp,
+        color: colorAppBlue,
+        fontWeight: FontWeight.bold);
+
+    return Container(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            signature,
+            style: TextStyle(
+                color: colorAppTextDark,
+                fontSize: 24,
+                fontFamily: fontApp,
+                fontWeight: FontWeight.bold),
+          ),
+          SizedBox(
+            height: 16,
+          ),
+          CategoryText(
+            title: "Calificaciones",
+          ),
+          SizedBox(
+            height: 16,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Column(
+                children: [
+                  Text(
+                    ap1,
+                    style: _textStyle1,
+                  ),
+                  Text(
+                    "Aporte 1",
+                    style: _subTextStyle1,
+                  )
+                ],
+              ),
+              SizedBox(
+                width: 16,
+              ),
+              Column(
+                children: [
+                  Text(
+                    ap2,
+                    style: _textStyle1,
+                  ),
+                  Text(
+                    "Aporte 2",
+                    style: _subTextStyle1,
+                  )
+                ],
+              ),
+              SizedBox(
+                width: 16,
+              ),
+              Column(
+                children: [
+                  Text(
+                    ap3,
+                    style: _textStyle1,
+                  ),
+                  Text(
+                    "Aporte 3",
+                    style: _subTextStyle1,
+                  )
+                ],
+              ),
+              SizedBox(
+                width: 16,
+              ),
+              Column(
+                children: [
+                  Text(
+                    finalRating,
+                    style: _textStyleColor1,
+                  ),
+                  Text(
+                    "Final",
+                    style: _subTextStyleColor1,
+                  )
+                ],
+              )
+            ],
+          ),
+          SizedBox(
+            height: 24,
+          )
+        ],
+      ),
+    );
+  }
 }
 
 class Absence {
   String signature, absence;
 
   Absence(this.signature, this.absence);
+}
+
+class Rating {
+  String signature, ap1, ap2, ap3, finalRating;
+  Rating(this.signature, this.ap1, this.ap2, this.ap3, this.finalRating);
 }

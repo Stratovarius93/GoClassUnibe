@@ -1,13 +1,17 @@
-import 'package:GoClassUnibe/constants/Shadows.dart';
 import 'package:GoClassUnibe/constants/Title.dart';
 import 'package:GoClassUnibe/services/serviceStudent.dart';
 import 'package:GoClassUnibe/widgets/generics/mainApp/CategoryText.dart';
+import 'package:GoClassUnibe/widgets/generics/mainApp/MainCard.dart';
+import 'package:GoClassUnibe/widgets/generics/mainApp/MainCard2.dart';
+import 'package:GoClassUnibe/widgets/generics/mainApp/Modal.dart';
+import 'package:GoClassUnibe/widgets/screens/mainApp/RecordScreen.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:GoClassUnibe/widgets/generics/mainApp/BigTitle.dart';
 
 import 'package:GoClassUnibe/constants/Fonts.dart';
 import 'package:GoClassUnibe/constants/Colors.dart';
+import 'package:ionicons/ionicons.dart';
 import 'package:provider/provider.dart';
 import 'package:scroll_glow_color/widget/scroll_glow_color.dart';
 
@@ -18,167 +22,176 @@ class RatingsScreen extends StatefulWidget {
 
 class _RatingsScreenState extends State<RatingsScreen> {
   final double _pi = 3.1415926535897932;
-  final list = List.generate(5, (i) => "Período $i");
 
-  final list2 = List.generate(5, (i) => "Materia $i");
+  final list2 = List.generate(7, (i) => "Materia $i");
 
+  PageController _pageController = new PageController();
   @override
   Widget build(BuildContext context) {
-    final studentData = Provider.of<StudentData>(context);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         backgroundColor: colorAppBackground,
-        body: ScrollGlowColor(
-          color: colorGlow,
-          child: ListView(children: [
-            Container(
-                padding: EdgeInsets.only(
-                    top: titlePaddingTop(context),
-                    left: 16,
-                    right: 16,
-                    bottom: 16),
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      BigTitle(
-                        title: "Calificaciones",
-                      ),
-                      CategoryText(
-                        title: studentData.getCareer,
-                      ),
-                      SizedBox(
-                        height: 16,
-                      ),
-                      _ratingsCard1(),
-                      SizedBox(
-                        height: 16,
-                      ),
-                      CategoryText(
-                        title: "IDIOMAS",
-                      ),
-                      SizedBox(
-                        height: 16,
-                      ),
-                      _ratingsCard1(),
-                    ])),
-          ]),
+        body: PageView(
+          controller: _pageController,
+          physics: BouncingScrollPhysics(),
+          children: [
+            _ratingsPage1(context),
+            _ratingsPage2(),
+          ],
         ),
       ),
     );
   }
 
-  Widget _ratingsCard1() {
-    return Container(
-      padding: EdgeInsets.only(left: 16, right: 16),
-      decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(16),
-          boxShadow: <BoxShadow>[boxShadowApp]),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(16),
-        child: ListView.separated(
-          separatorBuilder: (context, index) => Divider(
-            color: colorAppTextLight,
-          ),
-          physics: const NeverScrollableScrollPhysics(),
-          shrinkWrap: true,
-          itemCount: list.length,
-          itemBuilder: (context, index) => Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
+  Widget _ratingsPage1(BuildContext context) {
+    final _studentData1 = Provider.of<StudentData>(context);
+    return ListView(
+      physics: BouncingScrollPhysics(),
+      children: [
+        Container(
+          padding: EdgeInsets.only(
+              top: titlePaddingTop(context), left: 16, right: 16, bottom: 0),
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            BigTitle(
+              title: "Calificaciones",
             ),
-            child: ExpansionTile(
-              //trailing: Text("hola"),
-              title: Text(
-                '${list[index]}',
+            CategoryText(title: _studentData1.getCareer),
+            SizedBox(
+              height: 16,
+            ),
+            _signaturesList(),
+            SizedBox(
+              height: 16,
+            ),
+            CategoryText(
+              title: "Idiomas",
+            ),
+            SizedBox(
+              height: 16,
+            ),
+            _signaturesList(),
+            SizedBox(
+              height: 32,
+            ),
+            _bottonToRecordScreen(),
+            SizedBox(
+              height: 32,
+            )
+          ]),
+        ),
+      ],
+    );
+  }
+
+  Widget _ratingsPage2() {
+    return RecordScreen();
+  }
+
+  Widget _signaturesList() {
+    return MainCard(
+      childCard: ListView.separated(
+        physics: NeverScrollableScrollPhysics(),
+        shrinkWrap: true,
+        itemBuilder: (context, index) {
+          return InkWell(
+            onTap: () {
+              print(list2[index]);
+              showModal(context, list2[index], "8.1", "8.2", "8.3", "8.3", "1",
+                  "2", "3", "6");
+            },
+            child: Container(
+              child: Row(children: [
+                CircleAvatar(
+                  backgroundColor: constantsListColors[index],
+                  radius: (MediaQuery.of(context).size.width * 0.11) / 2,
+                  child: Transform.rotate(
+                    angle: -_pi / 10,
+                    child: Container(
+                      child: Text(list2[index][0],
+                          style: TextStyle(
+                              fontSize: 30,
+                              fontFamily: fontApp,
+                              color: Colors.white.withOpacity(0.6),
+                              fontWeight: FontWeight.bold)),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  width: 16,
+                ),
+                Expanded(
+                    child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      list2[index],
+                      style: TextStyle(
+                          fontFamily: fontApp,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: colorAppTextDark),
+                    ),
+                    Text(
+                      "Aprobado",
+                      style: TextStyle(
+                          fontFamily: fontApp,
+                          fontSize: 16,
+                          color: colorAppTextLight),
+                    )
+                  ],
+                )),
+                SizedBox(
+                  width: 16,
+                ),
+                Container(
+                    padding: EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(16),
+                      color: colorAppGreen.withOpacity(0.2),
+                    ),
+                    child: Text(
+                      '8.5',
+                      style: TextStyle(
+                          color: colorAppGreen,
+                          fontFamily: fontApp,
+                          fontSize: 18),
+                    )),
+              ]),
+            ),
+          );
+        },
+        itemCount: list2.length,
+        separatorBuilder: (context, index) => Divider(
+          color: colorAppTextLight.withOpacity(0.5),
+        ),
+      ),
+    );
+  }
+
+  Widget _bottonToRecordScreen() {
+    return Container(
+      child: Center(
+        child: InkWell(
+            onTap: () {
+              _pageController.animateToPage(1,
+                  duration: Duration(milliseconds: 500), curve: Curves.easeOut);
+            },
+            child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+              Text(
+                "Ver Récord académico",
                 style: TextStyle(
-                    color: colorAppTextDark,
+                    color: colorAppGreen,
                     fontFamily: fontApp,
                     fontSize: 18,
                     fontWeight: FontWeight.bold),
               ),
-              subtitle: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  AutoSizeText(
-                    "30/08/2020 -- 28/02/2021",
-                    presetFontSizes: [13, 12, 11, 10, 8, 6, 4],
-                    maxLines: 2,
-                    style: TextStyle(
-                      color: colorAppTextLight,
-                      fontFamily: fontApp,
-                    ),
-                  ),
-                  Container(
-                    padding:
-                        EdgeInsets.only(top: 6, bottom: 6, left: 10, right: 10),
-                    decoration: BoxDecoration(
-                        color: Colors.green.shade100,
-                        borderRadius: BorderRadius.circular(16)),
-                    child: AutoSizeText(
-                      "8.5",
-                      presetFontSizes: [16, 15, 14, 13, 12, 11, 10, 8, 6, 4],
-                      style: TextStyle(
-                          color: Colors.green.shade800, fontFamily: fontApp),
-                    ),
-                  )
-                ],
-              ),
-              children: list2.map((val2) {
-                var subIndex = list2.indexOf(val2);
-                return ListTile(
-                  onTap: () {
-                    print(list[index]);
-                  },
-                  title: Text(
-                    val2,
-                    style: TextStyle(
-                        color: colorAppTextDark,
-                        fontFamily: fontApp,
-                        fontSize: 18),
-                  ),
-                  leading: CircleAvatar(
-                    backgroundColor: constantsListColors[subIndex],
-                    radius: (MediaQuery.of(context).size.width * 0.11) / 2,
-                    child: Transform.rotate(
-                      angle: -_pi / 10,
-                      child: Container(
-                        child: Text(val2[0],
-                            style: TextStyle(
-                                fontSize: 30,
-                                fontFamily: fontApp,
-                                color: Colors.white.withOpacity(0.6),
-                                fontWeight: FontWeight.bold)),
-                      ),
-                    ),
-                  ),
-                  trailing: Container(
-                    padding:
-                        EdgeInsets.only(top: 6, bottom: 6, left: 10, right: 10),
-                    decoration: BoxDecoration(
-                        color: Colors.green.shade100,
-                        borderRadius: BorderRadius.circular(16)),
-                    child: Text(
-                      "8.5",
-                      style: TextStyle(
-                          color: Colors.green.shade800,
-                          fontSize: 18,
-                          fontFamily: fontApp),
-                    ),
-                  ),
-                  subtitle: Text(
-                    "Aprobado",
-                    style: TextStyle(
-                        color: colorAppTextLight,
-                        fontFamily: fontApp,
-                        fontSize: 14),
-                  ),
-                );
-              }).toList(),
-            ),
-          ),
-        ),
+              Icon(
+                Ionicons.arrow_forward_outline,
+                color: colorAppGreen,
+              )
+            ])),
       ),
     );
   }

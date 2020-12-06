@@ -2,7 +2,6 @@ import 'package:GoClassUnibe/constants/Sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:GoClassUnibe/widgets/screens/mainApp/ScheduleScreen.dart';
 import 'package:GoClassUnibe/widgets/screens/mainApp/DasshboardScreen.dart';
-import 'package:GoClassUnibe/widgets/screens/mainApp/RecordScreen.dart';
 import 'package:GoClassUnibe/widgets/screens/mainApp/RatingsScreen.dart';
 import 'package:GoClassUnibe/widgets/screens/mainApp/SettingsScreen.dart';
 import 'package:GoClassUnibe/constants/Colors.dart';
@@ -33,14 +32,12 @@ class _HomeMenuState extends State<HomeMenu> {
   int _currentIndex = 0;
   final tabs = [
     ColorfulSafeArea(color: colorAppBackground, child: DasshboardScreen()),
-    ColorfulSafeArea(color: colorAppBackground, child: RecordScreen()),
     ColorfulSafeArea(color: colorAppBackground, child: ScheduleScreen()),
     ColorfulSafeArea(color: colorAppBackground, child: RatingsScreen()),
     ColorfulSafeArea(color: colorAppBackground, child: SettingsScreen()),
   ];
   List<ElementItemIcon> _elementItemIconList = [
     ElementItemIcon(Ionicons.home, Ionicons.home_outline, "Home"),
-    ElementItemIcon(Ionicons.list_circle, Ionicons.list_circle_outline, "Home"),
     ElementItemIcon(Ionicons.calendar, Ionicons.calendar_outline, "Home"),
     ElementItemIcon(Ionicons.checkbox, Ionicons.checkbox_outline, "Home"),
     ElementItemIcon(Ionicons.person, Ionicons.person_outline, "Home"),
@@ -56,9 +53,9 @@ class _HomeMenuState extends State<HomeMenu> {
           boxShadow: <BoxShadow>[
             BoxShadow(
                 color: Colors.blueGrey.shade100,
-                blurRadius: 22,
+                blurRadius: 12,
                 offset: Offset(0.0, 0.0),
-                spreadRadius: 8)
+                spreadRadius: 4)
           ],
         ),
         child: ClipRRect(
@@ -72,7 +69,7 @@ class _HomeMenuState extends State<HomeMenu> {
             //backgroundColor: white,
             selectedItemColor: colorNavBarButtonActive,
             unselectedItemColor: colorNavBarButtonDisable,
-            elevation: 6.0,
+            elevation: 2.0,
             items: _elementItemIconList.map((val) {
               var subIndex = _elementItemIconList.indexOf(val);
               var iconData =

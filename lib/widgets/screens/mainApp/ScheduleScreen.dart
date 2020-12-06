@@ -1,12 +1,14 @@
 import 'package:GoClassUnibe/constants/Shadows.dart';
 import 'package:GoClassUnibe/constants/Fonts.dart';
 import 'package:GoClassUnibe/constants/Title.dart';
+import 'package:GoClassUnibe/services/serviceStudent.dart';
 import 'package:GoClassUnibe/widgets/generics/mainApp/CategoryText.dart';
 import 'package:flutter/material.dart';
 import 'package:GoClassUnibe/widgets/generics/mainApp/BigTitle.dart';
 import 'package:intl/intl.dart';
 import 'package:GoClassUnibe/constants/Colors.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:provider/provider.dart';
 import 'package:scroll_glow_color/widget/scroll_glow_color.dart';
 
 class ScheduleScreen extends StatefulWidget {
@@ -45,31 +47,40 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final studentData = Provider.of<StudentData>(context);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         backgroundColor: colorAppBackground,
-        body: ScrollGlowColor(
-          color: colorGlow,
-          child: ListView(children: [
-            Container(
-                padding: EdgeInsets.only(
-                    top: titlePaddingTop(context),
-                    left: 16,
-                    right: 16,
-                    bottom: 0),
-                child: BigTitle(
-                  title: "Horario",
-                )),
-            _toggleButtonsDay(),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: CategoryText(
-                title: _dayList[_index],
+        body: ListView(physics: BouncingScrollPhysics(), children: [
+          Container(
+            padding: EdgeInsets.only(
+                top: titlePaddingTop(context), left: 16, right: 16, bottom: 0),
+            child:
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              BigTitle(
+                title: "Horario",
               ),
+              CategoryText(
+                title: studentData.getCareer,
+              )
+            ]),
+          ),
+          Container(
+            height: 100,
+            child: ListView(
+              physics: BouncingScrollPhysics(),
+              scrollDirection: Axis.horizontal,
+              children: [_toggleButtonsDay()],
             ),
-          ]),
-        ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: CategoryText(
+              title: _dayList[_index],
+            ),
+          ),
+        ]),
       ),
     );
   }
@@ -87,7 +98,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
           child: Container(
             decoration: BoxDecoration(boxShadow: <BoxShadow>[boxShadowApp]),
             child: CircleAvatar(
-                radius: (MediaQuery.of(context).size.width * 0.15) / 2,
+                radius: (MediaQuery.of(context).size.width * 0.20) / 2,
                 backgroundColor:
                     _daySelected[subIndex] ? colorAppBlue : Colors.white,
                 child: Text(

@@ -4,6 +4,8 @@ import 'package:GoClassUnibe/constants/Title.dart';
 import 'package:GoClassUnibe/services/serviceStudent.dart';
 import 'package:GoClassUnibe/widgets/generics/mainApp/CategoryText.dart';
 import 'package:GoClassUnibe/widgets/generics/mainApp/MainCard.dart';
+import 'package:GoClassUnibe/widgets/generics/mainApp/Modal.dart';
+import 'package:GoClassUnibe/widgets/screens/mainApp/RatingsScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:GoClassUnibe/widgets/generics/mainApp/BigTitle.dart';
 
@@ -29,6 +31,7 @@ class _RecordScreenState extends State<RecordScreen> {
         body: ScrollGlowColor(
           color: colorGlow,
           child: ListView(
+            physics: BouncingScrollPhysics(),
             children: [
               Container(
                 padding: EdgeInsets.only(
@@ -105,6 +108,10 @@ class _RecordScreenState extends State<RecordScreen> {
         ),
         children: list
             .map((val) => ListTile(
+                  onTap: () {
+                    showModal(context, val, "8.1", "8.2", "8.3", "8.3", "1",
+                        "2", "3", "6");
+                  },
                   title: Text(
                     val,
                     style: TextStyle(
@@ -123,7 +130,7 @@ class _RecordScreenState extends State<RecordScreen> {
                               fontFamily: fontApp,
                               fontSize: 15,
                               fontWeight: FontWeight.bold,
-                              color: Colors.green.shade900))),
+                              color: colorAppGreen))),
                 ))
             .toList(),
       ),

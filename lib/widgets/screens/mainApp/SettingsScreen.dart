@@ -23,7 +23,8 @@ class SettingsScreen extends StatelessWidget {
           body: ScrollGlowColor(
             color: colorGlow,
             child: ListView(
-              shrinkWrap: true,
+              physics: BouncingScrollPhysics(),
+              //shrinkWrap: true,
               children: [
                 Container(
 //padding: EdgeInsets.symmetric(vertical:16, horizontal: 16),
