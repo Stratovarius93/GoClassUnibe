@@ -12,15 +12,27 @@ void main() {
       systemNavigationBarColor: Colors.white,
       systemNavigationBarIconBrightness: Brightness.dark,
       statusBarIconBrightness: Brightness.dark,
-      statusBarColor: Colors.transparent));
+      statusBarColor: Colors.transparent
+      //statusBarBrightness: Brightness.dark
+      ));
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
+
     return MaterialApp(
         //debugShowCheckedModeBanner: false, title: 'MyApp', home: HomeScreen());
+        //theme: ThemeData(
+        //appBarTheme: AppBarTheme(
+        //brightness: Brightness.dark,
+        //)),
+        theme: ThemeData(splashColor: Colors.transparent),
         debugShowCheckedModeBanner: false,
         title: 'MyApp',
         home: IndexScreen());
