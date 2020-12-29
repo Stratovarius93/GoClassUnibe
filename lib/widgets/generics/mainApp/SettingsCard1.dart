@@ -107,7 +107,7 @@ class SettingsCard1 extends StatelessWidget {
                 width: 32,
               ),
               Icon(
-                Icons.lock_open,
+                Icons.lock_sharp,
                 color: colorAppBlue,
                 size: 32,
               ),

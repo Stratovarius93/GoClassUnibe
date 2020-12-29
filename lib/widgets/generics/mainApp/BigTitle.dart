@@ -23,7 +23,7 @@ class BigTitle extends StatelessWidget {
                   fontFamily: fontApp,
                   color: colorAppTextDark,
                   fontWeight: FontWeight.w900),
-              presetFontSizes: [35, 30, 25],
+              presetFontSizes: [35, 32, 30, 28, 26, 24, 22, 20],
               maxLines: 1,
             )
           ],

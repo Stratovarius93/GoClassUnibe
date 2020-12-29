@@ -20,7 +20,7 @@ class CreateLoginButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.only(top:10.0,left: 40.0,right: 40.0,bottom: 20.0),
-      height: 80.0,
+      height: MediaQuery.of(context).size.width * 0.22,
       width: MediaQuery.of(context).size.width * 0.80,
       child: RaisedButton(
         child: Row(

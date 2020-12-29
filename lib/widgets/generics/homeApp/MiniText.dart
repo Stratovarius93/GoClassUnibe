@@ -12,7 +12,7 @@ class CreateMiniText extends StatelessWidget {
   }) : super(key: key);
   Widget build(BuildContext context) {
     return Container(
-        padding: EdgeInsets.only(top: 32),
+        padding: EdgeInsets.only(top: 20.0),
         child:  Text((Title),
           textAlign: TextAlign.center,
           style: TextStyle(fontWeight: FontWeight.bold, color: colorText,fontFamily: fontApp),

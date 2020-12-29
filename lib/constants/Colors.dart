@@ -45,3 +45,41 @@ Color colorAppTextLight = Color(0xFF8494A3);
 //=======================
 Color colorNavBarButtonActive = Color(0xFF315CF3);
 Color colorNavBarButtonDisable = Color(0xFFB9D4DC);
+
+List<Color> constantsListColors = [
+  colorAppGreen,
+  colorAppSkyBlue,
+  colorAppPurple,
+  colorAppBlue,
+  colorAppRed,
+  colorAppGreen,
+  colorAppSkyBlue,
+  colorAppPurple,
+  colorAppBlue,
+  colorAppRed,
+  colorAppGreen,
+  colorAppSkyBlue,
+  colorAppPurple,
+  colorAppBlue,
+  colorAppRed,
+  colorAppGreen,
+  colorAppSkyBlue,
+  colorAppPurple,
+  colorAppBlue,
+  colorAppRed,
+  colorAppGreen,
+  colorAppSkyBlue,
+  colorAppPurple,
+  colorAppBlue,
+  colorAppRed,
+  colorAppGreen,
+  colorAppSkyBlue,
+  colorAppPurple,
+  colorAppBlue,
+  colorAppRed,
+  colorAppGreen,
+  colorAppSkyBlue,
+  colorAppPurple,
+  colorAppBlue,
+  colorAppRed
+];

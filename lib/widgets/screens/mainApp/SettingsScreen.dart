@@ -1,20 +1,22 @@
 import 'package:GoClassUnibe/constants/Fonts.dart';
+import 'package:GoClassUnibe/constants/Title.dart';
+import 'package:GoClassUnibe/widgets/generics/mainApp/BigTitle.dart';
 import 'package:flutter/material.dart';
 import 'package:GoClassUnibe/constants/Colors.dart';
-import 'package:GoClassUnibe/widgets/generics/mainApp/BigTitle.dart';
 import 'package:GoClassUnibe/widgets/generics/mainApp/SingleTitle.dart';
 import 'package:GoClassUnibe/widgets/generics/mainApp/CategoryText.dart';
-import 'package:GoClassUnibe/widgets/generics/mainApp/ProfileImage.dart';
-import 'package:GoClassUnibe/widgets/generics/mainApp/MainCard.dart';
 import 'package:GoClassUnibe/widgets/generics/mainApp/SettingsCard1.dart';
 import 'package:GoClassUnibe/widgets/generics/mainApp/SettingsCard2.dart';
+import 'package:provider/provider.dart';
+import 'package:GoClassUnibe/services/serviceStudent.dart';
 
 class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final studentData = Provider.of<StudentData>(context);
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'MainApp',
+        //title: 'MainApp',
         home: Scaffold(
           backgroundColor: colorAppBackground,
           body: ListView(
@@ -23,18 +25,15 @@ class SettingsScreen extends StatelessWidget {
               Container(
 //padding: EdgeInsets.symmetric(vertical:16, horizontal: 16),
                   padding: EdgeInsets.only(
-                      top: MediaQuery.of(context).size.height * 0.07,
+                      top: titlePaddingTop(context),
                       left: 16,
                       right: 16,
                       bottom: 16),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SingleTitle(
+                      BigTitle(
                         title: "Configuración",
-                      ),
-                      SizedBox(
-                        height: 32,
                       ),
                       CategoryText(
                         title: "Perfil",
@@ -42,17 +41,23 @@ class SettingsScreen extends StatelessWidget {
                       SizedBox(
                         height: 16,
                       ),
-                      Center(
-                          child: ProfileImage(
-                        name: 'Scarlett Johansson',
-                        idNumber: '1726499393',
-                      )),
+                      //Center(
+                      //child: ProfileImage(
+                      //name:
+                      //studentData.getName + ' ' + studentData.getLastName,
+                      //idNumber: (studentData.getIdNumber).toString(),
+                      //)),
+                      _profileCircle(
+                          studentData.getName,
+                          studentData.getLastName,
+                          studentData.getIdNumber,
+                          context),
                       SizedBox(
                         height: 16,
                       ),
                       SettingsCard1(
-                        career: 'Ingeniería de Software',
-                        email: 'scarlett2020@hotmail.es',
+                        career: studentData.getCareer,
+                        email: studentData.getEmail,
                       ),
                       SizedBox(
                         height: 16,
@@ -94,6 +99,46 @@ class SettingsScreen extends StatelessWidget {
             ],
           ),
         ));
+  }
+
+  Widget _profileCircle(String getName, String getLastName, int getIdNumber,
+      BuildContext context) {
+    return Column(children: [
+      CircleAvatar(
+        radius: (MediaQuery.of(context).size.width * 0.22) / 2,
+        backgroundColor: colorAppSkyBlue,
+        child: Text(
+          getName[0] + getLastName[0],
+          style: TextStyle(
+              color: Colors.white.withOpacity(0.7),
+              fontSize: 52,
+              fontFamily: fontApp,
+              fontWeight: FontWeight.bold),
+        ),
+      ),
+      SizedBox(
+        height: 16,
+      ),
+      Center(
+          child: Column(children: [
+        Text(
+          getName + ' ' + getLastName,
+          style: TextStyle(
+              color: colorAppTextDark,
+              fontWeight: FontWeight.bold,
+              fontSize: 18,
+              fontFamily: fontApp),
+        ),
+        Text(
+          (getIdNumber).toString(),
+          style: TextStyle(
+              color: colorAppTextLight,
+              fontSize: 16,
+              fontWeight: FontWeight.w800,
+              fontFamily: fontApp),
+        )
+      ]))
+    ]);
   }
 }
 

@@ -1,4 +1,4 @@
-import 'package:GoClassUnibe/constants/Colors.dart';
+/*import 'package:GoClassUnibe/constants/Colors.dart';
 import 'package:GoClassUnibe/constants/Fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -7,7 +7,9 @@ import 'dart:io';
 class ProfileImage extends StatefulWidget {
   final String name;
   final String idNumber;
+
   const ProfileImage({Key key, this.name, this.idNumber}) : super(key: key);
+
   @override
   _ProfileImageState createState() => _ProfileImageState();
 }
@@ -111,4 +113,4 @@ class _ProfileImageState extends State<ProfileImage> {
       ],
     );
   }
-}
+}*/

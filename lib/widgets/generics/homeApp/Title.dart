@@ -15,12 +15,16 @@ class MainTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: MediaQuery.of(context).size.width * 0.9,
+      margin: EdgeInsets.only(top: 20.0,left: 30.0,right: 30.0),
+      padding: EdgeInsets.all(10.0),
       child: Column(
         children: <Widget>[
           SizedBox(
             height: 6,
           ),
-          Text(Title,
+          Text(
+            Title,
             style: TextStyle(
               fontFamily: fontApp,
               fontWeight: FontWeight.bold,
