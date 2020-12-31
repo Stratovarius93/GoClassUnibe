@@ -1,13 +1,14 @@
 import 'package:GoClassUnibe/constants/Colors.dart';
 import 'package:GoClassUnibe/constants/Fonts.dart';
 import 'package:GoClassUnibe/constants/Shadows.dart';
-//import 'package:GoClassUnibe/data/exampleSchedule.dart';
+import 'package:GoClassUnibe/controllers/ScheduleController.dart';
+import 'package:GoClassUnibe/models/scheduleModels.dart';
 import 'package:GoClassUnibe/widgets/generics/mainApp/CategoryText.dart';
-//import 'package:GoClassUnibe/widgets/generics/mainApp/ReorderableListSchedule.dart';
 import 'package:GoClassUnibe/widgets/generics/mainApp/ScheduleDay.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
+import 'package:GoClassUnibe/data/exampleSchedule.dart';
 
 class Schedule2Screen extends StatefulWidget {
   @override
@@ -25,6 +26,17 @@ final List<String> _weekDays = [
   'viernes'
 ];
 List<bool> _daySelected = [false, false, false, false, false];
+List<ScheduleSignature> _listDay0 = [];
+List<ScheduleSignature> _listDay1 = [];
+List<ScheduleSignature> _listDay2 = [];
+List<ScheduleSignature> _listDay3 = [];
+List<ScheduleSignature> _listDay4 = [];
+
+//variables DayView
+
+final int _indexMaX =
+    10; //numero de horas m'aximas por dia contando desde las 7 AM
+List<int> _listIndex; //lista en blanco de indices
 
 class _Schedule2ScreenState extends State<Schedule2Screen>
     with SingleTickerProviderStateMixin {
@@ -49,24 +61,32 @@ class _Schedule2ScreenState extends State<Schedule2Screen>
         _daySelected[0] = true;
       }
     }
-    //print(_index);
     _controller = new TabController(
         initialIndex: _index, length: _weekDays.length, vsync: this);
-    onChanged = () {
-      setState(() {
-        _currentIndex = _controller.index;
-        //_currentIndex = _index;
-        //print(_controller.index);
-      });
-    };
-    _controller.addListener(onChanged);
+    //onChanged = () {
+    //setState(() {
+    //_currentIndex = _controller.index;
+    //});
+    //};
+    //_controller.addListener(onChanged);
+    //setState(() {
+    //_currentIndex = _controller.index;
+    //});
+
+    _listIndex = List<int>.generate(_indexMaX, (int item) => item);
+
+    _listDay0 = validateListDay(listItem, _weekDays[0]);
+    _listDay1 = validateListDay(listItem, _weekDays[1]);
+    _listDay2 = validateListDay(listItem, _weekDays[2]);
+    _listDay3 = validateListDay(listItem, _weekDays[3]);
+    _listDay4 = validateListDay(listItem, _weekDays[4]);
   }
 
   @override
   void dispose() {
     // Dispose of the Tab Controller
-    _controller.removeListener(onChanged);
-    _controller.dispose();
+    //_controller.removeListener(onChanged);
+    //_controller.dispose();
     super.dispose();
     _daySelected = [false, false, false, false, false];
 
@@ -137,18 +157,33 @@ class _TabViewWidgetState extends State<TabViewWidget>
       children: [
         _DayView(
           dayName: _weekDays[0],
+          list: _listDay0,
+          indexMax: _indexMaX,
+          listIndex: _listIndex,
         ),
         _DayView(
           dayName: _weekDays[1],
+          list: _listDay1,
+          indexMax: _indexMaX,
+          listIndex: _listIndex,
         ),
         _DayView(
           dayName: _weekDays[2],
+          list: _listDay2,
+          indexMax: _indexMaX,
+          listIndex: _listIndex,
         ),
         _DayView(
           dayName: _weekDays[3],
+          list: _listDay3,
+          indexMax: _indexMaX,
+          listIndex: _listIndex,
         ),
         _DayView(
           dayName: _weekDays[4],
+          list: _listDay4,
+          indexMax: _indexMaX,
+          listIndex: _listIndex,
         ),
       ],
     );
@@ -210,8 +245,17 @@ class _TabBarWidgetState extends State<TabBarWidget> {
 
 class _DayView extends StatelessWidget {
   final String dayName;
+  final int indexMax;
+  final List<int> listIndex;
+  final List<ScheduleSignature> list;
 
-  const _DayView({Key key, this.dayName}) : super(key: key);
+  const _DayView(
+      {Key key,
+      this.dayName,
+      @required this.list,
+      @required this.indexMax,
+      @required this.listIndex})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -226,7 +270,12 @@ class _DayView extends StatelessWidget {
         //Expanded(child: ReorderableListSchedula())
         Expanded(
           //child: ReorderableListSchedule(signatureList: signatureListExample))
-          child: ScheduleDay(),
+          child: ScheduleDay(
+            dayName: dayName,
+            list: list,
+            indexMax: _indexMaX,
+            listIndex: _listIndex,
+          ),
         )
       ],
     );

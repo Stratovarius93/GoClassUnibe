@@ -1,18 +1,31 @@
 import 'package:GoClassUnibe/constants/Colors.dart';
 import 'package:GoClassUnibe/constants/Fonts.dart';
-import 'package:GoClassUnibe/data/exampleSchedule.dart';
+import 'package:GoClassUnibe/controllers/ScheduleController.dart';
 import 'package:GoClassUnibe/models/scheduleModels.dart';
 import 'package:flutter/material.dart';
+import 'package:scroll_glow_color/widget/scroll_glow_color.dart';
 
-final int _indexMaX =
-    10; //numero de horas m'aximas por dia contando desde las 7 AM
 List<int> _listIndex; //lista en blanco de indices
+
+int _indexMax = 0;
 final int _itemMaxLenght = 3; //limite maximo de horas por materia
 
 List<ScheduleSignature> _listItemFinal = [];
 _ScheduleDayState globalState;
 
 class ScheduleDay extends StatefulWidget {
+  final String dayName;
+  final int indexMax;
+  final List<int> listIndex;
+  final List<ScheduleSignature> list;
+
+  const ScheduleDay(
+      {Key key,
+      this.dayName,
+      @required this.list,
+      @required this.indexMax,
+      @required this.listIndex})
+      : super(key: key);
   @override
   _ScheduleDayState createState() => _ScheduleDayState();
 }
@@ -22,19 +35,24 @@ class _ScheduleDayState extends State<ScheduleDay> {
   void initState() {
     super.initState();
     globalState = this;
-    _listIndex = List<int>.generate(_indexMaX, (int item) => item);
-    _listItemFinal = _generateEmptyList(_indexMaX);
-    List<ScheduleSignature> _listDivided = _listDivider(listItem);
-    _generateFinalList(_listDivided, _indexMaX);
+    _indexMax = widget.indexMax;
+    _listIndex = widget.listIndex;
+    print(widget.dayName);
+    _listItemFinal = dayInitState(_listItemFinal, widget.list);
+    //print(_listItemFinal);
   }
 
   @override
   Widget build(BuildContext context) {
-    return HomePage();
+    return HomePage(
+      dayName: widget.dayName,
+    );
   }
 }
 
 class HomePage extends StatefulWidget {
+  final String dayName;
+  const HomePage({Key key, this.dayName}) : super(key: key);
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -42,65 +60,156 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    return ReorderableListView(
-      onReorder: (int oldIndex, int newIndex) {
-        setState(() {
-          if (newIndex > oldIndex) {
-            newIndex -= 1;
+    return ScrollGlowColor(
+      color: colorAppSkyBlue.withOpacity(0.5),
+      child: ReorderableListView(
+        onReorder: (int oldIndex, int newIndex) {
+          setState(() {
+            if (newIndex > oldIndex) {
+              newIndex -= 1;
+            }
+            final ScheduleSignature newString =
+                _listItemFinal.removeAt(oldIndex);
+            _listItemFinal.insert(newIndex, newString);
+            reorderTime(_listItemFinal, _listIndex);
+            print(_listItemFinal);
+            print(widget.dayName);
+          });
+        },
+        children: _listItemFinal.map((item) {
+          var index = _listItemFinal.indexOf(item);
+          if (item.name == 'Default') {
+            return ElementDefault(
+              key: UniqueKey(),
+              title: item.timeStart.toString(),
+              timeStart: item.timeStart,
+              timeEnd: item.timeEnd,
+              index: index,
+            );
+          } else {
+            return ElementActive(
+              key: UniqueKey(),
+              title: item.name,
+              color: item.color,
+              indexIn: item.timeStart,
+              indexOut: item.timeEnd,
+              index: index,
+              subtitle: item.classRoom,
+            );
           }
-          final ScheduleSignature newString = _listItemFinal.removeAt(oldIndex);
-          _listItemFinal.insert(newIndex, newString);
-          for (var i = 0, len = _listIndex.length; i < len; ++i) {
-            _listItemFinal[i].timeStart = _listIndex[i] + 7;
-          }
-          for (var i = 0, len = _listIndex.length; i < len; ++i) {
-            _listItemFinal[i].timeEnd = (_listIndex[i] + 1) + 7;
-          }
-        });
-      },
-      children: _listItemFinal.map((item) {
-        var index = _listItemFinal.indexOf(item);
-        if (item.name == 'Default') {
-          return ElementDefault(
-            key: UniqueKey(),
-            title: item.timeStart.toString(),
-          );
-        } else {
-          return ElementActive(
-            key: UniqueKey(),
-            title: item.name,
-            color: item.color,
-            indexIn: item.timeStart,
-            indexOut: item.timeEnd,
-            index: index,
-          );
-        }
-      }).toList(),
+        }).toList(),
+      ),
     );
   }
 }
 
-class ElementDefault extends StatelessWidget {
+class ElementDefault extends StatefulWidget {
   final String title;
-  const ElementDefault({Key key, this.title}) : super(key: key);
+  final int timeStart;
+  final int timeEnd;
+  final int index;
+  const ElementDefault({
+    Key key,
+    this.title,
+    this.timeStart,
+    this.timeEnd,
+    this.index,
+  }) : super(key: key);
 
+  @override
+  _ElementDefaultState createState() => _ElementDefaultState();
+}
+
+class _ElementDefaultState extends State<ElementDefault> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 52,
-      margin: EdgeInsets.only(left: 16, right: 16, top: 4, bottom: 4),
       decoration: BoxDecoration(
-        color: Colors.grey.withOpacity(0.08),
+        color: Colors.blueGrey.shade100.withOpacity(0.18),
         borderRadius: BorderRadius.circular(16),
       ),
-      child: Center(
-        child: Text(
-          'Hora libre $title',
-          style: TextStyle(
-              color: Colors.grey.withOpacity(0.5),
-              fontSize: 20,
-              fontFamily: fontApp),
-        ),
+      height: 58,
+      margin: EdgeInsets.only(left: 10, right: 10, top: 8, bottom: 8),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            padding: EdgeInsets.all(4),
+            margin: EdgeInsets.only(left: 10, right: 10, top: 4, bottom: 4),
+            decoration: BoxDecoration(
+                color: Colors.blueGrey.shade100,
+                borderRadius: BorderRadius.circular(8)),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  widget.timeStart.toString().padLeft(2, '0') + ':00',
+                  style: TextStyle(
+                      color: Colors.blueGrey.shade300,
+                      fontSize: 16,
+                      fontFamily: fontApp,
+                      fontWeight: FontWeight.bold),
+                ),
+                Text(
+                  widget.timeEnd.toString().padLeft(2, '0') + ':00',
+                  style: TextStyle(
+                      color: Colors.blueGrey.shade300,
+                      fontFamily: fontApp,
+                      fontSize: 16),
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            child: Center(
+              child: Text(
+                'Hora libre',
+                style: TextStyle(
+                    color: Colors.blueGrey.shade300,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w700,
+                    fontFamily: fontApp),
+              ),
+            ),
+          ),
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              InkWell(
+                child: CircleAvatar(
+                  backgroundColor: Colors.transparent,
+                  child: Icon(
+                    Icons.add,
+                    color: Colors.blueGrey.shade300,
+                  ),
+                ),
+                onTap: () {
+                  addFreeHour(_listItemFinal, widget.index, _indexMax,
+                      _listIndex, context);
+                  globalState.setState(() {});
+                },
+              ),
+              InkWell(
+                child: CircleAvatar(
+                  backgroundColor: Colors.transparent,
+                  child: Icon(
+                    Icons.delete,
+                    color: Colors.blueGrey.shade300,
+                  ),
+                ),
+                onTap: () {
+                  deleteFreeHour(
+                      _listItemFinal, widget.index, _indexMax, _listIndex);
+                  globalState.setState(() {});
+                },
+              ),
+              SizedBox(
+                width: 16,
+              )
+            ],
+          )
+        ],
       ),
     );
   }
@@ -114,56 +223,59 @@ class ElementActive extends StatelessWidget {
   final String subtitle;
   final int index;
 
-  const ElementActive(
-      {Key key,
-      this.color,
-      this.title,
-      this.subtitle,
-      this.indexIn,
-      this.indexOut,
-      this.index})
-      : super(key: key);
+  const ElementActive({
+    Key key,
+    this.color,
+    this.title,
+    this.subtitle,
+    this.indexIn,
+    this.indexOut,
+    this.index,
+  }) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      leading: Container(
-        margin: EdgeInsets.all(4),
-        padding: EdgeInsets.all(4),
-        decoration:
-            BoxDecoration(borderRadius: BorderRadius.circular(8), color: color),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              indexIn.toString().padLeft(2, '0') + ':00',
-              style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.white,
-                  fontFamily: fontApp,
-                  fontWeight: FontWeight.bold),
-            ),
-            Text(
-              indexOut.toString().padLeft(2, '0') + ':00',
-              style: TextStyle(
-                  fontSize: 16, fontFamily: fontApp, color: Colors.white),
-            ),
-          ],
+    return Container(
+      color: Colors.white,
+      child: ListTile(
+        leading: Container(
+          margin: EdgeInsets.all(4),
+          padding: EdgeInsets.all(4),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8), color: color),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                indexIn.toString().padLeft(2, '0') + ':00',
+                style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.white,
+                    fontFamily: fontApp,
+                    fontWeight: FontWeight.bold),
+              ),
+              Text(
+                indexOut.toString().padLeft(2, '0') + ':00',
+                style: TextStyle(
+                    fontSize: 16, fontFamily: fontApp, color: Colors.white),
+              ),
+            ],
+          ),
         ),
-      ),
-      title: Text(
-        title,
-        style: TextStyle(
-            color: colorAppTextDark,
-            fontFamily: fontApp,
-            fontWeight: FontWeight.w500),
-      ),
-      subtitle: Text(
-        "Aula A4",
-        style: TextStyle(color: colorAppTextLight, fontFamily: fontApp),
-      ),
-      //trailing: _popupMenuSignature(index),
-      trailing: _PopupMenuItem(
-        index: index,
+        title: Text(
+          title,
+          style: TextStyle(
+              color: colorAppTextDark,
+              fontFamily: fontApp,
+              fontWeight: FontWeight.w500),
+        ),
+        subtitle: Text(
+          subtitle,
+          style: TextStyle(color: colorAppTextLight, fontFamily: fontApp),
+        ),
+        //trailing: _popupMenuSignature(index),
+        trailing: _PopupMenuItem(
+          index: index,
+        ),
       ),
     );
   }
@@ -171,7 +283,10 @@ class ElementActive extends StatelessWidget {
 
 class _PopupMenuItem extends StatefulWidget {
   final int index;
-  _PopupMenuItem({Key key, this.index}) : super(key: key);
+  _PopupMenuItem({
+    Key key,
+    this.index,
+  }) : super(key: key);
   @override
   __PopupMenuItemState createState() => __PopupMenuItemState();
 }
@@ -180,8 +295,6 @@ class __PopupMenuItemState extends State<_PopupMenuItem> {
   @override
   Widget build(BuildContext context) {
     List<String> _values = [
-      'Añadir 1 hora',
-      'Restar 1 hora',
       'Mover a día...',
       'Añadir hora libre antes',
       'Añadir hora libre después'
@@ -190,19 +303,15 @@ class __PopupMenuItemState extends State<_PopupMenuItem> {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       onSelected: (int value) {
         if (value == 0) {
-          print('Add Hour ${_listItemFinal[widget.index].name}');
-          if (_isMaxLength(_listItemFinal, _listItemFinal[widget.index].name) ==
-              true) {
-            print('Supera el maximo');
-          } else {
-            print('Anadiendo hora');
-            _addHour(_listItemFinal, widget.index);
-            globalState.setState(() {});
-          }
+          print('Mover');
         } else if (value == 1) {
-          print('restar 1 hora');
+          addFreeHourAbove(
+              _listItemFinal, widget.index, _indexMax, _listIndex, context);
+          globalState.setState(() {});
         } else {
-          print('mover a dia');
+          addFreeHourBelow(
+              _listItemFinal, widget.index, _indexMax, _listIndex, context);
+          globalState.setState(() {});
         }
       },
       elevation: 4,
@@ -223,130 +332,11 @@ class __PopupMenuItemState extends State<_PopupMenuItem> {
   }
 }
 
-bool _isMaxLength(List<ScheduleSignature> list, String name) {
-  int sum = 0;
-  for (var i = 0, len = list.length; i < len; ++i) {
-    if (name == list[i].name) {
-      sum++;
-    }
-  }
-  if (sum >= _itemMaxLenght) {
-    return true;
-  } else {
-    return false;
-  }
-}
-
-void _addHour(List<ScheduleSignature> list, int index) {
-  int defaultSum = 0;
-  for (var i = 0, len = list.length; i < len; ++i) {
-    if (list[i].name == 'Default') {
-      defaultSum++;
-    }
-  }
-  if (defaultSum >= 1) {
-    int length = _listItemFinal.length - 1;
-    for (var i = 0, len = _listItemFinal.length; i < len; ++i) {
-      if (_listItemFinal[length].name == 'Default') {
-        //print(_listItemFinal[length].name + ' ' + length.toString());
-        break;
-      } else {
-        length = length - 1;
-      }
-    }
-
-    //print(list);
-    //print(length);
-    ScheduleSignature newItem = ScheduleSignature(
-        name: list[index].name,
-        timeStart: list[index].timeStart,
-        timeEnd: list[index].timeEnd,
-        color: list[index].color);
-    _listItemFinal.removeAt(length);
-    _listItemFinal.insert(index, newItem);
-    for (var i = 0, len = _listIndex.length; i < len; ++i) {
-      _listItemFinal[i].timeStart = _listIndex[i] + 7;
-    }
-    for (var i = 0, len = _listIndex.length; i < len; ++i) {
-      _listItemFinal[i].timeEnd = (_listIndex[i] + 1) + 7;
-    }
-    print('Hour added');
-  } else {
-    print('There is not space available');
-  }
-}
-
-List<ScheduleSignature> _listDivider(List<ScheduleSignature> list) {
-  List<int> listIndex = [];
-  List<ScheduleSignature> newList = [];
-  int sum = 0;
-  for (var i = 0, len = list.length; i < len; ++i) {
-    listIndex.add(list[i].timeEnd - list[i].timeStart);
-    sum = sum + (list[i].timeEnd - list[i].timeStart);
-  }
-  //print(listIndex);
-  //print(sum);
-  if (sum <= _indexMaX) {
-    for (var i = 0, len = list.length; i < len; ++i) {
-      if (list[i].timeEnd - list[i].timeStart > 1) {
-        for (var j = 0, len = (list[i].timeEnd - list[i].timeStart);
-            j < len;
-            ++j) {
-          newList.add(ScheduleSignature(
-              timeStart: list[i].timeStart + j,
-              timeEnd: (list[i].timeStart + j + 1),
-              name: list[i].name,
-              color: list[i].color));
-        }
-      } else {
-        newList.add(ScheduleSignature(
-            timeStart: list[i].timeStart,
-            timeEnd: list[i].timeEnd,
-            name: list[i].name,
-            color: list[i].color));
-      }
-    }
-  } else {
-    print('ERROR: The limit should must be less than $_indexMaX');
-    for (var i = 0, len = list.length; i < len; ++i) {
-      if (list[i].timeEnd - list[i].timeStart > 1) {
-        newList.add(ScheduleSignature(
-            timeStart: list[i].timeStart,
-            timeEnd: list[i].timeStart + 1,
-            name: list[i].name,
-            color: list[i].color));
-        print(
-            'Changed the size of ${list[i].name}, from ${(list[i].timeEnd - list[i].timeStart)} to 1');
-      } else {
-        newList.add(ScheduleSignature(
-            timeStart: list[i].timeStart,
-            timeEnd: list[i].timeEnd,
-            name: list[i].name,
-            color: list[i].color));
-      }
-    }
-  }
-  return newList;
-}
-
-List<ScheduleSignature> _generateEmptyList(int indexMax) {
-  List<ScheduleSignature> _listIndex = List<ScheduleSignature>.generate(
-      indexMax,
-      (int item) => ScheduleSignature(
-          timeStart: item + 7,
-          timeEnd: (item + 7) + 1,
-          name: 'Default',
-          color: Colors.transparent));
-  return _listIndex;
-}
-
-void _generateFinalList(List<ScheduleSignature> listDivided, int indexMax) {
-  for (var i = 0, len = indexMax; i < len; ++i) {
-    for (var j = 0, len = listDivided.length; j < len; ++j) {
-      if (i == listDivided[j].timeStart - 7) {
-        _listItemFinal[i] = listDivided[j];
-      }
-    }
-  }
-  //print(_listItemFinal.toString());
+List<ScheduleSignature> dayInitState(
+    List<ScheduleSignature> listFinal, List<ScheduleSignature> list) {
+  List<ScheduleSignature> _listDivided = listDivider(list, _indexMax);
+  listFinal = generateEmptyList(_indexMax);
+  generateFinalList(_listDivided, listFinal, _indexMax);
+  //print(listFinal);
+  return listFinal;
 }

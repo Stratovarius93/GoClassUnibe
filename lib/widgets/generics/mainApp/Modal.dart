@@ -16,9 +16,9 @@ void showModal(
     String in3,
     String finalIn) {
   final TextStyle _textStyle1 =
-      TextStyle(fontSize: 30, fontFamily: fontApp, color: colorAppTextLight);
+      TextStyle(fontSize: 28, fontFamily: fontApp, color: colorAppTextLight);
   final TextStyle _subTextStyle1 = TextStyle(
-      fontSize: 16,
+      fontSize: 14,
       fontFamily: fontApp,
       color: colorAppTextLight,
       fontWeight: FontWeight.bold);
@@ -69,68 +69,95 @@ void showModal(
                 height: 16,
               ),
               Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Column(
-                    children: [
-                      Text(
-                        ap1,
-                        style: _textStyle1,
-                      ),
-                      Text(
-                        "Aporte 1",
-                        style: _subTextStyle1,
-                      )
-                    ],
+                  Container(
+                    padding: EdgeInsets.all(6),
+                    margin: EdgeInsets.all(3),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        color: Colors.blueGrey.shade100.withOpacity(0.3)),
+                    child: Column(
+                      children: [
+                        Text(
+                          in1,
+                          style: _textStyle1,
+                        ),
+                        Text(
+                          "Aporte 1",
+                          style: _subTextStyle1,
+                        )
+                      ],
+                    ),
                   ),
-                  SizedBox(
-                    width: 16,
+                  Container(
+                    padding: EdgeInsets.all(6),
+                    margin: EdgeInsets.all(3),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        color: Colors.blueGrey.shade100.withOpacity(0.3)),
+                    child: Column(
+                      children: [
+                        Text(
+                          in1,
+                          style: _textStyle1,
+                        ),
+                        Text(
+                          "Aporte 2",
+                          style: _subTextStyle1,
+                        )
+                      ],
+                    ),
                   ),
-                  Column(
-                    children: [
-                      Text(
-                        ap2,
-                        style: _textStyle1,
-                      ),
-                      Text(
-                        "Aporte 2",
-                        style: _subTextStyle1,
-                      )
-                    ],
+                  Container(
+                    padding: EdgeInsets.all(6),
+                    margin: EdgeInsets.all(3),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        color: Colors.blueGrey.shade100.withOpacity(0.3)),
+                    child: Column(
+                      children: [
+                        Text(
+                          in1,
+                          style: _textStyle1,
+                        ),
+                        Text(
+                          "Aporte 3",
+                          style: _subTextStyle1,
+                        )
+                      ],
+                    ),
                   ),
-                  SizedBox(
-                    width: 16,
-                  ),
-                  Column(
-                    children: [
-                      Text(
-                        ap3,
-                        style: _textStyle1,
-                      ),
-                      Text(
-                        "Aporte 3",
-                        style: _subTextStyle1,
-                      )
-                    ],
-                  ),
-                  SizedBox(
-                    width: 16,
-                  ),
-                  Column(
+                ],
+              ),
+              Container(
+                padding: EdgeInsets.all(8),
+                margin: EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8),
+                  color: constantsListColors[2].withOpacity(0.5),
+                ),
+                child: Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
                         finalRating1,
                         style: _textStyleColor1,
                       ),
+                      SizedBox(
+                        width: 16,
+                      ),
                       Text(
-                        "Final",
+                        "Nota final",
                         style: _subTextStyleColor1,
                       )
                     ],
-                  )
-                ],
+                  ),
+                ),
               ),
               SizedBox(
-                height: 24,
+                height: 16,
               ),
               CategoryText(
                 title: "Inasistencias",
@@ -139,68 +166,95 @@ void showModal(
                 height: 16,
               ),
               Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Column(
-                    children: [
-                      Text(
-                        in1,
-                        style: _textStyle1,
-                      ),
-                      Text(
-                        "Aporte 1",
-                        style: _subTextStyle1,
-                      )
-                    ],
+                  Container(
+                    padding: EdgeInsets.all(6),
+                    margin: EdgeInsets.all(3),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        color: Colors.blueGrey.shade100.withOpacity(0.3)),
+                    child: Column(
+                      children: [
+                        Text(
+                          in1,
+                          style: _textStyle1,
+                        ),
+                        Text(
+                          "Aporte 1",
+                          style: _subTextStyle1,
+                        )
+                      ],
+                    ),
                   ),
-                  SizedBox(
-                    width: 16,
+                  Container(
+                    padding: EdgeInsets.all(6),
+                    margin: EdgeInsets.all(3),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        color: Colors.blueGrey.shade100.withOpacity(0.3)),
+                    child: Column(
+                      children: [
+                        Text(
+                          in1,
+                          style: _textStyle1,
+                        ),
+                        Text(
+                          "Aporte 2",
+                          style: _subTextStyle1,
+                        )
+                      ],
+                    ),
                   ),
-                  Column(
-                    children: [
-                      Text(
-                        in2,
-                        style: _textStyle1,
-                      ),
-                      Text(
-                        "Aporte 2",
-                        style: _subTextStyle1,
-                      )
-                    ],
+                  Container(
+                    padding: EdgeInsets.all(6),
+                    margin: EdgeInsets.all(3),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        color: Colors.blueGrey.shade100.withOpacity(0.3)),
+                    child: Column(
+                      children: [
+                        Text(
+                          in1,
+                          style: _textStyle1,
+                        ),
+                        Text(
+                          "Aporte 3",
+                          style: _subTextStyle1,
+                        )
+                      ],
+                    ),
                   ),
-                  SizedBox(
-                    width: 16,
-                  ),
-                  Column(
-                    children: [
-                      Text(
-                        in3,
-                        style: _textStyle1,
-                      ),
-                      Text(
-                        "Aporte 3",
-                        style: _subTextStyle1,
-                      )
-                    ],
-                  ),
-                  SizedBox(
-                    width: 16,
-                  ),
-                  Column(
-                    children: [
-                      Text(
-                        finalIn,
-                        style: _textStyleColor2,
-                      ),
-                      Text(
-                        "Final",
-                        style: _subTextStyleColor2,
-                      )
-                    ],
-                  )
                 ],
               ),
+              Container(
+                padding: EdgeInsets.all(8),
+                margin: EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8),
+                  color: constantsListColors[2].withOpacity(0.5),
+                ),
+                child: Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        finalRating1,
+                        style: _textStyleColor1,
+                      ),
+                      SizedBox(
+                        width: 16,
+                      ),
+                      Text(
+                        "Inasistencias",
+                        style: _subTextStyleColor1,
+                      )
+                    ],
+                  ),
+                ),
+              ),
               SizedBox(
-                height: 24,
+                height: 16,
               ),
               CategoryText(
                 title: "Estado",
@@ -238,21 +292,21 @@ void showModal(
 void showModalAbsence(BuildContext context, String signatureName, String in1,
     String in2, String in3, String finalIn) {
   final TextStyle _textStyle1 =
-      TextStyle(fontSize: 30, fontFamily: fontApp, color: colorAppTextLight);
+      TextStyle(fontSize: 28, fontFamily: fontApp, color: Colors.blueGrey);
   final TextStyle _subTextStyle1 = TextStyle(
-      fontSize: 16,
+      fontSize: 14,
       fontFamily: fontApp,
-      color: colorAppTextLight,
-      fontWeight: FontWeight.bold);
+      color: Colors.blueGrey.withOpacity(0.6),
+      fontWeight: FontWeight.w800);
   final TextStyle _textStyleColor2 = TextStyle(
       fontSize: 30,
       fontFamily: fontApp,
-      color: colorAppYellow,
+      color: colorAppBlue,
       fontWeight: FontWeight.bold);
   final TextStyle _subTextStyleColor2 = TextStyle(
       fontSize: 16,
       fontFamily: fontApp,
-      color: colorAppYellow,
+      color: colorAppBlue,
       fontWeight: FontWeight.bold);
 
   showDialog(
@@ -281,65 +335,102 @@ void showModalAbsence(BuildContext context, String signatureName, String in1,
                 height: 16,
               ),
               Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Column(
+                  Container(
+                    padding: EdgeInsets.all(6),
+                    margin: EdgeInsets.all(3),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        color: Colors.blueGrey.shade100.withOpacity(0.3)),
+                    child: Column(
+                      children: [
+                        Text(
+                          in1,
+                          style: _textStyle1,
+                        ),
+                        Text(
+                          "Aporte 1",
+                          style: _subTextStyle1,
+                        )
+                      ],
+                    ),
+                  ),
+                  Container(
+                    padding: EdgeInsets.all(6),
+                    margin: EdgeInsets.all(3),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        color: Colors.blueGrey.shade100.withOpacity(0.3)),
+                    child: Column(
+                      children: [
+                        Text(
+                          in2,
+                          style: _textStyle1,
+                        ),
+                        Text(
+                          "Aporte 2",
+                          style: _subTextStyle1,
+                        )
+                      ],
+                    ),
+                  ),
+                  Container(
+                    padding: EdgeInsets.all(6),
+                    margin: EdgeInsets.all(3),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        color: Colors.blueGrey.shade100.withOpacity(0.3)),
+                    child: Column(
+                      children: [
+                        Text(
+                          in3,
+                          style: _textStyle1,
+                        ),
+                        Text(
+                          "Aporte 3",
+                          style: _subTextStyle1,
+                        )
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 16,
+              ),
+              CategoryText(
+                title: 'Total',
+              ),
+              SizedBox(
+                height: 16,
+              ),
+              Center(
+                child: Container(
+                  padding: EdgeInsets.all(6),
+                  decoration: BoxDecoration(
+                      color: colorAppBlue.withOpacity(0.5),
+                      borderRadius: BorderRadius.circular(8)),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
-                        in1,
-                        style: _textStyle1,
+                      CircleAvatar(
+                        backgroundColor: constantsListColors[2],
+                        child: Text(
+                          finalIn,
+                          style: _textStyleColor2,
+                        ),
+                      ),
+                      SizedBox(
+                        width: 16,
                       ),
                       Text(
-                        "Aporte 1",
-                        style: _subTextStyle1,
-                      )
-                    ],
-                  ),
-                  SizedBox(
-                    width: 16,
-                  ),
-                  Column(
-                    children: [
-                      Text(
-                        in2,
-                        style: _textStyle1,
-                      ),
-                      Text(
-                        "Aporte 2",
-                        style: _subTextStyle1,
-                      )
-                    ],
-                  ),
-                  SizedBox(
-                    width: 16,
-                  ),
-                  Column(
-                    children: [
-                      Text(
-                        in3,
-                        style: _textStyle1,
-                      ),
-                      Text(
-                        "Aporte 3",
-                        style: _subTextStyle1,
-                      )
-                    ],
-                  ),
-                  SizedBox(
-                    width: 16,
-                  ),
-                  Column(
-                    children: [
-                      Text(
-                        finalIn,
-                        style: _textStyleColor2,
-                      ),
-                      Text(
-                        "Final",
+                        "Inasistencias",
                         style: _subTextStyleColor2,
                       )
                     ],
-                  )
-                ],
+                  ),
+                ),
               ),
               SizedBox(
                 height: 24,

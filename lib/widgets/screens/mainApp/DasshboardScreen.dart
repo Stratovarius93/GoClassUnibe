@@ -29,6 +29,7 @@ class _DasshboardScreenState extends State<DasshboardScreen> {
   Widget build(BuildContext context) {
     final studentData = Provider.of<StudentData>(context);
     return Scaffold(
+      backgroundColor: colorAppBackground,
       body: ScrollGlowColor(
         color: colorGlow,
         child: ListView(
