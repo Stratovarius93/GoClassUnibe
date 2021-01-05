@@ -13,7 +13,7 @@ import 'package:GoClassUnibe/widgets/screens/homeApp/home.dart';
 import 'package:GoClassUnibe/widgets/screens/mainApp/IndexScreen.dart';
 //import 'package:GoClassUnibe/constants/Colors.dart';
 
-void main() => runApp(App());
+/*void main() => runApp(App());
 
 class App extends StatefulWidget {
   App({Key key}) : super(key: key);
@@ -51,8 +51,8 @@ class _AppState extends State<App> {
           )),
     );
   }
-}
-/*void main() {
+}*/
+void main() {
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       systemNavigationBarColor: Colors.white,
       systemNavigationBarIconBrightness: Brightness.dark,
@@ -72,4 +72,4 @@ class MyApp extends StatelessWidget {
   }
 
 
-}*/
+}

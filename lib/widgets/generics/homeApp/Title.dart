@@ -16,7 +16,7 @@ class MainTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width * 0.9,
-      margin: EdgeInsets.only(top: 20.0,left: 30.0,right: 30.0),
+      margin: EdgeInsets.only(top: 50.0, left: 30.0, right: 30.0),
       padding: EdgeInsets.all(10.0),
       child: Column(
         children: <Widget>[
@@ -28,7 +28,7 @@ class MainTitle extends StatelessWidget {
             style: TextStyle(
               fontFamily: fontApp,
               fontWeight: FontWeight.bold,
-              fontSize: 20.0,
+              fontSize: MediaQuery.of(context).size.width * 0.09,
               color: colorText,
             ),
           ),

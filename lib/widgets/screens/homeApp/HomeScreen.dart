@@ -14,19 +14,17 @@ class HomeScreen extends StatelessWidget {
       body: Stack(
         children: <Widget>[
           Background(
-            color1: colorButtonPurpleLight1,
-            color2: colorButtonPurpleLight1,
+            color1: Color.fromRGBO(254, 231, 189, 100),
+            color2: Color.fromRGBO(254, 231, 189, 100),
           ),
           Container(
             child: Column(
               children: <Widget>[
-                Image.asset(
-                  'images/Go.png',
-                  height: 220.0,
-                  width: 300.0,
-                ),
+                Image.asset('images/Go.png',
+                    height: MediaQuery.of(context).size.width * 0.8,
+                    width: MediaQuery.of(context).size.width * 0.8),
                 MainTitle(
-                  colorText: colorAppPurple,
+                  colorText: Color.fromRGBO(22, 53, 96, 38),
                   Title: "GoClass UNIB.E",
                 ),
                 SecondMiniText(
@@ -35,17 +33,17 @@ class HomeScreen extends StatelessWidget {
                       "Consulta tu información académica, crea tu horario y más desde un solo lugar",
                 ),
                 ButtonFirst(
-                  color1: colorButtonPurpleLight1,
-                  color2: colorButtonPurpleDark2,
-                  colorText1: colorButtonPurpleDark1,
+                  color1: Color.fromRGBO(255, 188, 62, 100),
+                  color2: Color.fromRGBO(22, 53, 96, 38),
+                  colorText1: Color.fromRGBO(22, 53, 96, 38),
                   colorText2: colorAppBackground,
                   title: "Iniciar Sesión",
                 ),
                 ButtonFirst(
-                  color1: colorButtonPurpleDark2,
-                  color2: colorButtonPurpleLight1,
+                  color1: Color.fromRGBO(22, 53, 96, 38),
+                  color2: Color.fromRGBO(255, 188, 62, 100),
                   colorText1: colorAppBackground,
-                  colorText2: colorButtonPurpleDark2,
+                  colorText2: Color.fromRGBO(22, 53, 96, 38),
                   title: "Registrarse",
                 ),
               ],

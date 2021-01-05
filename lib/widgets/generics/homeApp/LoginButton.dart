@@ -19,30 +19,33 @@ class CreateLoginButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.only(top:10.0,left: 40.0,right: 40.0,bottom: 20.0),
-      height: MediaQuery.of(context).size.width * 0.22,
-      width: MediaQuery.of(context).size.width * 0.80,
+      height: MediaQuery.of(context).size.width * 0.20,
+      width: MediaQuery.of(context).size.width * 0.90,
+      padding: const EdgeInsets.only(top: 20.0, left: 15.0, right: 15.0),
       child: RaisedButton(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
-            Text((Title),style: TextStyle(fontSize: 17.0, fontFamily: fontApp, fontWeight: FontWeight.bold,),),
-            Icon( Icons.arrow_forward, size: 20.0,
+            Text(
+              (Title),
+              style: TextStyle(
+                fontSize: 17.0,
+                fontFamily: fontApp,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            Icon(
+              Icons.arrow_forward,
+              size: 20.0,
             ),
           ],
-
         ),
         color: color,
         textColor: colorText,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(50),
-        ),
-
-        onPressed: () {},
+        ), onPressed: () {  },
       ),
     );
   }
-
 }
-
-

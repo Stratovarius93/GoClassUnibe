@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:GoClassUnibe/constants/Fonts.dart';
 
@@ -18,8 +17,12 @@ class CreateEmailInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 10.0, left: 40.0, right: 40.0, bottom: 20.0),
+    return Container(
+      width: MediaQuery
+          .of(context)
+          .size
+          .width * 0.90,
+      padding: const EdgeInsets.only(top: 40.0, left: 15.0, right: 15.0),
       child: TextFormField(
         maxLength: 10,
         keyboardType: TextInputType.number,
@@ -35,8 +38,8 @@ class CreateEmailInput extends StatelessWidget {
             fillColor: color,
             border: new OutlineInputBorder(
                 borderRadius: const BorderRadius.all(
-              const Radius.circular(50.0),
-            ))),
+                  const Radius.circular(50.0),
+                ))),
         style: TextStyle(
           fontFamily: fontApp,
           fontWeight: FontWeight.bold,

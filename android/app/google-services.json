@@ -8,38 +8,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:82308795523:android:d0847ce19e4e64f9839fb6",
+        "mobilesdk_app_id": "1:82308795523:android:92cf2444c2886985839fb6",
         "android_client_info": {
-          "package_name": "GoClass.unibe"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "82308795523-8mb1phj4cvnhovcpvos5rftf8ooiq40b.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyDpObq9mPypIwqCVIHQS4KIn-EtB2mxh-Q"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "82308795523-8mb1phj4cvnhovcpvos5rftf8ooiq40b.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:82308795523:android:5b76b812345a718c839fb6",
-        "android_client_info": {
-          "package_name": "edu.unibe.goclass"
+          "package_name": "com.example.GoClassUnibe"
         }
       },
       "oauth_client": [

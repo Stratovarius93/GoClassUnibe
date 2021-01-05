@@ -15,47 +15,46 @@ class LoginScreen extends StatelessWidget {
       body: Stack(
         children: <Widget>[
           Background(
-            color1: colorAppBackground,
-            color2: colorInputBlueLight,
+            color1: Color.fromRGBO(254, 231, 189, 100),
+            color2: Color.fromRGBO(254, 231, 189, 100),
           ),
           Container(
             child: Column(
               children: <Widget>[
                 MainTitle(
-                  colorText: colorButtonBlueDark1,
+                  colorText: Color.fromRGBO(22, 53, 96, 38),
                   Title: "Iniciar Sesión",
                 ),
                 Image.asset(
                   'images/login.png',
-                  height: 200.0,
-                  width: 150.0,
-                ),
+                    height: MediaQuery.of(context).size.height * 0.3,
+                    width: MediaQuery.of(context).size.width * 0.5),
                 CreateEmailInput(
                   color: colorInputBlueLight,
-                  colorText: colorButtonBlueDark1,
+                  colorText: Color.fromRGBO(22, 53, 96, 38),
                   Title: "Ingrese su cédula",
                   icon: new Icon(
                     Icons.account_circle,
-                    color: colorButtonBlueDark1,
+                    color: Color.fromRGBO(22, 53, 96, 38),
                   ),
                 ),
                 CreatePasswordInput(
                   color: colorInputBlueLight,
-                  colorText: colorButtonBlueDark1,
+                  colorText: Color.fromRGBO(22, 53, 96, 38),
                   icon: new Icon(
                     Icons.vpn_key,
-                    color: colorButtonBlueDark1,
+                    color: Color.fromRGBO(22, 53, 96, 38),
                   ),
                   Title: "Ingrese su contraseña",
                 ),
                 CreateLoginButton(
-                  color: colorButtonBlueDark1,
+                  color: Color.fromRGBO(22, 53, 96, 38),
                   colorText: colorInputBlueLight,
                   icon: new Icon(Icons.arrow_forward),
                   Title: "Iniciar Sesión",
                 ),
                 CreateMiniText(
-                  colorText: colorButtonBlueDark1,
+                  colorText: Color.fromRGBO(22, 53, 96, 38),
                   Title: "Olvidaste tu contraseña? Restaura aquí",
                 ),
               ],

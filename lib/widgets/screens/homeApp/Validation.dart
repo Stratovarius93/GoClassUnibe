@@ -22,21 +22,19 @@ class ValidationScreen extends StatelessWidget {
             child: Column(
               children: <Widget>[
                 MainTitle(
-                  colorText: colorButtonBlueDark1,
+                  colorText: Color.fromRGBO(22, 53, 96, 38),
                   Title: "Validación",
                 ),
-                Image.asset(
-                  'images/check.png',
-                  height: MediaQuery.of(context).size.height * .5,
-                  width: 150.0,
-                ),
+                Image.asset('images/check.png',
+                    height: MediaQuery.of(context).size.height * 0.5,
+                    width: MediaQuery.of(context).size.width * 0.5),
                 CreateMiniText(
-                  colorText: colorButtonBlueDark1,
+                  colorText: Color.fromRGBO(22, 53, 96, 38),
                   Title: "Estamos validando tu identidad",
                 ),
-                CreateMiniText(
-                  colorText: Color.fromRGBO(133, 133, 133, 52),
-                  Title: "Por favor espere...",
+                CreateMiniText2(
+                  colorText: Color.fromRGBO(22, 53, 96, 38),
+                  Title: "Por favor Espere...",
                 ),
               ],
             ),
