@@ -1,5 +1,6 @@
 import 'package:GoClassUnibe/constants/Colors.dart';
 import 'package:GoClassUnibe/constants/Fonts.dart';
+import 'package:GoClassUnibe/constants/UtilsText.dart';
 import 'package:GoClassUnibe/widgets/generics/mainApp/CategoryText.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
@@ -14,7 +15,8 @@ void showModal(
     String in1,
     String in2,
     String in3,
-    String finalIn) {
+    String finalIn,
+    String stateSignature) {
   final TextStyle _textStyle1 =
       TextStyle(fontSize: 28, fontFamily: fontApp, color: colorAppTextLight);
   final TextStyle _subTextStyle1 = TextStyle(
@@ -27,20 +29,11 @@ void showModal(
       fontFamily: fontApp,
       color: colorAppBlue,
       fontWeight: FontWeight.bold);
-  final TextStyle _textStyleColor2 = TextStyle(
-      fontSize: 30,
-      fontFamily: fontApp,
-      color: colorAppYellow,
-      fontWeight: FontWeight.bold);
+
   final TextStyle _subTextStyleColor1 = TextStyle(
       fontSize: 16,
       fontFamily: fontApp,
       color: colorAppBlue,
-      fontWeight: FontWeight.bold);
-  final TextStyle _subTextStyleColor2 = TextStyle(
-      fontSize: 16,
-      fontFamily: fontApp,
-      color: colorAppYellow,
       fontWeight: FontWeight.bold);
 
   showDialog(
@@ -80,7 +73,7 @@ void showModal(
                     child: Column(
                       children: [
                         Text(
-                          in1,
+                          ap1,
                           style: _textStyle1,
                         ),
                         Text(
@@ -99,7 +92,7 @@ void showModal(
                     child: Column(
                       children: [
                         Text(
-                          in1,
+                          ap2,
                           style: _textStyle1,
                         ),
                         Text(
@@ -118,7 +111,7 @@ void showModal(
                     child: Column(
                       children: [
                         Text(
-                          in1,
+                          ap3,
                           style: _textStyle1,
                         ),
                         Text(
@@ -196,7 +189,7 @@ void showModal(
                     child: Column(
                       children: [
                         Text(
-                          in1,
+                          in2,
                           style: _textStyle1,
                         ),
                         Text(
@@ -215,7 +208,7 @@ void showModal(
                     child: Column(
                       children: [
                         Text(
-                          in1,
+                          in3,
                           style: _textStyle1,
                         ),
                         Text(
@@ -239,7 +232,7 @@ void showModal(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        finalRating1,
+                        finalIn,
                         style: _textStyleColor1,
                       ),
                       SizedBox(
@@ -267,14 +260,14 @@ void showModal(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Icon(
-                      Ionicons.checkmark_circle,
-                      color: colorAppGreen,
+                      _statusSignatureIcon(stateSignature),
+                      color: stateSignatureText(stateSignature),
                     ),
                     SizedBox(
                       width: 16,
                     ),
                     Text(
-                      "Aprobado",
+                      toSentence(stateSignature),
                       style: TextStyle(
                           color: colorAppTextLight,
                           fontFamily: fontApp,
@@ -409,7 +402,7 @@ void showModalAbsence(BuildContext context, String signatureName, String in1,
                 child: Container(
                   padding: EdgeInsets.all(6),
                   decoration: BoxDecoration(
-                      color: colorAppBlue.withOpacity(0.5),
+                      color: colorAppBlue.withOpacity(0.2),
                       borderRadius: BorderRadius.circular(8)),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -439,4 +432,14 @@ void showModalAbsence(BuildContext context, String signatureName, String in1,
           ),
         );
       });
+}
+IconData _statusSignatureIcon(String stateSignature){
+  if (stateSignature == 'APROBADO') {
+    return Ionicons.checkmark_circle;
+  } else if (stateSignature == 'REPROBADO') {
+    return Ionicons.close_circle;
+  } else {
+    return Ionicons.alert_circle;
+  }
+
 }

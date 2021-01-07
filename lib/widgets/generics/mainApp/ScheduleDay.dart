@@ -1,7 +1,7 @@
 import 'package:GoClassUnibe/constants/Colors.dart';
 import 'package:GoClassUnibe/constants/Fonts.dart';
-import 'package:GoClassUnibe/controllers/ScheduleController.dart';
-import 'package:GoClassUnibe/models/scheduleModels.dart';
+import 'package:GoClassUnibe/models/ScheduleModel.dart';
+import 'package:GoClassUnibe/utils/ScheduleUtils.dart';
 import 'package:flutter/material.dart';
 import 'package:scroll_glow_color/widget/scroll_glow_color.dart';
 

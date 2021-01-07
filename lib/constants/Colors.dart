@@ -1,6 +1,29 @@
 import 'package:flutter/material.dart';
 
 //=======================
+// Color utils Signature status
+//=======================
+Color stateSignatureText(String stateSignature) {
+  if (stateSignature == 'APROBADO') {
+    return colorAppGreen;
+  } else if (stateSignature == 'REPROBADO') {
+    return colorAppRed;
+  } else {
+    return colorAppRed;
+  }
+}
+
+Color stateSignatureDecoration(String stateSignature) {
+  if (stateSignature == 'APROBADO') {
+    return colorAppGreen.withOpacity(0.2);
+  } else if (stateSignature == 'REPROBADO') {
+    return colorAppRed.withOpacity(0.2);
+  } else {
+    return colorAppRed.withOpacity(0.2);
+  }
+}
+
+//=======================
 //    home login/signup
 //=======================
 

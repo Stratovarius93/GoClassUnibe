@@ -1,25 +1,18 @@
 import 'package:GoClassUnibe/constants/Sizes.dart';
 import 'package:flutter/material.dart';
-import 'package:GoClassUnibe/widgets/screens/mainApp/ScheduleScreen.dart';
 import 'package:GoClassUnibe/widgets/screens/mainApp/Schedule2Screen.dart';
 import 'package:GoClassUnibe/widgets/screens/mainApp/DasshboardScreen.dart';
 import 'package:GoClassUnibe/widgets/screens/mainApp/RatingsScreen.dart';
 import 'package:GoClassUnibe/widgets/screens/mainApp/SettingsScreen.dart';
 import 'package:GoClassUnibe/constants/Colors.dart';
-import 'package:flutter/services.dart';
 import 'package:ionicons/ionicons.dart';
-import 'package:provider/provider.dart';
-import 'package:GoClassUnibe/services/serviceStudent.dart';
 import 'package:colorful_safe_area/colorful_safe_area.dart';
 
 class IndexScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => StudentData(),
-      child: Container(
-        child: HomeMenu(),
-      ),
+    return Container(
+      child: HomeMenu(),
     );
   }
 }

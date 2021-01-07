@@ -1,3 +1,7 @@
+import 'package:GoClassUnibe/providers/PeriodProvider.dart';
+import 'package:GoClassUnibe/providers/RatingProvider.dart';
+import 'package:GoClassUnibe/providers/RegistrationProvider.dart';
+import 'package:GoClassUnibe/providers/StudentProvider.dart';
 import 'package:GoClassUnibe/widgets/screens/homeApp/FirstHome.dart';
 import 'package:GoClassUnibe/widgets/screens/homeApp/HomeScreen.dart';
 import 'package:GoClassUnibe/widgets/screens/homeApp/LoginScreen.dart';
@@ -5,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 //import 'package:GoClassUnibe/widgets/screens/homeApp/FirstHome.dart';
 import 'package:GoClassUnibe/widgets/screens/mainApp/IndexScreen.dart';
+import 'package:provider/provider.dart';
 //import 'package:GoClassUnibe/constants/Colors.dart';
 
 void main() {
@@ -26,15 +31,31 @@ class MyApp extends StatelessWidget {
       DeviceOrientation.portraitDown,
     ]);
 
-    return MaterialApp(
-        //debugShowCheckedModeBanner: false, title: 'MyApp', home: HomeScreen());
-        //theme: ThemeData(
-        //appBarTheme: AppBarTheme(
-        //brightness: Brightness.dark,
-        //)),
-        theme: ThemeData(splashColor: Colors.transparent),
-        debugShowCheckedModeBanner: false,
-        title: 'MyApp',
-        home: IndexScreen());
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (_) => StudentProvider(),
+        ),
+        ChangeNotifierProvider(
+            create: (_)=>RatingProvider(),
+        ),
+        ChangeNotifierProvider(
+            create: (_)=>PeriodProvider(),
+        ),
+        ChangeNotifierProvider(
+            create: (_)=>RegistrationProvider(),
+        )
+      ],
+      child: MaterialApp(
+          //debugShowCheckedModeBanner: false, title: 'MyApp', home: HomeScreen());
+          //theme: ThemeData(
+          //appBarTheme: AppBarTheme(
+          //brightness: Brightness.dark,
+          //)),
+          theme: ThemeData(splashColor: Colors.transparent),
+          debugShowCheckedModeBanner: false,
+          title: 'MyApp',
+          home: IndexScreen()),
+    );
   }
 }

@@ -1,0 +1,663 @@
+@startuml
+set namespaceSeparator ::
+
+class "GoClassUnibe::providers::RatingProvider.dart::RatingProvider" {
+  -List<Rating> _ratings
+  +dynamic getRatingsByID()
+  +List getRatings()
+  +dynamic setRatings()
+}
+
+"flutter::src::foundation::change_notifier.dart::ChangeNotifier" <|-- "GoClassUnibe::providers::RatingProvider.dart::RatingProvider"
+
+class "GoClassUnibe::providers::PeriodProvider.dart::PeriodProvider" {
+  -List<Period> _periodlist
+  -List<Registration> _registrationList
+  -List<Period> _currentPeriod
+  +dynamic getPeriodByID()
+  +List getPeriodlist()
+  -dynamic _setPeriodlist()
+  +List getCurrentPeriod()
+  -dynamic _setCurrentPeriod()
+  +List getRegistrationList()
+  -dynamic _setRegistrationList()
+}
+
+"flutter::src::foundation::change_notifier.dart::ChangeNotifier" <|-- "GoClassUnibe::providers::PeriodProvider.dart::PeriodProvider"
+
+class "GoClassUnibe::providers::StudentProvider.dart::StudentProvider" {
+  -Student _student
+  +dynamic getStudentByID()
+  +Student getStudent()
+  +dynamic setStudent()
+}
+
+"GoClassUnibe::providers::StudentProvider.dart::StudentProvider" o-- "GoClassUnibe::models::StudentModel.dart::Student"
+"flutter::src::foundation::change_notifier.dart::ChangeNotifier" <|-- "GoClassUnibe::providers::StudentProvider.dart::StudentProvider"
+
+class "GoClassUnibe::providers::RegistrationProvider.dart::RegistrationProvider" {
+  -List<Registration> _registrationList
+  +dynamic getRegistrationByID()
+  +List getRegistrationList()
+  +dynamic setRegistrationList()
+}
+
+"flutter::src::foundation::change_notifier.dart::ChangeNotifier" <|-- "GoClassUnibe::providers::RegistrationProvider.dart::RegistrationProvider"
+
+class "GoClassUnibe::models::RegistrationModel.dart::Registration" {
+  +int registrationId
+  +int careerId
+  +String career
+  +Map toJson()
+}
+
+class "GoClassUnibe::models::PeriodModel.dart::Period" {
+  +int periodId
+  +String cycle
+  +int careerId
+  +Map toJson()
+}
+
+class "GoClassUnibe::models::StudentModel.dart::Student" {
+  +int studentId
+  +String name
+  +String lastName
+  +String career
+}
+
+class "GoClassUnibe::models::ScheduleModel.dart::ScheduleSignature" {
+  +int timeStart
+  +int timeEnd
+  +dynamic name
+  +dynamic classRoom
+  +dynamic teacher
+  +dynamic career
+  +dynamic day
+  +Color color
+  +dynamic toString()
+}
+
+"GoClassUnibe::models::ScheduleModel.dart::ScheduleSignature" o-- "dart::ui::Color"
+
+class "GoClassUnibe::models::RatingsModel.dart::Rating" {
+  +int periodId
+  +String signatureName
+  +int registrationId
+  +int signatureId
+  +double ap1
+  +double ap2
+  +double ap3
+  +double finalRating
+  +int in1
+  +int in2
+  +int in3
+  +int finalIn
+  +int supplementaryExam
+  +String stateSignature
+}
+
+class "GoClassUnibe::main.dart::MyApp" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "GoClassUnibe::main.dart::MyApp"
+
+class "GoClassUnibe::widgets::screens::mainApp::IndexScreen.dart::IndexScreen" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "GoClassUnibe::widgets::screens::mainApp::IndexScreen.dart::IndexScreen"
+
+class "GoClassUnibe::widgets::screens::mainApp::IndexScreen.dart::HomeMenu" {
+  +_HomeMenuState createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "GoClassUnibe::widgets::screens::mainApp::IndexScreen.dart::HomeMenu"
+
+class "GoClassUnibe::widgets::screens::mainApp::IndexScreen.dart::_HomeMenuState" {
+  -double _iconSize
+  -int _currentIndex
+  +List<ColorfulSafeArea> tabs
+  -List<ElementItemIcon> _elementItemIconList
+  -List<bool> _selected
+  +Widget build()
+  -BottomNavigationBarItem _iconNavBar()
+}
+
+"flutter::src::widgets::framework.dart::State<T>" <|-- "GoClassUnibe::widgets::screens::mainApp::IndexScreen.dart::_HomeMenuState"
+
+class "GoClassUnibe::widgets::screens::mainApp::IndexScreen.dart::ElementItemIcon" {
+  +IconData iconData
+  +IconData iconDataOutline
+  +dynamic name
+}
+
+"GoClassUnibe::widgets::screens::mainApp::IndexScreen.dart::ElementItemIcon" o-- "flutter::src::widgets::icon_data.dart::IconData"
+
+class "GoClassUnibe::widgets::screens::mainApp::RecordScreen.dart::RecordScreen" {
+  +_RecordScreenState createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "GoClassUnibe::widgets::screens::mainApp::RecordScreen.dart::RecordScreen"
+
+class "GoClassUnibe::widgets::screens::mainApp::RecordScreen.dart::_RecordScreenState" {
+  -double _pi
+  +Widget build()
+  -Widget _listItems()
+  -List _listSubItem()
+}
+
+"flutter::src::widgets::framework.dart::State<T>" <|-- "GoClassUnibe::widgets::screens::mainApp::RecordScreen.dart::_RecordScreenState"
+
+class "GoClassUnibe::widgets::screens::mainApp::SettingsScreen.dart::SettingsScreen" {
+  +Widget build()
+  -Widget _profileCircle()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "GoClassUnibe::widgets::screens::mainApp::SettingsScreen.dart::SettingsScreen"
+
+class "GoClassUnibe::widgets::screens::mainApp::SettingsScreen.dart::LogOutApp" {
+  +_LogOutAppState createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "GoClassUnibe::widgets::screens::mainApp::SettingsScreen.dart::LogOutApp"
+
+class "GoClassUnibe::widgets::screens::mainApp::SettingsScreen.dart::_LogOutAppState" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State<T>" <|-- "GoClassUnibe::widgets::screens::mainApp::SettingsScreen.dart::_LogOutAppState"
+
+class "GoClassUnibe::widgets::screens::mainApp::DasshboardScreen.dart::DasshboardScreen" {
+  +_DasshboardScreenState createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "GoClassUnibe::widgets::screens::mainApp::DasshboardScreen.dart::DasshboardScreen"
+
+class "GoClassUnibe::widgets::screens::mainApp::DasshboardScreen.dart::_DasshboardScreenState" {
+  +Widget build()
+  -Widget _signaturesItem()
+  -Widget _titleHeader()
+}
+
+"flutter::src::widgets::framework.dart::State<T>" <|-- "GoClassUnibe::widgets::screens::mainApp::DasshboardScreen.dart::_DasshboardScreenState"
+
+class "GoClassUnibe::widgets::screens::mainApp::Schedule2Screen.dart::Schedule2Screen" {
+  +_Schedule2ScreenState createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "GoClassUnibe::widgets::screens::mainApp::Schedule2Screen.dart::Schedule2Screen"
+
+class "GoClassUnibe::widgets::screens::mainApp::Schedule2Screen.dart::_Schedule2ScreenState" {
+  +void Function() onChanged
+  +TabBarView tabBarView
+  -dynamic _currentDay
+  -DateTime _date
+  +void initState()
+  +void dispose()
+  +Widget build()
+}
+
+"GoClassUnibe::widgets::screens::mainApp::Schedule2Screen.dart::_Schedule2ScreenState" o-- "dart::ui::void Function()"
+"GoClassUnibe::widgets::screens::mainApp::Schedule2Screen.dart::_Schedule2ScreenState" o-- "flutter::src::material::tabs.dart::TabBarView"
+"flutter::src::widgets::framework.dart::State<T>" <|-- "GoClassUnibe::widgets::screens::mainApp::Schedule2Screen.dart::_Schedule2ScreenState"
+"flutter::src::widgets::ticker_provider.dart::SingleTickerProviderStateMixin<T>" <|-- "GoClassUnibe::widgets::screens::mainApp::Schedule2Screen.dart::_Schedule2ScreenState"
+
+class "GoClassUnibe::widgets::screens::mainApp::Schedule2Screen.dart::TabViewWidget" {
+  +_TabViewWidgetState createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "GoClassUnibe::widgets::screens::mainApp::Schedule2Screen.dart::TabViewWidget"
+
+class "GoClassUnibe::widgets::screens::mainApp::Schedule2Screen.dart::_TabViewWidgetState" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State<T>" <|-- "GoClassUnibe::widgets::screens::mainApp::Schedule2Screen.dart::_TabViewWidgetState"
+"flutter::src::widgets::ticker_provider.dart::SingleTickerProviderStateMixin<T>" <|-- "GoClassUnibe::widgets::screens::mainApp::Schedule2Screen.dart::_TabViewWidgetState"
+
+class "GoClassUnibe::widgets::screens::mainApp::Schedule2Screen.dart::TabBarWidget" {
+  +_TabBarWidgetState createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "GoClassUnibe::widgets::screens::mainApp::Schedule2Screen.dart::TabBarWidget"
+
+class "GoClassUnibe::widgets::screens::mainApp::Schedule2Screen.dart::_TabBarWidgetState" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State<T>" <|-- "GoClassUnibe::widgets::screens::mainApp::Schedule2Screen.dart::_TabBarWidgetState"
+
+class "GoClassUnibe::widgets::screens::mainApp::Schedule2Screen.dart::_DayView" {
+  +dynamic dayName
+  +int indexMax
+  +List<int> listIndex
+  +List<ScheduleSignature> list
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "GoClassUnibe::widgets::screens::mainApp::Schedule2Screen.dart::_DayView"
+
+class "GoClassUnibe::widgets::screens::mainApp::RatingsScreen.dart::RatingsScreen" {
+  +_RatingsScreenState createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "GoClassUnibe::widgets::screens::mainApp::RatingsScreen.dart::RatingsScreen"
+
+class "GoClassUnibe::widgets::screens::mainApp::RatingsScreen.dart::_RatingsScreenState" {
+  +Widget build()
+  -Widget _ratingsPage1()
+  -Widget _ratingsPage2()
+}
+
+"flutter::src::widgets::framework.dart::State<T>" <|-- "GoClassUnibe::widgets::screens::mainApp::RatingsScreen.dart::_RatingsScreenState"
+
+class "GoClassUnibe::widgets::screens::mainApp::RatingsScreen.dart::RatingsBody" {
+  +List<Registration> registrationList
+  +Widget build()
+  -Widget _bottonToRecordScreen()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "GoClassUnibe::widgets::screens::mainApp::RatingsScreen.dart::RatingsBody"
+
+class "GoClassUnibe::widgets::screens::mainApp::RatingsScreen.dart::SignaturesItem" {
+  +double finalRating
+  +Color color
+  +dynamic title
+  +dynamic stateSignature
+  +void Function() onTap
+  +Widget build()
+}
+
+"GoClassUnibe::widgets::screens::mainApp::RatingsScreen.dart::SignaturesItem" o-- "dart::ui::Color"
+"GoClassUnibe::widgets::screens::mainApp::RatingsScreen.dart::SignaturesItem" o-- "dart::ui::void Function()"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "GoClassUnibe::widgets::screens::mainApp::RatingsScreen.dart::SignaturesItem"
+
+class "GoClassUnibe::widgets::screens::homeApp::LoginScreen.dart::LoginScreen" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "GoClassUnibe::widgets::screens::homeApp::LoginScreen.dart::LoginScreen"
+
+class "GoClassUnibe::widgets::screens::homeApp::HomeScreen.dart::HomeScreen" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "GoClassUnibe::widgets::screens::homeApp::HomeScreen.dart::HomeScreen"
+
+class "GoClassUnibe::widgets::screens::homeApp::FirstHome.dart::FirstHome" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "GoClassUnibe::widgets::screens::homeApp::FirstHome.dart::FirstHome"
+
+class "GoClassUnibe::widgets::generics::mainApp::BigTitle.dart::BigTitle" {
+  +dynamic title
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "GoClassUnibe::widgets::generics::mainApp::BigTitle.dart::BigTitle"
+
+class "GoClassUnibe::widgets::generics::mainApp::ReorderableListSchedule.dart::ReorderableListSchedule" {
+  +List signatureList
+  +_ReorderableListScheduleState createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "GoClassUnibe::widgets::generics::mainApp::ReorderableListSchedule.dart::ReorderableListSchedule"
+
+class "GoClassUnibe::widgets::generics::mainApp::ReorderableListSchedule.dart::_ReorderableListScheduleState" {
+  +void initState()
+  +Widget build()
+  -Widget _popupMenuSignature()
+  -void _addOneHour()
+}
+
+"flutter::src::widgets::framework.dart::State<T>" <|-- "GoClassUnibe::widgets::generics::mainApp::ReorderableListSchedule.dart::_ReorderableListScheduleState"
+
+class "GoClassUnibe::widgets::generics::mainApp::LoadingCircle.dart::LoadingCircle" {
+  +dynamic loadingText
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "GoClassUnibe::widgets::generics::mainApp::LoadingCircle.dart::LoadingCircle"
+
+class "GoClassUnibe::widgets::generics::mainApp::CategoryText.dart::CategoryText" {
+  +dynamic title
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "GoClassUnibe::widgets::generics::mainApp::CategoryText.dart::CategoryText"
+
+class "GoClassUnibe::widgets::generics::mainApp::MainCard.dart::MainCard" {
+  +Widget childCard
+  +Widget build()
+}
+
+"GoClassUnibe::widgets::generics::mainApp::MainCard.dart::MainCard" o-- "flutter::src::widgets::framework.dart::Widget"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "GoClassUnibe::widgets::generics::mainApp::MainCard.dart::MainCard"
+
+class "GoClassUnibe::widgets::generics::mainApp::Card1Dashboard.dart::Card1Dashboard" {
+  +dynamic subject
+  +dynamic teacherName
+  +dynamic subjectTime
+  +dynamic classRoom
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "GoClassUnibe::widgets::generics::mainApp::Card1Dashboard.dart::Card1Dashboard"
+
+class "GoClassUnibe::widgets::generics::mainApp::Card1Dashboard.dart::SignatureCard" {
+  +dynamic subject
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "GoClassUnibe::widgets::generics::mainApp::Card1Dashboard.dart::SignatureCard"
+
+class "GoClassUnibe::widgets::generics::mainApp::Card1Dashboard.dart::TeacherCard" {
+  +dynamic teacherName
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "GoClassUnibe::widgets::generics::mainApp::Card1Dashboard.dart::TeacherCard"
+
+class "GoClassUnibe::widgets::generics::mainApp::Card1Dashboard.dart::ClassRoomCard" {
+  +dynamic classRoom
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "GoClassUnibe::widgets::generics::mainApp::Card1Dashboard.dart::ClassRoomCard"
+
+class "GoClassUnibe::widgets::generics::mainApp::Card1Dashboard.dart::TimeCard" {
+  +dynamic subjectTime
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "GoClassUnibe::widgets::generics::mainApp::Card1Dashboard.dart::TimeCard"
+
+class "GoClassUnibe::widgets::generics::mainApp::SingleTitle.dart::SingleTitle" {
+  +dynamic title
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "GoClassUnibe::widgets::generics::mainApp::SingleTitle.dart::SingleTitle"
+
+class "GoClassUnibe::widgets::generics::mainApp::ListToCard.dart::ListToCard" {
+  +List<Elements> elements
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "GoClassUnibe::widgets::generics::mainApp::ListToCard.dart::ListToCard"
+
+class "GoClassUnibe::widgets::generics::mainApp::ListToCard.dart::Elements" {
+  +dynamic title
+  +dynamic subtitle
+  +dynamic url
+  +Color color
+}
+
+"GoClassUnibe::widgets::generics::mainApp::ListToCard.dart::Elements" o-- "dart::ui::Color"
+
+class "GoClassUnibe::widgets::generics::mainApp::ListToCard.dart::ItemContainer" {
+  +Color color
+  +dynamic title
+  +dynamic subtitle
+  +dynamic url
+  +_ItemContainerState createState()
+}
+
+"GoClassUnibe::widgets::generics::mainApp::ListToCard.dart::ItemContainer" o-- "dart::ui::Color"
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "GoClassUnibe::widgets::generics::mainApp::ListToCard.dart::ItemContainer"
+
+class "GoClassUnibe::widgets::generics::mainApp::ListToCard.dart::_ItemContainerState" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State<T>" <|-- "GoClassUnibe::widgets::generics::mainApp::ListToCard.dart::_ItemContainerState"
+
+class "GoClassUnibe::widgets::generics::mainApp::ScheduleDay.dart::ScheduleDay" {
+  +dynamic dayName
+  +int indexMax
+  +List<int> listIndex
+  +List<ScheduleSignature> list
+  +_ScheduleDayState createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "GoClassUnibe::widgets::generics::mainApp::ScheduleDay.dart::ScheduleDay"
+
+class "GoClassUnibe::widgets::generics::mainApp::ScheduleDay.dart::_ScheduleDayState" {
+  +void initState()
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State<T>" <|-- "GoClassUnibe::widgets::generics::mainApp::ScheduleDay.dart::_ScheduleDayState"
+
+class "GoClassUnibe::widgets::generics::mainApp::ScheduleDay.dart::HomePage" {
+  +dynamic dayName
+  +_HomePageState createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "GoClassUnibe::widgets::generics::mainApp::ScheduleDay.dart::HomePage"
+
+class "GoClassUnibe::widgets::generics::mainApp::ScheduleDay.dart::_HomePageState" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State<T>" <|-- "GoClassUnibe::widgets::generics::mainApp::ScheduleDay.dart::_HomePageState"
+
+class "GoClassUnibe::widgets::generics::mainApp::ScheduleDay.dart::ElementDefault" {
+  +dynamic title
+  +int timeStart
+  +int timeEnd
+  +int index
+  +_ElementDefaultState createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "GoClassUnibe::widgets::generics::mainApp::ScheduleDay.dart::ElementDefault"
+
+class "GoClassUnibe::widgets::generics::mainApp::ScheduleDay.dart::_ElementDefaultState" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State<T>" <|-- "GoClassUnibe::widgets::generics::mainApp::ScheduleDay.dart::_ElementDefaultState"
+
+class "GoClassUnibe::widgets::generics::mainApp::ScheduleDay.dart::ElementActive" {
+  +int indexIn
+  +int indexOut
+  +Color color
+  +dynamic title
+  +dynamic subtitle
+  +int index
+  +Widget build()
+}
+
+"GoClassUnibe::widgets::generics::mainApp::ScheduleDay.dart::ElementActive" o-- "dart::ui::Color"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "GoClassUnibe::widgets::generics::mainApp::ScheduleDay.dart::ElementActive"
+
+class "GoClassUnibe::widgets::generics::mainApp::ScheduleDay.dart::_PopupMenuItem" {
+  +int index
+  +__PopupMenuItemState createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "GoClassUnibe::widgets::generics::mainApp::ScheduleDay.dart::_PopupMenuItem"
+
+class "GoClassUnibe::widgets::generics::mainApp::ScheduleDay.dart::__PopupMenuItemState" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State<T>" <|-- "GoClassUnibe::widgets::generics::mainApp::ScheduleDay.dart::__PopupMenuItemState"
+
+class "GoClassUnibe::widgets::generics::mainApp::MainCard2.dart::MainCard2" {
+  +Widget childCard
+  +Widget build()
+}
+
+"GoClassUnibe::widgets::generics::mainApp::MainCard2.dart::MainCard2" o-- "flutter::src::widgets::framework.dart::Widget"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "GoClassUnibe::widgets::generics::mainApp::MainCard2.dart::MainCard2"
+
+class "GoClassUnibe::widgets::generics::mainApp::SettingsCard2.dart::SettingsCard2" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "GoClassUnibe::widgets::generics::mainApp::SettingsCard2.dart::SettingsCard2"
+
+class "GoClassUnibe::widgets::generics::mainApp::SettingsCard1.dart::SettingsCard1" {
+  +void Function() onTapEmail
+  +void Function() onTapPass
+  +dynamic email
+  +dynamic career
+  +Widget build()
+}
+
+"GoClassUnibe::widgets::generics::mainApp::SettingsCard1.dart::SettingsCard1" o-- "dart::ui::void Function()"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "GoClassUnibe::widgets::generics::mainApp::SettingsCard1.dart::SettingsCard1"
+
+class "GoClassUnibe::widgets::generics::homeApp::SecondText.dart::SecondMiniText" {
+  +dynamic Title
+  +Color colorText
+  +Widget build()
+}
+
+"GoClassUnibe::widgets::generics::homeApp::SecondText.dart::SecondMiniText" o-- "dart::ui::Color"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "GoClassUnibe::widgets::generics::homeApp::SecondText.dart::SecondMiniText"
+
+class "GoClassUnibe::widgets::generics::homeApp::ButtonFirst.dart::ButtonFirst" {
+  +dynamic title
+  +void Function() onTap
+  +Color color1
+  +Color color2
+  +Color colorText1
+  +Color colorText2
+  +_ButtonFirstState createState()
+}
+
+"GoClassUnibe::widgets::generics::homeApp::ButtonFirst.dart::ButtonFirst" o-- "dart::ui::void Function()"
+"GoClassUnibe::widgets::generics::homeApp::ButtonFirst.dart::ButtonFirst" o-- "dart::ui::Color"
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "GoClassUnibe::widgets::generics::homeApp::ButtonFirst.dart::ButtonFirst"
+
+class "GoClassUnibe::widgets::generics::homeApp::ButtonFirst.dart::_ButtonFirstState" {
+  -bool _tapInProgress
+  -double _blurRadius
+  +dynamic colorText
+  -void _tapDown()
+  -void _tapUp()
+  -void _tapToCancel()
+  -void _onTap()
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State<T>" <|-- "GoClassUnibe::widgets::generics::homeApp::ButtonFirst.dart::_ButtonFirstState"
+
+class "GoClassUnibe::widgets::generics::homeApp::Background.dart::Background" {
+  +Color color1
+  +Color color2
+  +Widget build()
+}
+
+"GoClassUnibe::widgets::generics::homeApp::Background.dart::Background" o-- "dart::ui::Color"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "GoClassUnibe::widgets::generics::homeApp::Background.dart::Background"
+
+class "GoClassUnibe::widgets::generics::homeApp::Background.dart::MyPainter" {
+  +List<Color> colorG
+  +List<double> stopsG
+  +void paint()
+  +bool shouldRepaint()
+}
+
+"flutter::src::rendering::custom_paint.dart::CustomPainter" <|-- "GoClassUnibe::widgets::generics::homeApp::Background.dart::MyPainter"
+
+class "GoClassUnibe::widgets::generics::homeApp::Background.dart::MyPainter2" {
+  +List<Color> colorG
+  +List<double> stopsG
+  +void paint()
+  +bool shouldRepaint()
+}
+
+"flutter::src::rendering::custom_paint.dart::CustomPainter" <|-- "GoClassUnibe::widgets::generics::homeApp::Background.dart::MyPainter2"
+
+class "GoClassUnibe::widgets::generics::homeApp::Background.dart::CustomPAnimated1" {
+  +Color color1
+  +Color color2
+  +_CustomPAnimated1State createState()
+}
+
+"GoClassUnibe::widgets::generics::homeApp::Background.dart::CustomPAnimated1" o-- "dart::ui::Color"
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "GoClassUnibe::widgets::generics::homeApp::Background.dart::CustomPAnimated1"
+
+class "GoClassUnibe::widgets::generics::homeApp::Background.dart::_CustomPAnimated1State" {
+  -AnimationController _controller
+  +void initState()
+  +void dispose()
+  +Widget build()
+}
+
+"GoClassUnibe::widgets::generics::homeApp::Background.dart::_CustomPAnimated1State" o-- "flutter::src::animation::animation_controller.dart::AnimationController"
+"flutter::src::widgets::framework.dart::State<T>" <|-- "GoClassUnibe::widgets::generics::homeApp::Background.dart::_CustomPAnimated1State"
+"flutter::src::widgets::ticker_provider.dart::SingleTickerProviderStateMixin<T>" <|-- "GoClassUnibe::widgets::generics::homeApp::Background.dart::_CustomPAnimated1State"
+
+class "GoClassUnibe::widgets::generics::homeApp::PasswordInput.dart::CreatePasswordInput" {
+  +dynamic Title
+  +Icon icon
+  +Color color
+  +Color colorText
+  +Widget build()
+}
+
+"GoClassUnibe::widgets::generics::homeApp::PasswordInput.dart::CreatePasswordInput" o-- "flutter::src::widgets::icon.dart::Icon"
+"GoClassUnibe::widgets::generics::homeApp::PasswordInput.dart::CreatePasswordInput" o-- "dart::ui::Color"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "GoClassUnibe::widgets::generics::homeApp::PasswordInput.dart::CreatePasswordInput"
+
+class "GoClassUnibe::widgets::generics::homeApp::Input.dart::CreateEmailInput" {
+  +dynamic Title
+  +Icon icon
+  +Color color
+  +Color colorText
+  +Widget build()
+}
+
+"GoClassUnibe::widgets::generics::homeApp::Input.dart::CreateEmailInput" o-- "flutter::src::widgets::icon.dart::Icon"
+"GoClassUnibe::widgets::generics::homeApp::Input.dart::CreateEmailInput" o-- "dart::ui::Color"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "GoClassUnibe::widgets::generics::homeApp::Input.dart::CreateEmailInput"
+
+class "GoClassUnibe::widgets::generics::homeApp::MiniText.dart::CreateMiniText" {
+  +dynamic Title
+  +Color colorText
+  +Widget build()
+}
+
+"GoClassUnibe::widgets::generics::homeApp::MiniText.dart::CreateMiniText" o-- "dart::ui::Color"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "GoClassUnibe::widgets::generics::homeApp::MiniText.dart::CreateMiniText"
+
+class "GoClassUnibe::widgets::generics::homeApp::Title.dart::MainTitle" {
+  +Color colorText
+  +dynamic Title
+  +Widget build()
+}
+
+"GoClassUnibe::widgets::generics::homeApp::Title.dart::MainTitle" o-- "dart::ui::Color"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "GoClassUnibe::widgets::generics::homeApp::Title.dart::MainTitle"
+
+class "GoClassUnibe::widgets::generics::homeApp::LoginButton.dart::CreateLoginButton" {
+  +dynamic Title
+  +Icon icon
+  +Color color
+  +Color colorText
+  +Widget build()
+}
+
+"GoClassUnibe::widgets::generics::homeApp::LoginButton.dart::CreateLoginButton" o-- "flutter::src::widgets::icon.dart::Icon"
+"GoClassUnibe::widgets::generics::homeApp::LoginButton.dart::CreateLoginButton" o-- "dart::ui::Color"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "GoClassUnibe::widgets::generics::homeApp::LoginButton.dart::CreateLoginButton"
+
+class "GoClassUnibe::requests::SQLServerRequest.dart::SQLServerRequest" {
+  -String _studentID
+  +String url
+  +String getStudentID
+  +String setStudentID
+  +Future fetchStudent()
+  +Future fetchRating()
+  +Future fetchPeriod()
+  +Future fetchRegistration()
+}
+
+
+@enduml

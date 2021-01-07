@@ -1,20 +1,20 @@
 import 'package:GoClassUnibe/constants/Fonts.dart';
 import 'package:GoClassUnibe/constants/Title.dart';
+import 'package:GoClassUnibe/providers/StudentProvider.dart';
 import 'package:GoClassUnibe/widgets/generics/mainApp/BigTitle.dart';
+import 'package:GoClassUnibe/widgets/generics/mainApp/LoadingCircle.dart';
 import 'package:flutter/material.dart';
 import 'package:GoClassUnibe/constants/Colors.dart';
-import 'package:GoClassUnibe/widgets/generics/mainApp/SingleTitle.dart';
 import 'package:GoClassUnibe/widgets/generics/mainApp/CategoryText.dart';
 import 'package:GoClassUnibe/widgets/generics/mainApp/SettingsCard1.dart';
 import 'package:GoClassUnibe/widgets/generics/mainApp/SettingsCard2.dart';
 import 'package:provider/provider.dart';
-import 'package:GoClassUnibe/services/serviceStudent.dart';
 import 'package:scroll_glow_color/widget/scroll_glow_color.dart';
 
 class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final studentData = Provider.of<StudentData>(context);
+    final studentProvider = Provider.of<StudentProvider>(context);
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         //title: 'MainApp',
@@ -27,7 +27,6 @@ class SettingsScreen extends StatelessWidget {
               //shrinkWrap: true,
               children: [
                 Container(
-//padding: EdgeInsets.symmetric(vertical:16, horizontal: 16),
                     padding: EdgeInsets.only(
                         top: titlePaddingTop(context),
                         left: 16,
@@ -45,24 +44,29 @@ class SettingsScreen extends StatelessWidget {
                         SizedBox(
                           height: 16,
                         ),
-                        //Center(
-                        //child: ProfileImage(
-                        //name:
-                        //studentData.getName + ' ' + studentData.getLastName,
-                        //idNumber: (studentData.getIdNumber).toString(),
-                        //)),
-                        _profileCircle(
-                            studentData.getName,
-                            studentData.getLastName,
-                            studentData.getIdNumber,
-                            context),
+                        (studentProvider.getStudent() == null)
+                            ?LoadingCircle(loadingText: 'Cargando perfil...',) 
+                            : _profileCircle(
+                                studentProvider.getStudent().name,
+                                studentProvider.getStudent().lastName,
+                                studentProvider.getStudent().studentId,
+                                context),
                         SizedBox(
                           height: 16,
                         ),
-                        SettingsCard1(
-                          career: studentData.getCareer,
-                          email: studentData.getEmail,
-                        ),
+                        (studentProvider.getStudent() == null)
+                            ? SettingsCard1(
+                                email: 'correo',
+                                career: 'carrera',
+                                onTapPass: () {},
+                                onTapEmail: () {},
+                              )
+                            : SettingsCard1(
+                                email: 'scarlett@hotmail.es',
+                                career: studentProvider.getStudent().career,
+                                onTapPass: () {},
+                                onTapEmail: () {},
+                              ),
                         SizedBox(
                           height: 16,
                         ),

@@ -1,5 +1,10 @@
 import 'package:GoClassUnibe/constants/Title.dart';
+import 'package:GoClassUnibe/constants/UtilsText.dart';
+import 'package:GoClassUnibe/providers/PeriodProvider.dart';
+import 'package:GoClassUnibe/providers/RatingProvider.dart';
+import 'package:GoClassUnibe/providers/StudentProvider.dart';
 import 'package:GoClassUnibe/widgets/generics/mainApp/CategoryText.dart';
+import 'package:GoClassUnibe/widgets/generics/mainApp/LoadingCircle.dart';
 import 'package:GoClassUnibe/widgets/generics/mainApp/MainCard2.dart';
 import 'package:GoClassUnibe/widgets/generics/mainApp/Modal.dart';
 import 'package:flutter/material.dart';
@@ -7,10 +12,9 @@ import 'package:GoClassUnibe/widgets/generics/mainApp/BigTitle.dart';
 import 'package:GoClassUnibe/constants/Colors.dart';
 import 'package:GoClassUnibe/constants/Fonts.dart';
 import 'package:GoClassUnibe/widgets/generics/mainApp/Card1Dashboard.dart';
-import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:GoClassUnibe/services/serviceStudent.dart';
 import 'package:scroll_glow_color/scroll_glow_color.dart';
+import 'package:GoClassUnibe/models/RatingsModel.dart';
 
 class DasshboardScreen extends StatefulWidget {
   @override
@@ -18,16 +22,23 @@ class DasshboardScreen extends StatefulWidget {
 }
 
 class _DasshboardScreenState extends State<DasshboardScreen> {
-  List<Absence> absence = [
-    Absence('Matematicas', '10 inasistencias'),
-    Absence('Matematicas', '20 inasistencias'),
-    Absence('Matematicas', '30 inasistencias'),
-    Absence('Matematicas', '40 inasistencias'),
-  ];
-
   @override
   Widget build(BuildContext context) {
-    final studentData = Provider.of<StudentData>(context);
+    final studentProvider = Provider.of<StudentProvider>(context);
+    final periodprovider = Provider.of<PeriodProvider>(context);
+    final ratingProvider = Provider.of<RatingProvider>(context);
+    List<Rating> listIn = [];
+    for (var i = 0, len = periodprovider.getCurrentPeriod().length;
+        i < len;
+        ++i) {
+      for (var j = 0, len = ratingProvider.getRatings().length; j < len; ++j) {
+        if (periodprovider.getCurrentPeriod()[i].periodId ==
+            ratingProvider.getRatings()[j].periodId) {
+          listIn.add(ratingProvider.getRatings()[j]);
+          //print(ratingProvider.getRatings()[j].signatureName);
+        }
+      }
+    }
     return Scaffold(
       backgroundColor: colorAppBackground,
       body: ScrollGlowColor(
@@ -44,14 +55,26 @@ class _DasshboardScreenState extends State<DasshboardScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
-                children: [
-                  _titleHeader(context, studentData.getName,
-                      studentData.getLastName, studentData.getCareer),
-                  SizedBox(
-                    height: 16,
-                  ),
-                  CategoryText(title: "Clase de hoy"),
-                ],
+                children: (studentProvider.getStudent() == null)
+                    ? [
+                        _titleHeader(context, 'Loading name...',
+                            'Loading last name...', 'Loading career...'),
+                        SizedBox(
+                          height: 16,
+                        ),
+                        CategoryText(title: "Clase de hoy"),
+                      ]
+                    : [
+                        _titleHeader(
+                            context,
+                            studentProvider.getStudent().name,
+                            studentProvider.getStudent().lastName,
+                            studentProvider.getStudent().career),
+                        SizedBox(
+                          height: 16,
+                        ),
+                        CategoryText(title: "Clase de hoy"),
+                      ],
               ),
             ),
             SingleChildScrollView(
@@ -66,7 +89,7 @@ class _DasshboardScreenState extends State<DasshboardScreen> {
                       child: InkWell(
                         onTap: () {
                           showModal(context, "Matetmaticas", "8.1", "8.2",
-                              "8.3", "8.3", "1", "2", "3", "6");
+                              "8.3", "8.3", "1", "2", "3", "6", "REPROBADO");
                         },
                         child: Card1Dashboard(
                           subject: "Matetmaticas",
@@ -96,23 +119,35 @@ class _DasshboardScreenState extends State<DasshboardScreen> {
             ),
             Padding(
               padding: const EdgeInsets.all(16.0),
-              child: MainCard2(
-                childCard: ListView.separated(
-                    physics: const NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: absence.length,
-                    separatorBuilder: (context, index) => Divider(
-                          color: colorAppTextLight.withOpacity(0.5),
-                        ),
-                    itemBuilder: (context, index) {
-                      return _signaturesItem(
-                          context,
-                          "${absence[index].signature}",
-                          "${absence[index].absence}",
-                          constantsListColors[index]);
-                      //return Text(absence[index].absence);
-                    }),
-              ),
+              child: (periodprovider.getCurrentPeriod().length == 0)
+                  ? LoadingCircle(loadingText: 'Cargando materias...')
+                  : MainCard2(
+                      childCard: ListView.separated(
+                          physics: const NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: listIn.length,
+                          separatorBuilder: (context, index) => Divider(
+                                color: colorAppTextLight.withOpacity(0.5),
+                              ),
+                          itemBuilder: (context, index) {
+                            return _signaturesItem(
+                              context,
+                              toSentence(listIn[index].signatureName),
+                              _totalAbsencesToString(listIn[index].finalIn),
+                              constantsListColors[index],
+                              () {
+                                showModalAbsence(
+                                    context, 
+                              toSentence(listIn[index].signatureName),
+                              listIn[index].in1.toString(),
+                              listIn[index].in2.toString(),
+                              listIn[index].in3.toString(),
+                              listIn[index].finalIn.toString());
+                              },
+                            );
+                            //return Text(absence[index].absence);
+                          }),
+                    ),
             )
           ],
         ),
@@ -120,8 +155,8 @@ class _DasshboardScreenState extends State<DasshboardScreen> {
     );
   }
 
-  Widget _signaturesItem(
-      BuildContext context, String signature, String absence, Color color) {
+  Widget _signaturesItem(BuildContext context, String signature, String absence,
+      Color color, VoidCallback onTap) {
     return Row(
       children: [
         CircleAvatar(
@@ -138,10 +173,7 @@ class _DasshboardScreenState extends State<DasshboardScreen> {
         ),
         Expanded(
           child: InkWell(
-            onTap: () {
-              showModalAbsence(context, signature, "1", "2", "3", "6");
-              //Navigator.push(context, MaterialPageRoute(builder: (context)=>OnlyRatingsScreen());
-            },
+            onTap: onTap,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -207,8 +239,10 @@ class _DasshboardScreenState extends State<DasshboardScreen> {
   }
 }
 
-class Absence {
-  String signature, absence;
-
-  Absence(this.signature, this.absence);
+String _totalAbsencesToString(int finalIn) {
+  if (finalIn > 0) {
+    return '$finalIn inasistencias 😒';
+  } else {
+    return 'No tienes inasistencias 😀';
+  }
 }

@@ -1,5 +1,5 @@
 import 'package:GoClassUnibe/constants/Colors.dart';
-import 'package:GoClassUnibe/models/scheduleModels.dart';
+import 'package:GoClassUnibe/models/ScheduleModel.dart';
 
 final List<ScheduleSignature> listItem = [
   ScheduleSignature(

@@ -1,6 +1,6 @@
 import 'package:GoClassUnibe/constants/Colors.dart';
 import 'package:GoClassUnibe/constants/Fonts.dart';
-import 'package:GoClassUnibe/models/scheduleModels.dart';
+import 'package:GoClassUnibe/models/ScheduleModel.dart';
 import 'package:flutter/material.dart';
 
 void reorderTime(List<ScheduleSignature> list, List<int> listIndex) {

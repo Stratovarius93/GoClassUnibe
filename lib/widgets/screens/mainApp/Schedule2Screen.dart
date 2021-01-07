@@ -1,8 +1,8 @@
 import 'package:GoClassUnibe/constants/Colors.dart';
 import 'package:GoClassUnibe/constants/Fonts.dart';
 import 'package:GoClassUnibe/constants/Shadows.dart';
-import 'package:GoClassUnibe/controllers/ScheduleController.dart';
-import 'package:GoClassUnibe/models/scheduleModels.dart';
+import 'package:GoClassUnibe/models/ScheduleModel.dart';
+import 'package:GoClassUnibe/utils/ScheduleUtils.dart';
 import 'package:GoClassUnibe/widgets/generics/mainApp/CategoryText.dart';
 import 'package:GoClassUnibe/widgets/generics/mainApp/ScheduleDay.dart';
 import 'package:flutter/material.dart';
@@ -90,7 +90,7 @@ class _Schedule2ScreenState extends State<Schedule2Screen>
     super.dispose();
     _daySelected = [false, false, false, false, false];
 
-    print('terminado');
+    //print('terminado');
   }
 
   @override
