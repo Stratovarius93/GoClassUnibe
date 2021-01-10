@@ -14,11 +14,11 @@ class ScheduleScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final scheduleProvider = Provider.of<ScheduleProvider>(context);
 
-    final studentProvider = Provider.of<StudentProvider>(context);
-    if (studentProvider.getStudent() != null) {
+    //final studentProvider = Provider.of<StudentProvider>(context);
+    //if (studentProvider.getStudent() != null) {
       
-    scheduleProvider.setCareer(studentProvider.getStudent().career);
-    }
+    //scheduleProvider.setCareer(studentProvider.getStudent().career);
+    //}
 
 
     return Scaffold(

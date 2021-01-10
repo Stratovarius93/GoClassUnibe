@@ -48,7 +48,7 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
             create: (_)=>ScheduleProvider(),
-        )
+        ),
       ],
       child: MaterialApp(
           //debugShowCheckedModeBanner: false, title: 'MyApp', home: HomeScreen());

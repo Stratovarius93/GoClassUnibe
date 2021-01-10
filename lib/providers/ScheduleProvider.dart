@@ -40,11 +40,13 @@ class ScheduleProvider with ChangeNotifier {
   String _career;
   List<Schedule> _newListSchedule = [];
 
+  List<ScheduleSignature> _dashboardList = [];
+
   ScheduleProvider() {
-    this._getCurrentDay();
+    //this._getCurrentDay();
     this.getScheduleListGS();
   }
-getScheduleListGS() async {
+  getScheduleListGS() async {
     await GSheetsRequest().fetchSchedule().then((res) {
       if (res.statusCode == 200) {
         final decodedData = scheduleFromJson(res.body);
@@ -54,12 +56,13 @@ getScheduleListGS() async {
         //print(_scheduleList.toString());
       }
     });
-    print(_career);
+    //print(_career);
     for (var i = 0, len = _getScheduleList().length; i < len; ++i) {
       if (_scheduleList[i].career == _getCareer()) {
         _newListSchedule.add(_scheduleList[i]);
       }
     }
+    //print(_newListSchedule.toString());
     for (var i = 0, len = _newListSchedule.length; i < len; ++i) {
       ScheduleSignature scheduleSignature = ScheduleSignature(
           timeStart: _newListSchedule[i].timeStart,
@@ -75,22 +78,53 @@ getScheduleListGS() async {
 
     //print(_listFull.toString());
     _getCurrentDay();
+    //print(_listFull.toString());
+    _setDashboard(_index, _listFull);
+    //print(getDashboardList().toString());
     notifyListeners();
   }
-List<Schedule> _getScheduleList() => _scheduleList;
+
+  List<Schedule> _getScheduleList() => _scheduleList;
 
   _setScheduleList(List<Schedule> scheduleList) {
     _scheduleList = scheduleList;
   }
+
   String _getCareer() => _career;
   setCareer(String career) {
     _career = career;
   }
 
+  List<ScheduleSignature> getDashboardList() => _dashboardList;
+  _setDashboard(int indexDay, List<ScheduleSignature> list) {
+    List<ScheduleSignature> _list = [];
+    switch (indexDay) {
+      case 0:
+        _list = validateListDay(list, _weekDays[0]);
+        break;
+      case 1:
+        _list = validateListDay(list, _weekDays[1]);
+        break;
+      case 2:
+        _list = validateListDay(list, _weekDays[2]);
+        break;
+      case 3:
+        _list = validateListDay(list, _weekDays[3]);
+        break;
+      case 4:
+        _list = validateListDay(list, _weekDays[4]);
+        break;
+      default:
+        _list = validateListDay(list, _weekDays[0]);
+        break;
+    }
+    _dashboardList = _list;
+  }
+
   _getCurrentDay() {
     initializeDateFormatting();
     _currentDay = DateFormat.EEEE('es_ES').format(_date);
-    print(_currentDay);
+    //print(_currentDay);
 
     for (var i = 0, len = _weekDays.length; i < len; ++i) {
       if (_weekDays[i] == _currentDay) {
@@ -129,7 +163,8 @@ List<Schedule> _getScheduleList() => _scheduleList;
     _setDayListByDay(_index);
     notifyListeners();
   }
-  List<ScheduleSignature> getListFull()=>_listFull;
+
+  List<ScheduleSignature> getListFull() => _listFull;
 
   List<ScheduleSignature> getFinaListDay(
       List<ScheduleSignature> listDivided, int indexMax) {

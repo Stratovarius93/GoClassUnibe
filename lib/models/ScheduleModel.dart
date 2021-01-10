@@ -22,7 +22,7 @@ class ScheduleSignature {
   @override
   String toString() {
     // TODO: implement toString
-    return '[$timeStart, $timeEnd, $name, $day, $color]\r\n';
+    return '[$timeStart, $timeEnd, $name, $day, $color, $classRoom, $teacher]\r\n';
   }
 
 }

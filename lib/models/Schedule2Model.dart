@@ -37,7 +37,7 @@ class Schedule {
   @override
   String toString() {
     // TODO: implement toString
-    return '[$timeStart, $timeEnd, $name, $career]\r\n';
+    return '[$timeStart, $timeEnd, $name, $day,  $classRoom, $teacher]\r\n';
   }
 
 }

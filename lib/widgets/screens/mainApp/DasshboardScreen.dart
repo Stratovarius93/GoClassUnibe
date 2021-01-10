@@ -2,9 +2,11 @@ import 'package:GoClassUnibe/constants/Title.dart';
 import 'package:GoClassUnibe/constants/UtilsText.dart';
 import 'package:GoClassUnibe/providers/PeriodProvider.dart';
 import 'package:GoClassUnibe/providers/RatingProvider.dart';
+import 'package:GoClassUnibe/providers/ScheduleProvider.dart';
 import 'package:GoClassUnibe/providers/StudentProvider.dart';
 import 'package:GoClassUnibe/widgets/generics/mainApp/CategoryText.dart';
 import 'package:GoClassUnibe/widgets/generics/mainApp/LoadingCircle.dart';
+import 'package:GoClassUnibe/widgets/generics/mainApp/MainCard.dart';
 import 'package:GoClassUnibe/widgets/generics/mainApp/MainCard2.dart';
 import 'package:GoClassUnibe/widgets/generics/mainApp/Modal.dart';
 import 'package:flutter/material.dart';
@@ -12,21 +14,30 @@ import 'package:GoClassUnibe/widgets/generics/mainApp/BigTitle.dart';
 import 'package:GoClassUnibe/constants/Colors.dart';
 import 'package:GoClassUnibe/constants/Fonts.dart';
 import 'package:GoClassUnibe/widgets/generics/mainApp/Card1Dashboard.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:scroll_glow_color/scroll_glow_color.dart';
 import 'package:GoClassUnibe/models/RatingsModel.dart';
-
+import 'package:rive/rive.dart';
 class DasshboardScreen extends StatefulWidget {
   @override
   _DasshboardScreenState createState() => _DasshboardScreenState();
 }
 
+List<String> list = ['Matetmaticas', 'Lenguaje'];
+
 class _DasshboardScreenState extends State<DasshboardScreen> {
   @override
   Widget build(BuildContext context) {
-    final studentProvider = Provider.of<StudentProvider>(context);
     final periodprovider = Provider.of<PeriodProvider>(context);
     final ratingProvider = Provider.of<RatingProvider>(context);
+    final studentProvider = Provider.of<StudentProvider>(context);
+    final scheduleProvider = Provider.of<ScheduleProvider>(context);
+    if (studentProvider.getStudent() != null) {
+      scheduleProvider.setCareer(studentProvider.getStudent().career);
+    }
+
+    print(scheduleProvider.getDashboardList().toString());
     List<Rating> listIn = [];
     for (var i = 0, len = periodprovider.getCurrentPeriod().length;
         i < len;
@@ -77,42 +88,7 @@ class _DasshboardScreenState extends State<DasshboardScreen> {
                       ],
               ),
             ),
-            SingleChildScrollView(
-                physics: BouncingScrollPhysics(),
-                scrollDirection: Axis.horizontal,
-                child: Row(children: [
-                  Padding(
-                    padding: const EdgeInsets.only(
-                        top: 20.0, bottom: 20.0, left: 16.0, right: 8.0),
-                    child: Align(
-                      alignment: Alignment.topLeft,
-                      child: InkWell(
-                        onTap: () {
-                          showModal(context, "Matetmaticas", "8.1", "8.2",
-                              "8.3", "8.3", "1", "2", "3", "6", "REPROBADO");
-                        },
-                        child: Card1Dashboard(
-                          subject: "Matetmaticas",
-                          teacherName: "Dra. Yoisi Perez",
-                          subjectTime: "7:00 - 9:00 AM",
-                          classRoom: "Aula A1",
-                        ),
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Align(
-                      alignment: Alignment.topLeft,
-                      child: Card1Dashboard(
-                        subject: "Matetmaticas",
-                        teacherName: "Dra. Yoisi Perez",
-                        subjectTime: "7:00 - 9:00 AM",
-                        classRoom: "Aula A1",
-                      ),
-                    ),
-                  ),
-                ])),
+            CurrentAsignatureCard(scheduleProvider: scheduleProvider),
             Padding(
               padding: const EdgeInsets.only(left: 16.0),
               child: CategoryText(title: "Inasistencias del último período"),
@@ -137,12 +113,12 @@ class _DasshboardScreenState extends State<DasshboardScreen> {
                               constantsListColors[index],
                               () {
                                 showModalAbsence(
-                                    context, 
-                              toSentence(listIn[index].signatureName),
-                              listIn[index].in1.toString(),
-                              listIn[index].in2.toString(),
-                              listIn[index].in3.toString(),
-                              listIn[index].finalIn.toString());
+                                    context,
+                                    toSentence(listIn[index].signatureName),
+                                    listIn[index].in1.toString(),
+                                    listIn[index].in2.toString(),
+                                    listIn[index].in3.toString(),
+                                    listIn[index].finalIn.toString());
                               },
                             );
                             //return Text(absence[index].absence);
@@ -239,6 +215,103 @@ class _DasshboardScreenState extends State<DasshboardScreen> {
   }
 }
 
+class CurrentAsignatureCard extends StatelessWidget {
+  const CurrentAsignatureCard({
+    Key key,
+    @required this.scheduleProvider,
+  }) : super(key: key);
+
+  final ScheduleProvider scheduleProvider;
+
+  @override
+  Widget build(BuildContext context) {
+    if (scheduleProvider.getListFull().length > 0) {
+      if (scheduleProvider.getDashboardList().length > 0) {
+        return SingleChildScrollView(
+            physics: BouncingScrollPhysics(),
+            scrollDirection: Axis.horizontal,
+            child: Row(
+                children: scheduleProvider
+                    .getDashboardList()
+                    .map((item) => Padding(
+                          padding: const EdgeInsets.only(
+                              top: 20.0, bottom: 20.0, left: 16.0, right: 8.0),
+                          child: Align(
+                            alignment: Alignment.topLeft,
+                            child: InkWell(
+                              onTap: () {
+                                showModal(
+                                    context,
+                                    "Matetmaticas",
+                                    "8.1",
+                                    "8.2",
+                                    "8.3",
+                                    "8.3",
+                                    "1",
+                                    "2",
+                                    "3",
+                                    "6",
+                                    "REPROBADO");
+                              },
+                              child: Card1Dashboard(
+                                subject: toSentence(item.name),
+                                teacherName: (item.teacher == null)
+                                    ? 'No hay docente'
+                                    : item.teacher,
+                                subjectTime: (item.timeStart
+                                        .toString()
+                                        .padLeft(2, '0') +
+                                    ':00' +
+                                    ' - ' +
+                                    item.timeEnd.toString().padLeft(2, '0') +
+                                    ':00'),
+                                classRoom: item.classRoom,
+                              ),
+                            ),
+                          ),
+                        ))
+                    .toList()));
+      } else {
+        return Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(children:[ 
+              Container(
+                  //width: 400,
+                  height: 200,
+                  child: MyRiveAnimation(),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Column(
+                  children:[
+                    Text('No tienes clases hoy,', 
+                      style: TextStyle(
+                          fontFamily: fontApp,
+                          color: colorAppSkyBlue,
+                          fontSize: 22
+                      )
+                  ),Text('descansa 😌', 
+                      style: TextStyle(
+                          fontFamily: fontApp,
+                          color: colorAppSkyBlue,
+                          fontSize: 22
+                      )
+                  ),
+
+                  ]
+                ),
+              ),]
+              ),
+        );
+      }
+    } else {
+      return LoadingCircle(
+        loadingText: 'Cargando clase...',
+      );
+    }
+  }
+}
+
 String _totalAbsencesToString(int finalIn) {
   if (finalIn > 0) {
     return '$finalIn inasistencias 😒';
@@ -246,3 +319,45 @@ String _totalAbsencesToString(int finalIn) {
     return 'No tienes inasistencias 😀';
   }
 }
+
+class MyRiveAnimation extends StatefulWidget {
+  @override
+  _MyRiveAnimationState createState() => _MyRiveAnimationState();
+}
+
+class _MyRiveAnimationState extends State<MyRiveAnimation> {
+  final riveFileName = 'images/resting.riv';
+  Artboard _artboard;
+
+  @override
+  void initState() {
+    _loadRiveFile();
+    super.initState();
+  }
+
+  // loads a Rive file
+  void _loadRiveFile() async {
+    final bytes = await rootBundle.load(riveFileName);
+    final file = RiveFile();
+
+    if (file.import(bytes)) {
+      // Select an animation by its name
+      setState(() => _artboard = file.mainArtboard
+        ..addController(
+          SimpleAnimation('Untitled 1'),
+        ));
+    }
+  }
+
+  /// Show the rive file, when loaded
+  @override
+  Widget build(BuildContext context) {
+    return _artboard != null
+        ? Rive(
+            artboard: _artboard,
+            fit: BoxFit.cover,
+          )
+        : Container();
+  }
+}
+

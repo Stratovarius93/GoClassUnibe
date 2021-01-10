@@ -162,6 +162,8 @@ List<ScheduleSignature> validateListDay(
           timeEnd: list[i].timeEnd,
           name: list[i].name,
           color: list[i].color,
+          teacher: list[i].teacher,
+          day: list[i].day,
           classRoom: list[i].classRoom);
       newList.add(newSignature);
     }
