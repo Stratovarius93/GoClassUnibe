@@ -1,6 +1,5 @@
 import 'package:GoClassUnibe/constants/Sizes.dart';
 import 'package:flutter/material.dart';
-import 'package:GoClassUnibe/widgets/screens/mainApp/Schedule2Screen.dart';
 import 'package:GoClassUnibe/widgets/screens/mainApp/ScheduleScreen.dart';
 import 'package:GoClassUnibe/widgets/screens/mainApp/DasshboardScreen.dart';
 import 'package:GoClassUnibe/widgets/screens/mainApp/RatingsScreen.dart';

@@ -1,6 +1,5 @@
 import 'package:GoClassUnibe/constants/Colors.dart';
 import 'package:GoClassUnibe/constants/Fonts.dart';
-import 'package:GoClassUnibe/widgets/screens/mainApp/Schedule2Screen.dart';
 import 'package:flutter/material.dart';
 
 AppBar scheduleAppBar() {

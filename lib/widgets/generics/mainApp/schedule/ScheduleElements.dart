@@ -1,6 +1,6 @@
 import 'package:GoClassUnibe/constants/Colors.dart';
 import 'package:GoClassUnibe/constants/Fonts.dart';
-import 'package:GoClassUnibe/providers/Schedule2Provider.dart';
+import 'package:GoClassUnibe/providers/ScheduleProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -15,7 +15,7 @@ class ElementDefault extends StatelessWidget {
       : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final schedule2Provider = Provider.of<Schedule2Provider>(context);
+    final scheduleProvider = Provider.of<ScheduleProvider>(context);
     return Container(
       decoration: BoxDecoration(
         color: Colors.blueGrey.shade100.withOpacity(0.18),
@@ -78,7 +78,7 @@ class ElementDefault extends StatelessWidget {
                   ),
                 ),
                 onTap: () {
-                  schedule2Provider.setSelectecFreeHourAddHour(context, index);
+                  scheduleProvider.setSelectecFreeHourAddHour(context, index);
                 },
               ),
               InkWell(
@@ -90,7 +90,7 @@ class ElementDefault extends StatelessWidget {
                   ),
                 ),
                 onTap: () {
-                  schedule2Provider.setSelectecFreeHourRemoveHour(index);
+                  scheduleProvider.setSelectecFreeHourRemoveHour(index);
                 },
               ),
               SizedBox(
@@ -182,7 +182,7 @@ class _PopupMenuItem extends StatefulWidget {
 class __PopupMenuItemState extends State<_PopupMenuItem> {
   @override
   Widget build(BuildContext context) {
-    final schedule2Provider = Provider.of<Schedule2Provider>(context);
+    final schedule2Provider = Provider.of<ScheduleProvider>(context);
     List<String> _values = [
       'Añadir hora libre antes',
       'Añadir hora libre después'

@@ -1,4 +1,5 @@
-import 'package:GoClassUnibe/providers/Schedule2Provider.dart';
+import 'package:GoClassUnibe/constants/UtilsText.dart';
+import 'package:GoClassUnibe/providers/ScheduleProvider.dart';
 import 'package:GoClassUnibe/widgets/generics/mainApp/schedule/ScheduleElements.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -11,13 +12,13 @@ class ReorderableListItems extends StatefulWidget {
 class _ReorderableListItemsState extends State<ReorderableListItems> {
   @override
   Widget build(BuildContext context) {
-    final schedule2Provider = Provider.of<Schedule2Provider>(context);
+    final scheduleProvider = Provider.of<ScheduleProvider>(context);
     return Expanded(
       child: ReorderableListView(
-        children: schedule2Provider
+        children: scheduleProvider
             .getSignatureList()
             .map((elem) {
-              var _index = schedule2Provider.getSignatureList().indexOf(elem);
+              var _index = scheduleProvider.getSignatureList().indexOf(elem);
               if (elem.name == 'Default') {
                 return ElementDefault(
                     key: UniqueKey(),
@@ -29,7 +30,7 @@ class _ReorderableListItemsState extends State<ReorderableListItems> {
               }else{
               return ElementActive(
                     key: UniqueKey(),
-                    title: elem.name,
+                    title: toSentence( elem.name),
                     subtitle: elem.classRoom,
                     indexIn: elem.timeStart,
                     indexOut: elem.timeEnd,
@@ -39,7 +40,7 @@ class _ReorderableListItemsState extends State<ReorderableListItems> {
             })
             .toList(),
         onReorder: (oldIndex, newIndex) {
-          schedule2Provider.setListFinal(oldIndex, newIndex);
+          scheduleProvider.setListFinal(oldIndex, newIndex);
         },
       ),
     );
