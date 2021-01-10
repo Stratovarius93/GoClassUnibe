@@ -2,19 +2,23 @@ import 'package:GoClassUnibe/constants/Colors.dart';
 import 'package:GoClassUnibe/constants/Fonts.dart';
 import 'package:GoClassUnibe/constants/Shadows.dart';
 import 'package:GoClassUnibe/models/ScheduleModel.dart';
+import 'package:GoClassUnibe/providers/ScheduleProvider.dart';
+import 'package:GoClassUnibe/providers/StudentProvider.dart';
 import 'package:GoClassUnibe/utils/ScheduleUtils.dart';
 import 'package:GoClassUnibe/widgets/generics/mainApp/CategoryText.dart';
+import 'package:GoClassUnibe/widgets/generics/mainApp/LoadingCircle.dart';
 import 'package:GoClassUnibe/widgets/generics/mainApp/ScheduleDay.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
-import 'package:GoClassUnibe/data/exampleSchedule.dart';
+import 'package:provider/provider.dart';
 
 class Schedule2Screen extends StatefulWidget {
   @override
   _Schedule2ScreenState createState() => _Schedule2ScreenState();
 }
 
+List<ScheduleSignature> listScheduleFinal = [];
 int _index;
 int _currentIndex = 0;
 TabController _controller;
@@ -75,11 +79,11 @@ class _Schedule2ScreenState extends State<Schedule2Screen>
 
     _listIndex = List<int>.generate(_indexMaX, (int item) => item);
 
-    _listDay0 = validateListDay(listItem, _weekDays[0]);
-    _listDay1 = validateListDay(listItem, _weekDays[1]);
-    _listDay2 = validateListDay(listItem, _weekDays[2]);
-    _listDay3 = validateListDay(listItem, _weekDays[3]);
-    _listDay4 = validateListDay(listItem, _weekDays[4]);
+    //_listDay0 = validateListDay(listItem, _weekDays[0]);
+    //_listDay1 = validateListDay(listItem, _weekDays[1]);
+    //_listDay2 = validateListDay(listItem, _weekDays[2]);
+    //_listDay3 = validateListDay(listItem, _weekDays[3]);
+    //_listDay4 = validateListDay(listItem, _weekDays[4]);
   }
 
   @override
@@ -95,6 +99,19 @@ class _Schedule2ScreenState extends State<Schedule2Screen>
 
   @override
   Widget build(BuildContext context) {
+    final scheduleProvider = Provider.of<ScheduleProvider>(context);
+    final studentProvider = Provider.of<StudentProvider>(context);
+    if (studentProvider.getStudent() != null) {
+      
+    scheduleProvider.setCareer(studentProvider.getStudent().career);
+    }
+
+    listScheduleFinal = scheduleProvider.getScheduleListFinal();
+      _listDay0 = validateListDay(listScheduleFinal, _weekDays[0]);
+      _listDay1 = validateListDay(listScheduleFinal, _weekDays[1]);
+      _listDay2 = validateListDay(listScheduleFinal, _weekDays[2]);
+      _listDay3 = validateListDay(listScheduleFinal, _weekDays[3]);
+      _listDay4 = validateListDay(listScheduleFinal, _weekDays[4]);
     return DefaultTabController(
       length: _weekDays.length,
       child: Scaffold(
@@ -134,7 +151,9 @@ class _Schedule2ScreenState extends State<Schedule2Screen>
             ),
           ),
         ),
-        body: TabViewWidget(),
+        body:(listScheduleFinal.length ==0)
+            ?Center(child: LoadingCircle( loadingText: 'Cargando materias...' ))
+            :TabViewWidget(),
       ),
     );
   }
@@ -267,9 +286,7 @@ class _DayView extends StatelessWidget {
             title: dayName,
           ),
         ),
-        //Expanded(child: ReorderableListSchedula())
         Expanded(
-          //child: ReorderableListSchedule(signatureList: signatureListExample))
           child: ScheduleDay(
             dayName: dayName,
             list: list,

@@ -1,6 +1,8 @@
 import 'package:GoClassUnibe/providers/PeriodProvider.dart';
 import 'package:GoClassUnibe/providers/RatingProvider.dart';
 import 'package:GoClassUnibe/providers/RegistrationProvider.dart';
+import 'package:GoClassUnibe/providers/Schedule2Provider.dart';
+import 'package:GoClassUnibe/providers/ScheduleProvider.dart';
 import 'package:GoClassUnibe/providers/StudentProvider.dart';
 import 'package:GoClassUnibe/widgets/screens/homeApp/FirstHome.dart';
 import 'package:GoClassUnibe/widgets/screens/homeApp/HomeScreen.dart';
@@ -44,6 +46,12 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
             create: (_)=>RegistrationProvider(),
+        ),
+        ChangeNotifierProvider(
+            create: (_)=> ScheduleProvider(),
+        ),
+        ChangeNotifierProvider(
+            create: (_)=>Schedule2Provider(),
         )
       ],
       child: MaterialApp(

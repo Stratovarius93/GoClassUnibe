@@ -169,7 +169,39 @@ List<ScheduleSignature> validateListDay(
   return newList;
 }
 
-void moveToDay() {}
+void moveToDay(List<ScheduleSignature> listFrom, List<ScheduleSignature> listTo,
+    int indexFrom, List<int> listIndex, BuildContext context) {
+  //verificar si hay espacio disponible
+  int count = 0;
+  for (var i = 0, len = listTo.length; i < len; ++i) {
+    if (listTo[i].name == 'Default') {
+      count++;
+    }
+  }
+  if (count > 0) {
+    if (listTo[listTo.length - 1].name == 'Default') {
+      //removemos del primer list
+      ScheduleSignature newItem = ScheduleSignature(
+          name: 'Default',
+          timeStart: (listFrom.length + 7) - 1,
+          timeEnd: listFrom.length + 7,
+          color: Colors.transparent);
+      final item = listFrom.removeAt(indexFrom);
+      listFrom.insert(listFrom.length, newItem);
+      reorderTime(listFrom, listIndex);
+      //anadimos al segundo list
+      listTo.removeAt(listFrom.length - 1);
+      listTo.insert(0, item);
+    } else {
+      showAlertDialog(
+          context,
+          'Horas no disponibles en el día seleccionado',
+          'Se recomienda reorganizar las horas libres disponibles entre las otras materias',
+          'Entendido');
+    }
+  }
+}
+
 void showSnackBar(String message, BuildContext context) {
   final snackBar = SnackBar(
     content: Text(message),

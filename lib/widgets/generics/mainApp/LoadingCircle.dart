@@ -10,6 +10,7 @@ class LoadingCircle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
         children: [
           CircularProgressIndicator(
             valueColor: AlwaysStoppedAnimation<Color>(colorAppSkyBlue),
@@ -18,7 +19,7 @@ class LoadingCircle extends StatelessWidget {
           Text(
             loadingText,
             style: TextStyle(
-                fontFamily: fontApp, color: colorAppTextDark, fontSize: 16),
+                fontFamily: fontApp, color: colorAppSkyBlue, fontSize: 16),
           )
         ],
       ),

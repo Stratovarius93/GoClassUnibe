@@ -18,9 +18,11 @@ class ScheduleSignature {
       this.career,
       this.day,
       this.color});
+
   @override
   String toString() {
     // TODO: implement toString
-    return '[$timeStart, $timeEnd, $name]\r\n';
+    return '[$timeStart, $timeEnd, $name, $day, $color]\r\n';
   }
+
 }
