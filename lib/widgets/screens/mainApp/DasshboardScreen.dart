@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:GoClassUnibe/constants/Title.dart';
 import 'package:GoClassUnibe/constants/UtilsText.dart';
 import 'package:GoClassUnibe/providers/PeriodProvider.dart';
@@ -19,6 +21,7 @@ import 'package:provider/provider.dart';
 import 'package:scroll_glow_color/scroll_glow_color.dart';
 import 'package:GoClassUnibe/models/RatingsModel.dart';
 import 'package:rive/rive.dart';
+
 class DasshboardScreen extends StatefulWidget {
   @override
   _DasshboardScreenState createState() => _DasshboardScreenState();
@@ -36,8 +39,6 @@ class _DasshboardScreenState extends State<DasshboardScreen> {
     if (studentProvider.getStudent() != null) {
       scheduleProvider.setCareer(studentProvider.getStudent().career);
     }
-
-    print(scheduleProvider.getDashboardList().toString());
     List<Rating> listIn = [];
     for (var i = 0, len = periodprovider.getCurrentPeriod().length;
         i < len;
@@ -50,6 +51,7 @@ class _DasshboardScreenState extends State<DasshboardScreen> {
         }
       }
     }
+    
     return Scaffold(
       backgroundColor: colorAppBackground,
       body: ScrollGlowColor(
@@ -96,7 +98,9 @@ class _DasshboardScreenState extends State<DasshboardScreen> {
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: (periodprovider.getCurrentPeriod().length == 0)
-                  ? LoadingCircle(loadingText: 'Cargando materias...')
+                  ? Container(
+                      height: 300,
+                      child: LoadingCircle(loadingText: 'Cargando materias...'))
                   : MainCard2(
                       childCard: ListView.separated(
                           physics: const NeverScrollableScrollPhysics(),
@@ -271,42 +275,44 @@ class CurrentAsignatureCard extends StatelessWidget {
                           ),
                         ))
                     .toList()));
-      } else {
+      } else if (scheduleProvider.getCurrentDay() == 'domingo' ||
+          scheduleProvider.getCurrentDay() == 'sábado' ||
+          scheduleProvider.getDashboardList().length == 0) {
         return Padding(
           padding: const EdgeInsets.all(16.0),
-          child: Column(children:[ 
-              Container(
-                  //width: 400,
-                  height: 200,
-                  child: MyRiveAnimation(),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Column(
-                  children:[
-                    Text('No tienes clases hoy,', 
-                      style: TextStyle(
-                          fontFamily: fontApp,
-                          color: colorAppSkyBlue,
-                          fontSize: 22
-                      )
-                  ),Text('descansa 😌', 
-                      style: TextStyle(
-                          fontFamily: fontApp,
-                          color: colorAppSkyBlue,
-                          fontSize: 22
-                      )
-                  ),
-
-                  ]
-                ),
-              ),]
-              ),
+          child: Column(children: [
+            Container(
+              //width: 400,
+              height: 200,
+              child: MyRiveAnimation(),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Column(children: [
+                Text(' No tienes clases hoy,',
+                    style: TextStyle(
+                        fontFamily: fontApp,
+                        color: colorAppSkyBlue,
+                        fontSize: 22)),
+                Text('descansa 😌',
+                    style: TextStyle(
+                        fontFamily: fontApp,
+                        color: colorAppSkyBlue,
+                        fontSize: 22)),
+              ]),
+            ),
+          ]),
         );
       }
     } else {
-      return LoadingCircle(
-        loadingText: 'Cargando clase...',
+      return Padding(
+        padding: const EdgeInsets.only(top: 30, bottom: 30),
+        child: Container(
+            height: 150,
+          child: LoadingCircle(
+            loadingText: 'Cargando clase...',
+          ),
+        ),
       );
     }
   }
@@ -360,4 +366,3 @@ class _MyRiveAnimationState extends State<MyRiveAnimation> {
         : Container();
   }
 }
-

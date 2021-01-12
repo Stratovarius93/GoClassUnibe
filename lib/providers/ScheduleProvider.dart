@@ -89,6 +89,7 @@ class ScheduleProvider with ChangeNotifier {
   _setScheduleList(List<Schedule> scheduleList) {
     _scheduleList = scheduleList;
   }
+  String getCurrentDay()=>_currentDay;
 
   String _getCareer() => _career;
   setCareer(String career) {
