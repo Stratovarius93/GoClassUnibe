@@ -6,6 +6,7 @@ import 'package:GoClassUnibe/providers/StudentProvider.dart';
 import 'package:GoClassUnibe/widgets/screens/homeApp/FirstHome.dart';
 import 'package:GoClassUnibe/widgets/screens/homeApp/HomeScreen.dart';
 import 'package:GoClassUnibe/widgets/screens/homeApp/LoginScreen.dart';
+import 'package:GoClassUnibe/widgets/screens/mainApp/ConnectingScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 //import 'package:GoClassUnibe/widgets/screens/homeApp/FirstHome.dart';
@@ -59,7 +60,13 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(splashColor: Colors.transparent),
           debugShowCheckedModeBanner: false,
           title: 'MyApp',
-          home: IndexScreen()),
+          initialRoute: IndexScreen.routeName,
+          routes: {
+            IndexScreen.routeName : (BuildContext context) => IndexScreen(),
+            ConnectingScreen.routeName: (BuildContext context) => ConnectingScreen()
+          },
+          //home: IndexScreen()
+              ),
     );
   }
 }

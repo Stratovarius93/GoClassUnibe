@@ -12,27 +12,31 @@ class PeriodProvider with ChangeNotifier {
     this.getPeriodByID();
   }
   getPeriodByID() async {
-    await SQLServerRequest().fetchPeriod().then((res) {
-      if (res.statusCode == 200) {
-        final decodedData = periodFromJson(res.body);
-        List<Period> list = [];
-        list.addAll(decodedData);
-        _setPeriodlist(list);
-      } else {
-        throw Exception('Failed to load data');
-      }
-    });
+    try {
+      await SQLServerRequest().fetchPeriod().then((res) {
+        if (res.statusCode == 200) {
+          final decodedData = periodFromJson(res.body);
+          List<Period> list = [];
+          list.addAll(decodedData);
+          _setPeriodlist(list);
+        } else {
+          throw Exception('Failed to load data');
+        }
+      });
 
-    await SQLServerRequest().fetchRegistration().then((res) {
-      if (res.statusCode == 200) {
-        final decodedData = registrationFromJson(res.body);
-        List<Registration> list = [];
-        list.addAll(decodedData);
-        _setRegistrationList(list);
-      } else {
-        throw Exception('Failed to load data');
-      }
-    });
+      await SQLServerRequest().fetchRegistration().then((res) {
+        if (res.statusCode == 200) {
+          final decodedData = registrationFromJson(res.body);
+          List<Registration> list = [];
+          list.addAll(decodedData);
+          _setRegistrationList(list);
+        } else {
+          throw Exception('Failed to load data');
+        }
+      });
+    } catch (e) {
+      print('No internet connection');
+    }
     List<List<int>> _currenPeriodInt = [];
     List<List<int>> _listInt = [];
     for (var i = 0, len = _registrationList.length; i < len; ++i) {
@@ -64,7 +68,6 @@ class PeriodProvider with ChangeNotifier {
     }
     _setCurrentPeriod(_listCurrentPeriod);
     notifyListeners();
-
   }
 
   List<Period> getPeriodlist() => _periodlist;
@@ -73,7 +76,6 @@ class PeriodProvider with ChangeNotifier {
     _periodlist = periodlist;
     notifyListeners();
   }
-
 
   List<Period> getCurrentPeriod() => _currentPeriod;
 
@@ -88,4 +90,3 @@ class PeriodProvider with ChangeNotifier {
     notifyListeners();
   }
 }
-

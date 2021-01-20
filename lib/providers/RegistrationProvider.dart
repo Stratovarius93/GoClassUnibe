@@ -10,17 +10,21 @@ class RegistrationProvider with ChangeNotifier {
   }
 
   getRegistrationByID() async {
-    await SQLServerRequest().fetchRegistration().then((res) {
-      if (res.statusCode == 200) {
-        final decodedData = registrationFromJson(res.body);
-        List<Registration> list = [];
-        list.addAll(decodedData);
-        setRegistrationList(list);
-        notifyListeners();
-      } else {
-        throw Exception('failed to load data');
-      }
-    });
+    try {
+      await SQLServerRequest().fetchRegistration().then((res) {
+        if (res.statusCode == 200) {
+          final decodedData = registrationFromJson(res.body);
+          List<Registration> list = [];
+          list.addAll(decodedData);
+          setRegistrationList(list);
+          notifyListeners();
+        } else {
+          throw Exception('failed to load data');
+        }
+      });
+    } catch (e) {
+      print('No internet connection');
+    }
   }
 
   List<Registration> getRegistrationList() => _registrationList;

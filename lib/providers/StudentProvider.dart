@@ -4,33 +4,41 @@ import 'package:flutter/material.dart';
 
 class StudentProvider with ChangeNotifier {
   Student _student;
+  bool connectionStatus = false;
   StudentProvider() {
     this.getStudentByID();
   }
 
   getStudentByID() async {
-    await SQLServerRequest().fetchStudent().then((res) {
-      if (res.statusCode == 200) {
-        final decodedData = studentFromJson(res.body);
-        if (decodedData.length > 0) {
-          if (decodedData.length == 1) {
-            List<Student> list = [];
-            list.addAll(decodedData);
-            this.setStudent(list[0]);
-            notifyListeners();
+    try {
+      await SQLServerRequest().fetchStudent().then((res) {
+        if (res.statusCode == 200) {
+          final decodedData = studentFromJson(res.body);
+          if (decodedData.length > 0) {
+            if (decodedData.length == 1) {
+              List<Student> list = [];
+              list.addAll(decodedData);
+              this.setStudent(list[0]);
+              notifyListeners();
+            } else {
+              List<Student> list = [];
+              list.addAll(decodedData);
+              this.setStudent(list[0]);
+              notifyListeners();
+            }
+            this.connectionStatus = true;
+            print('SQL Server Connected');
           } else {
-            List<Student> list = [];
-            list.addAll(decodedData);
-            this.setStudent(list[0]);
-            notifyListeners();
+            print('There is no student with this ID');
           }
         } else {
-          print('There is no student with this ID');
+          throw Exception('Failed to load data');
         }
-      } else {
-        throw Exception('Failed to load data');
-      }
-    });
+      });
+    } catch (e) {
+      print('No internet connection');
+      this.connectionStatus = false;
+    }
   }
 
   Student getStudent() => _student;

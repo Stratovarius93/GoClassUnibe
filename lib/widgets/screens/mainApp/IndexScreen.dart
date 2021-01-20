@@ -1,4 +1,6 @@
+import 'package:GoClassUnibe/constants/Fonts.dart';
 import 'package:GoClassUnibe/constants/Sizes.dart';
+import 'package:GoClassUnibe/providers/StudentProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:GoClassUnibe/widgets/screens/mainApp/ScheduleScreen.dart';
 import 'package:GoClassUnibe/widgets/screens/mainApp/DasshboardScreen.dart';
@@ -7,13 +9,18 @@ import 'package:GoClassUnibe/widgets/screens/mainApp/SettingsScreen.dart';
 import 'package:GoClassUnibe/constants/Colors.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:colorful_safe_area/colorful_safe_area.dart';
+import 'package:provider/provider.dart';
 
 class IndexScreen extends StatelessWidget {
+  static final String routeName = 'indexScreen';
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: HomeMenu(),
-    );
+    final studentProvider = Provider.of<StudentProvider>(context);
+    if (studentProvider.connectionStatus == true) {
+      return HomeMenu();
+    } else {
+      return connectingScreen();
+    }
   }
 }
 
@@ -106,4 +113,41 @@ class ElementItemIcon {
   IconData iconDataOutline;
   String name;
   ElementItemIcon(this.iconData, this.iconDataOutline, this.name);
+}
+
+Widget connectingScreen() {
+  TextStyle _textStyle1 = TextStyle(
+      fontFamily: fontApp,
+      color: colorAppTextDark,
+      fontSize: 25,
+      fontWeight: FontWeight.bold);
+
+  TextStyle _textStyle2 = TextStyle(
+    fontFamily: fontApp,
+    color: colorAppTextLight,
+    fontSize: 20,
+  );
+
+  return Scaffold(
+    body: Container(
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            CircularProgressIndicator(
+              valueColor: AlwaysStoppedAnimation<Color>(colorAppTextLight),
+            ),
+            SizedBox(
+              height: 16,
+            ),
+            Text(
+              'Cargando ...',
+              style: _textStyle1,
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
 }

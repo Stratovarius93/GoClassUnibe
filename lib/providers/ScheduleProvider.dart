@@ -8,6 +8,7 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 
 class ScheduleProvider with ChangeNotifier {
+  bool connectionStatus = false;
   List<Schedule> _scheduleList = [];
   List<ScheduleSignature> _listFull = [];
   int _indexMax = 10;
@@ -54,8 +55,10 @@ class ScheduleProvider with ChangeNotifier {
         list.addAll(decodedData);
         _setScheduleList(list);
         //print(_scheduleList.toString());
+
       }
     });
+
     //print(_career);
     for (var i = 0, len = _getScheduleList().length; i < len; ++i) {
       if (_scheduleList[i].career == _getCareer()) {
@@ -82,6 +85,10 @@ class ScheduleProvider with ChangeNotifier {
     _setDashboard(_index, _listFull);
     //print(getDashboardList().toString());
     notifyListeners();
+
+    this.connectionStatus = true;
+    print('GSheets connected');
+
   }
 
   List<Schedule> _getScheduleList() => _scheduleList;
@@ -89,7 +96,8 @@ class ScheduleProvider with ChangeNotifier {
   _setScheduleList(List<Schedule> scheduleList) {
     _scheduleList = scheduleList;
   }
-  String getCurrentDay()=>_currentDay;
+
+  String getCurrentDay() => _currentDay;
 
   String _getCareer() => _career;
   setCareer(String career) {
