@@ -9,6 +9,7 @@ import 'package:GoClassUnibe/widgets/generics/mainApp/schedule/ScheduleReorderab
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+class ScheduleScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final scheduleProvider = Provider.of<ScheduleProvider>(context);
@@ -39,54 +40,4 @@ import 'package:provider/provider.dart';
           child: LoadingCircle( loadingText: 'Cargando horario...', )),
     );
   }
-
-  Widget _toggleButtonsDay() {
-    return ToggleButtons(
-      color: colorAppTextDark,
-      fillColor: Colors.transparent,
-      splashColor: Colors.transparent,
-      renderBorder: false,
-      children: _dayList.map((val) {
-        var subIndex = _dayList.indexOf(val);
-        return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 16),
-          child: Container(
-            decoration: BoxDecoration(boxShadow: <BoxShadow>[boxShadowApp]),
-            child: CircleAvatar(
-                radius: (MediaQuery.of(context).size.width * 0.15) / 2,
-                backgroundColor:
-                    _daySelected[subIndex] ? colorTextBlue : Colors.white,
-                child: Text(
-                  val[0].toUpperCase(),
-                  style: TextStyle(
-                      color: _daySelected[subIndex]
-                          ? Colors.white
-                          : colorAppTextDark,
-                      fontFamily: fontApp,
-                      fontWeight: FontWeight.w800,
-                      fontSize: 30),
-                )),
-          ),
-        );
-      }).toList(),
-      onPressed: (int index) {
-        setState(() {
-          for (int buttonIndex = 0;
-              buttonIndex < _daySelected.length;
-              buttonIndex++) {
-            if (buttonIndex == index) {
-              _daySelected[buttonIndex] = true;
-            } else {
-              _daySelected[buttonIndex] = false;
-            }
-          }
-          _index = index;
-          print(_dayList[index]);
-        });
-      },
-      isSelected: _daySelected,
-    );
-  }
 }
-
-

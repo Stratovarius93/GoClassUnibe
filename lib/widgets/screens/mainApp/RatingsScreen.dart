@@ -29,7 +29,6 @@ PageController _pageController = new PageController();
 class _RatingsScreenState extends State<RatingsScreen> {
   @override
   Widget build(BuildContext context) {
-    final studentData = Provider.of<StudentData>(context);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(

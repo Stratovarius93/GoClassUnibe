@@ -88,7 +88,6 @@ class _RecordScreenState extends State<RecordScreen> {
           ),
         ),
       ),
-      itemCount: 5,
     );
   }
 
