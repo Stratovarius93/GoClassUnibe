@@ -1,102 +1,111 @@
 import 'package:GoClassUnibe/constants/Fonts.dart';
 import 'package:GoClassUnibe/constants/Title.dart';
+import 'package:GoClassUnibe/providers/StudentProvider.dart';
 import 'package:GoClassUnibe/widgets/generics/mainApp/BigTitle.dart';
+import 'package:GoClassUnibe/widgets/generics/mainApp/LoadingCircle.dart';
 import 'package:flutter/material.dart';
 import 'package:GoClassUnibe/constants/Colors.dart';
-import 'package:GoClassUnibe/widgets/generics/mainApp/SingleTitle.dart';
 import 'package:GoClassUnibe/widgets/generics/mainApp/CategoryText.dart';
 import 'package:GoClassUnibe/widgets/generics/mainApp/SettingsCard1.dart';
 import 'package:GoClassUnibe/widgets/generics/mainApp/SettingsCard2.dart';
 import 'package:provider/provider.dart';
-import 'package:GoClassUnibe/services/serviceStudent.dart';
+import 'package:scroll_glow_color/widget/scroll_glow_color.dart';
 
 class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final studentData = Provider.of<StudentData>(context);
+    final studentProvider = Provider.of<StudentProvider>(context);
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         //title: 'MainApp',
         home: Scaffold(
           backgroundColor: colorAppBackground,
-          body: ListView(
-            shrinkWrap: true,
-            children: [
-              Container(
-//padding: EdgeInsets.symmetric(vertical:16, horizontal: 16),
-                  padding: EdgeInsets.only(
-                      top: titlePaddingTop(context),
-                      left: 16,
-                      right: 16,
-                      bottom: 16),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      BigTitle(
-                        title: "Configuración",
-                      ),
-                      CategoryText(
-                        title: "Perfil",
-                      ),
-                      SizedBox(
-                        height: 16,
-                      ),
-                      //Center(
-                      //child: ProfileImage(
-                      //name:
-                      //studentData.getName + ' ' + studentData.getLastName,
-                      //idNumber: (studentData.getIdNumber).toString(),
-                      //)),
-                      _profileCircle(
-                          studentData.getName,
-                          studentData.getLastName,
-                          studentData.getIdNumber,
-                          context),
-                      SizedBox(
-                        height: 16,
-                      ),
-                      SettingsCard1(
-                        career: studentData.getCareer,
-                        email: studentData.getEmail,
-                      ),
-                      SizedBox(
-                        height: 16,
-                      ),
-                      CategoryText(
-                        title: "Páginas web",
-                      ),
-                      SizedBox(
-                        height: 16,
-                      ),
-                      SettingsCard2(),
-                      SizedBox(
-                        height: 16,
-                      ),
-                      CategoryText(
-                        title: "Sesión",
-                      ),
-                      SizedBox(
-                        height: 16,
-                      ),
-                      Center(
-                        child: LogOutApp(),
-                      ),
-                      SizedBox(
-                        height: 16,
-                      ),
-                      Center(
-                        child: Text("GoClassUnibe V. 0.1",
-                            style: TextStyle(
-                                fontFamily: fontApp,
-                                color: colorAppTextLight,
-                                fontSize: 16)),
-                      ),
-                      SizedBox(
-                        height: 16,
-                      ),
-                    ],
-                  ))
-            ],
+          body: ScrollGlowColor(
+            color: colorGlow,
+            child: ListView(
+              physics: BouncingScrollPhysics(),
+              //shrinkWrap: true,
+              children: [
+                Container(
+                    padding: EdgeInsets.only(
+                        top: titlePaddingTop(context),
+                        left: 16,
+                        right: 16,
+                        bottom: 16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        BigTitle(
+                          title: "Configuración",
+                        ),
+                        CategoryText(
+                          title: "Perfil",
+                        ),
+                        SizedBox(
+                          height: 16,
+                        ),
+                        (studentProvider.getStudent() == null)
+                            ?LoadingCircle(loadingText: 'Cargando perfil...',) 
+                            : _profileCircle(
+                                studentProvider.getStudent().name,
+                                studentProvider.getStudent().lastName,
+                                studentProvider.getStudent().studentId,
+                                context),
+                        SizedBox(
+                          height: 16,
+                        ),
+                        (studentProvider.getStudent() == null)
+                            ? SettingsCard1(
+                                email: 'correo',
+                                career: 'carrera',
+                                onTapPass: () {},
+                                onTapEmail: () {},
+                              )
+                            : SettingsCard1(
+                                email: 'scarlett@hotmail.es',
+                                career: studentProvider.getStudent().career,
+                                onTapPass: () {},
+                                onTapEmail: () {},
+                              ),
+                        SizedBox(
+                          height: 16,
+                        ),
+                        CategoryText(
+                          title: "Páginas web",
+                        ),
+                        SizedBox(
+                          height: 16,
+                        ),
+                        SettingsCard2(),
+                        SizedBox(
+                          height: 16,
+                        ),
+                        CategoryText(
+                          title: "Sesión",
+                        ),
+                        SizedBox(
+                          height: 16,
+                        ),
+                        Center(
+                          child: LogOutApp(),
+                        ),
+                        SizedBox(
+                          height: 16,
+                        ),
+                        Center(
+                          child: Text("GoClassUnibe V. 0.1",
+                              style: TextStyle(
+                                  fontFamily: fontApp,
+                                  color: colorAppTextLight,
+                                  fontSize: 16)),
+                        ),
+                        SizedBox(
+                          height: 16,
+                        ),
+                      ],
+                    ))
+              ],
+            ),
           ),
         ));
   }
@@ -160,7 +169,7 @@ class _LogOutAppState extends State<LogOutApp> {
           }),
           child: Icon(
             Icons.exit_to_app,
-            color: colorAppPurple,
+            color: colorAppGreen,
           ),
         ),
         SizedBox(
@@ -172,7 +181,7 @@ class _LogOutAppState extends State<LogOutApp> {
           }),
           child: Text("Cerrar Sesión",
               style: TextStyle(
-                  color: colorAppPurple,
+                  color: colorAppGreen,
                   fontFamily: fontApp,
                   fontSize: 18,
                   fontWeight: FontWeight.w600)),

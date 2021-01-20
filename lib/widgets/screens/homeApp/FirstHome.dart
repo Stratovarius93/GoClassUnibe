@@ -14,8 +14,8 @@ class FirstHome extends StatelessWidget {
             Scaffold(
               body: Center(
                 child: Background(
-                  color1: colorButtonPurpleLight1,
-                  color2: colorInputBlueLight,
+                  color1: colorButtonBlueDark1,
+                  color2: colorInput,
                 ),
               ),
             ),
@@ -27,8 +27,8 @@ class FirstHome extends StatelessWidget {
                   onTap: () {
                     print("Iniciando sesion");
                   },
-                  color1: colorButtonPurpleDark1,
-                  color2: colorButtonPurpleDark2,
+                  color1: colorButtonBlueDark1,
+                  color2: colorButtonBlueDark2,
                 ),
               ),
             )

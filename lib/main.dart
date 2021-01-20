@@ -57,7 +57,9 @@ void main() {
       systemNavigationBarColor: Colors.white,
       systemNavigationBarIconBrightness: Brightness.dark,
       statusBarIconBrightness: Brightness.dark,
-      statusBarColor: Colors.transparent));
+      statusBarColor: Colors.transparent
+      //statusBarBrightness: Brightness.dark
+      ));
   runApp(MyApp());
 }
 

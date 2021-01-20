@@ -1,23 +1,26 @@
+import 'package:GoClassUnibe/constants/Fonts.dart';
+import 'package:GoClassUnibe/constants/Sizes.dart';
+import 'package:GoClassUnibe/providers/StudentProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:GoClassUnibe/widgets/screens/mainApp/ScheduleScreen.dart';
 import 'package:GoClassUnibe/widgets/screens/mainApp/DasshboardScreen.dart';
-import 'package:GoClassUnibe/widgets/screens/mainApp/RecordScreen.dart';
 import 'package:GoClassUnibe/widgets/screens/mainApp/RatingsScreen.dart';
 import 'package:GoClassUnibe/widgets/screens/mainApp/SettingsScreen.dart';
 import 'package:GoClassUnibe/constants/Colors.dart';
-import 'package:provider/provider.dart';
-import 'package:GoClassUnibe/services/serviceStudent.dart';
+import 'package:ionicons/ionicons.dart';
 import 'package:colorful_safe_area/colorful_safe_area.dart';
+import 'package:provider/provider.dart';
 
 class IndexScreen extends StatelessWidget {
+  static final String routeName = 'indexScreen';
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => StudentData(),
-      child: Container(
-        child: HomeMenu(),
-      ),
-    );
+    final studentProvider = Provider.of<StudentProvider>(context);
+    if (studentProvider.connectionStatus == true) {
+      return HomeMenu();
+    } else {
+      return connectingScreen();
+    }
   }
 }
 
@@ -31,24 +34,30 @@ class _HomeMenuState extends State<HomeMenu> {
   int _currentIndex = 0;
   final tabs = [
     ColorfulSafeArea(color: colorAppBackground, child: DasshboardScreen()),
-    ColorfulSafeArea(color: colorAppBackground, child: RecordScreen()),
     ColorfulSafeArea(color: colorAppBackground, child: ScheduleScreen()),
     ColorfulSafeArea(color: colorAppBackground, child: RatingsScreen()),
     ColorfulSafeArea(color: colorAppBackground, child: SettingsScreen()),
   ];
+  List<ElementItemIcon> _elementItemIconList = [
+    ElementItemIcon(Ionicons.home, Ionicons.home_outline, "Home"),
+    ElementItemIcon(Ionicons.calendar, Ionicons.calendar_outline, "Home"),
+    ElementItemIcon(Ionicons.checkbox, Ionicons.checkbox_outline, "Home"),
+    ElementItemIcon(Ionicons.person, Ionicons.person_outline, "Home"),
+  ];
+  List<bool> _selected = [true, false, false, false, false];
   @override
   Widget build(BuildContext context) {
-    _iconSize = MediaQuery.of(context).size.width * 0.08;
+    _iconSize = ConstWidthScreen(context) * 0.08;
     return Scaffold(
       body: tabs[_currentIndex],
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
           boxShadow: <BoxShadow>[
             BoxShadow(
-                color: colorNavBarButtonDisable.withOpacity(0.8),
-                blurRadius: 22,
+                color: Colors.blueGrey.shade100,
+                blurRadius: 12,
                 offset: Offset(0.0, 0.0),
-                spreadRadius: 8)
+                spreadRadius: 4)
           ],
         ),
         child: ClipRRect(
@@ -62,37 +71,25 @@ class _HomeMenuState extends State<HomeMenu> {
             //backgroundColor: white,
             selectedItemColor: colorNavBarButtonActive,
             unselectedItemColor: colorNavBarButtonDisable,
-            elevation: 6.0,
-            items: [
-              BottomNavigationBarItem(
-                icon: Icon(Icons.home, size: _iconSize),
-                title: Text("Inicio"),
-                //backgroundColor: Colors.blue
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.format_list_bulleted, size: _iconSize),
-                title: Text("Récord"),
-                //backgroundColor: Colors.blue
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.date_range, size: _iconSize),
-                title: Text("Horario"),
-                //backgroundColor: Colors.blue
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.assignment, size: _iconSize),
-                title: Text("Notas"),
-                //backgroundColor: Colors.blue
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.account_circle, size: _iconSize),
-                title: Text("Cuenta"),
-                //backgroundColor: Colors.blue
-              )
-            ],
+            elevation: 2.0,
+            items: _elementItemIconList.map((val) {
+              var subIndex = _elementItemIconList.indexOf(val);
+              var iconData =
+                  _selected[subIndex] ? val.iconData : val.iconDataOutline;
+              return _iconNavBar(iconData, Text(val.name));
+            }).toList(),
             onTap: (index) {
               setState(() {
                 _currentIndex = index;
+                for (int buttonIndex = 0;
+                    buttonIndex < _selected.length;
+                    buttonIndex++) {
+                  if (buttonIndex == index) {
+                    _selected[buttonIndex] = true;
+                  } else {
+                    _selected[buttonIndex] = false;
+                  }
+                }
               });
             },
           ),
@@ -100,4 +97,57 @@ class _HomeMenuState extends State<HomeMenu> {
       ),
     );
   }
+
+  BottomNavigationBarItem _iconNavBar(IconData iconData, Widget text) {
+    return BottomNavigationBarItem(
+        icon: Icon(
+          iconData,
+          size: _iconSize,
+        ),
+        title: text);
+  }
+}
+
+class ElementItemIcon {
+  IconData iconData;
+  IconData iconDataOutline;
+  String name;
+  ElementItemIcon(this.iconData, this.iconDataOutline, this.name);
+}
+
+Widget connectingScreen() {
+  TextStyle _textStyle1 = TextStyle(
+      fontFamily: fontApp,
+      color: colorAppTextDark,
+      fontSize: 25,
+      fontWeight: FontWeight.bold);
+
+  TextStyle _textStyle2 = TextStyle(
+    fontFamily: fontApp,
+    color: colorAppTextLight,
+    fontSize: 20,
+  );
+
+  return Scaffold(
+    body: Container(
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            CircularProgressIndicator(
+              valueColor: AlwaysStoppedAnimation<Color>(colorAppTextLight),
+            ),
+            SizedBox(
+              height: 16,
+            ),
+            Text(
+              'Cargando ...',
+              style: _textStyle1,
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
 }

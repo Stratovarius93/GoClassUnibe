@@ -1,72 +1,42 @@
-import 'package:GoClassUnibe/constants/Shadows.dart';
-import 'package:GoClassUnibe/constants/Fonts.dart';
-import 'package:GoClassUnibe/constants/Title.dart';
-import 'package:GoClassUnibe/widgets/generics/mainApp/CategoryText.dart';
-import 'package:flutter/material.dart';
-import 'package:GoClassUnibe/widgets/generics/mainApp/BigTitle.dart';
-import 'package:intl/intl.dart';
 import 'package:GoClassUnibe/constants/Colors.dart';
-import 'package:intl/date_symbol_data_local.dart';
-
-class ScheduleScreen extends StatefulWidget {
-  @override
-  _ScheduleScreenState createState() => _ScheduleScreenState();
-}
-
-class _ScheduleScreenState extends State<ScheduleScreen> {
-  int _index;
-  String _currentDay;
-  var _date = DateTime.now();
-  final List<String> _dayList = [
-    'lunes',
-    'martes',
-    'miércoles',
-    'jueves',
-    'viernes'
-  ];
-  final List<bool> _daySelected = [false, false, false, false, false];
-
-  @override
-  void initState() {
-    super.initState();
-    initializeDateFormatting();
-    _currentDay = DateFormat.EEEE('es_ES').format(_date);
-    for (var i = 0, len = _dayList.length; i < len; ++i) {
-      if (_dayList[i] == _currentDay) {
-        _index = i;
-        _daySelected[i] = true;
-      } else if (_currentDay == 'sábado' || _currentDay == 'domingo') {
-        _index = 0;
-        _daySelected[0] = true;
-      }
-    }
-  }
+import 'package:GoClassUnibe/providers/ScheduleProvider.dart';
+import 'package:GoClassUnibe/providers/StudentProvider.dart';
+import 'package:GoClassUnibe/widgets/generics/mainApp/CategoryText.dart';
+import 'package:GoClassUnibe/widgets/generics/mainApp/LoadingCircle.dart';
+import 'package:GoClassUnibe/widgets/generics/mainApp/schedule/ScheduleAppBar.dart';
+import 'package:GoClassUnibe/widgets/generics/mainApp/schedule/ScheduleDayTopButtons.dart';
+import 'package:GoClassUnibe/widgets/generics/mainApp/schedule/ScheduleReorderableList.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        backgroundColor: colorAppBackground,
-        body: ListView(children: [
-          Container(
-              padding: EdgeInsets.only(
-                  top: titlePaddingTop(context),
-                  left: 16,
-                  right: 16,
-                  bottom: 0),
-              child: BigTitle(
-                title: "Horario",
-              )),
-          _toggleButtonsDay(),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: CategoryText(
-              title: _dayList[_index],
-            ),
+    final scheduleProvider = Provider.of<ScheduleProvider>(context);
+
+    //final studentProvider = Provider.of<StudentProvider>(context);
+    //if (studentProvider.getStudent() != null) {
+      
+    //scheduleProvider.setCareer(studentProvider.getStudent().career);
+    //}
+
+
+    return Scaffold(
+      backgroundColor: colorAppBackground,
+      appBar: scheduleAppBar(),
+      body: (scheduleProvider.getListFull().length > 0)
+      ?Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        ScheduleDayTopButtons(),
+        Padding(
+          padding: const EdgeInsets.only(left: 16.0, bottom: 16),
+          child: CategoryText(
+            title: scheduleProvider
+                .getWeekDaysList()[scheduleProvider.getIndex()],
           ),
-        ]),
-      ),
+        ),
+        ReorderableListItems(),
+      ])
+      :Container(
+          child: LoadingCircle( loadingText: 'Cargando horario...', )),
     );
   }
 
@@ -118,3 +88,5 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
     );
   }
 }
+
+

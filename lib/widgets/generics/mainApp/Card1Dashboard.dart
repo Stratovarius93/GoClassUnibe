@@ -59,7 +59,7 @@ class SignatureCard extends StatelessWidget {
       children: [
         CircleAvatar(
           radius: 18,
-          backgroundColor: colorAppSkyBlue,
+          backgroundColor: colorAppYellow,
           child: Icon(
             Icons.book,
             color: Colors.white,
@@ -150,13 +150,13 @@ class TimeCard extends StatelessWidget {
     return Container(
       padding: EdgeInsets.only(top: 4, bottom: 4, left: 8, right: 8),
       decoration: BoxDecoration(
-          color: colorInputPurpleLight,
+          color: colorAppRed.withOpacity(0.2),
           borderRadius: BorderRadius.circular(16)),
       child: Row(
         children: [
           Icon(
             Icons.access_time,
-            color: colorAppPurple,
+            color: colorAppRed,
           ),
           SizedBox(
             width: 8,
@@ -164,7 +164,7 @@ class TimeCard extends StatelessWidget {
           Text(
             subjectTime,
             style: TextStyle(
-                fontFamily: fontApp, fontSize: 16, color: colorAppPurple),
+                fontFamily: fontApp, fontSize: 16, color: colorAppRed),
           )
         ],
       ),

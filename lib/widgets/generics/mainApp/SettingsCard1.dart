@@ -26,7 +26,7 @@ class SettingsCard1 extends StatelessWidget {
           Row(
             children: [
               CircleAvatar(
-                backgroundColor: colorAppGreen,
+                backgroundColor: colorAppYellow,
                 child: Icon(
                   Icons.local_library,
                   color: Colors.white,
@@ -52,7 +52,7 @@ class SettingsCard1 extends StatelessWidget {
           Row(
             children: [
               CircleAvatar(
-                backgroundColor: colorAppSkyBlue,
+                backgroundColor: colorAppYellow,
                 child: Icon(
                   Icons.alternate_email,
                   color: Colors.white,
