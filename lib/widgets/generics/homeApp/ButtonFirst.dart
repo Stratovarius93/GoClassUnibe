@@ -57,12 +57,11 @@ class _ButtonFirstState extends State<ButtonFirst> {
   Widget build(BuildContext context) {
     return GestureDetector(
       child: Container(
-          margin: const EdgeInsets.only(top: 40.0),
-          height: 60.0,
-          width: (MediaQuery.of(context).size.width) * 0.55,
+          height: 65.0,
+          margin: EdgeInsets.only(top: 12, bottom: 12),
           decoration: BoxDecoration(
               color: _tapInProgress ? widget.color2 : widget.color1,
-              borderRadius: BorderRadius.circular(30),
+              borderRadius: BorderRadius.circular(35),
               /*boxShadow: [
                 BoxShadow(
                     color: widget.color1,
@@ -75,6 +74,7 @@ class _ButtonFirstState extends State<ButtonFirst> {
             style: TextStyle(
               color: _tapInProgress ? widget.colorText2 : widget.colorText1,
               fontFamily: fontApp,
+              fontWeight: FontWeight.w700,
               fontSize: 20.0,
             ),
           ))),

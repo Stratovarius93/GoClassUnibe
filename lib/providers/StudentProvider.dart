@@ -1,17 +1,21 @@
 import 'package:GoClassUnibe/models/StudentModel.dart';
+import 'package:GoClassUnibe/preferences/userPreferences.dart';
 import 'package:GoClassUnibe/requests/SQLServerRequest.dart';
 import 'package:flutter/material.dart';
 
 class StudentProvider with ChangeNotifier {
   Student _student;
   bool connectionStatus = false;
+
+  final _prefs = new UserPreferences();
   StudentProvider() {
     this.getStudentByID();
   }
 
   getStudentByID() async {
     try {
-      await SQLServerRequest().fetchStudent().then((res) {
+      final id = await _prefs.studentID;
+      await SQLServerRequest().fetchStudent(id.toString()).then((res) {
         if (res.statusCode == 200) {
           final decodedData = studentFromJson(res.body);
           if (decodedData.length > 0) {

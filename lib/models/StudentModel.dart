@@ -3,6 +3,8 @@ import 'dart:convert';
 List<Student> studentFromJson(String str) =>
     List<Student>.from(json.decode(str).map((x) => Student.fromJson(x)));
 
+String studentToJson(Student data) => json.encode(data.toJson());
+
 class Student {
   Student({
     this.studentId,
@@ -22,4 +24,10 @@ class Student {
         lastName: json["lastName"],
         career: json["career"],
       );
+  Map<String, dynamic> toJson() => {
+        "studentID": studentId,
+        "name": name,
+        "lastName": lastName,
+        "career": career,
+      };
 }

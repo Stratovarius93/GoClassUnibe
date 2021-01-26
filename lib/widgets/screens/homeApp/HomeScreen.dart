@@ -10,47 +10,59 @@ import 'package:flutter/widgets.dart';
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: <Widget>[
-        Background(
-          color1: colorButtonBlueDark1,
-          color2: colorButtonBlueDark1,
-        ),
-        Container(
-          child: Column(
-            children: <Widget>[
-              Image.asset(
-                'images/Go.png',
-                height: 250.0,
-                width: 320.0,
-              ),
-              MainTitle(
-                colorText: colorAppYellow,
-                Title: "GoClass UNIB.E",
-              ),
-              SecondMiniText(
-                colorText: colorAppTextDark,
-                Title:
-                    "Consulta tu información académica, crea tu horario y más desde un solo lugar",
-              ),
-              ButtonFirst(
-                color1: colorButtonBlueDark1,
-                color2: colorButtonBlueDark2,
-                colorText1: colorButtonBlueDark1,
-                colorText2: colorAppBackground,
-                title: "Iniciar Sesión",
-              ),
-              ButtonFirst(
-                color1: colorButtonBlueDark2,
-                color2: colorButtonBlueDark1,
-                colorText1: colorAppBackground,
-                colorText2: colorButtonBlueDark2,
-                title: "Registrarse",
-              ),
-            ],
+    return Scaffold(
+        resizeToAvoidBottomPadding: false,
+      body: Stack(
+        children: <Widget>[
+          Background(
+            color1: colorButtonYellow1.withOpacity(0.3),
+            color2: colorButtonYellow2.withOpacity(0.3),
           ),
-        ),
-      ],
+          Container(
+              padding: EdgeInsets.all(40),
+            child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Image.asset(
+                  'images/go2.png',
+                  height: 250.0,
+                  width: 320.0,
+                ),
+                MainTitle(
+                  colorText: colorAppBlue,
+                  title: "GoClass UNIB.E",
+                ),
+                SecondMiniText(
+                  colorText: colorAppTextDark,
+                  title:
+                      "Consulta tu información académica, crea tu horario y más desde un solo lugar",
+                ),
+                SizedBox(height: 16,),
+                ButtonFirst(
+                  color1: colorButtonYellow2,
+                  color2: colorButtonYellow1,
+                  colorText1: colorButtonBlueDark1,
+                  colorText2: colorAppBackground,
+                  title: "Iniciar Sesión",
+                  onTap: (){
+                    Navigator.pushNamed(context, 'loginScreen');
+                  },
+                ),
+                ButtonFirst(
+                  color1: colorAppBlue,
+                  color2: colorButtonBlueDark1,
+                  colorText1: colorAppBackground,
+                  colorText2: colorAppBackground,
+                  title: "Registrarse",
+                  onTap: (){
+                    Navigator.pushNamed(context, 'signUpScreen');
+                  },
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

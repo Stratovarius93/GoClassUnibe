@@ -4,24 +4,17 @@ Color color11;
 Color _color2;
 double imageSize;
 
-class Background extends StatelessWidget {
+class Background2 extends StatelessWidget {
   final Color color1;
   final Color color2;
-  const Background({Key key, this.color1, this.color2}) : super(key: key);
+  const Background2({Key key, this.color1, this.color2}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    imageSize = MediaQuery.of(context).size.height * 0.20;
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Background',
-      home: Scaffold(
-        //appBar: AppBar(
-        //title: Text('Prueba CustomP'),
-        //),
-        body: CustomPAnimated1(
-          color1: color1,
-          color2: color2,
-        ),
+    imageSize = MediaQuery.of(context).size.width * 0.5;
+    return Scaffold(
+      body: CustomPAnimated1(
+        color1: color1,
+        color2: color2,
       ),
     );
   }
@@ -43,11 +36,6 @@ class MyPainter extends CustomPainter {
         colors: colorG,
         stops: stopsG,
       ).createShader(rect);
-    //..color = Color(0xff21232a);
-    //..style = PaintingStyle.stroke
-    //..strokeWidth = 5
-    //..strokeCap = StrokeCap.round;
-    //paint.color = Color(0xFF21232a);
     final path = new Path();
     path.lineTo(0, size.height);
     path.quadraticBezierTo(
@@ -74,10 +62,6 @@ class MyPainter2 extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     final rect = Offset.zero & size;
     final paint = new Paint()
-      //..color = Color(0xff21232a)
-      //..style = PaintingStyle.stroke
-      //..strokeWidth = 5
-      //..strokeCap = StrokeCap.round;
       ..shader = LinearGradient(
         begin: Alignment.topRight,
         end: Alignment.bottomLeft,
@@ -135,28 +119,20 @@ class _CustomPAnimated1State extends State<CustomPAnimated1>
               Align(
                 alignment: Alignment.topLeft,
                 child: Container(
-                    //alignment: Alignment.topLeft,
-                    height: imageSize + (15 * _controller.value),
-                    width: imageSize + (15 * _controller.value),
-                    //color: Colors.black12,
+                    height: imageSize + (22 * _controller.value),
+                    width: imageSize + (22 * _controller.value),
                     child: CustomPaint(
                       painter: MyPainter(
                           [widget.color1, widget.color2, widget.color1],
                           [0.0, _controller.value, 1.0]),
                     )),
               ),
-
-              //SizedBox(
-              //height: MediaQuery.of(context).size.height -
-              //(2 * (imageSize + (10 * _controller.value))),
-              //),
-
               Align(
                 alignment: Alignment.bottomRight,
                 child: Container(
                     //alignment: new Alignment.bottomRight,
-                    height: imageSize + (10 * _controller.value),
-                    width: imageSize + (10 * _controller.value),
+                    height: imageSize + (22 * _controller.value),
+                    width: imageSize + (22 * _controller.value),
                     //color: Colors.black12,
                     child: CustomPaint(
                       painter: MyPainter2(

@@ -12,7 +12,6 @@ import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:provider/provider.dart';
 
 class IndexScreen extends StatelessWidget {
-  static final String routeName = 'indexScreen';
   @override
   Widget build(BuildContext context) {
     final studentProvider = Provider.of<StudentProvider>(context);

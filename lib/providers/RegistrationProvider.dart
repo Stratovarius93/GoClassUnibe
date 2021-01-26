@@ -1,17 +1,20 @@
 import 'package:GoClassUnibe/models/RegistrationModel.dart';
+import 'package:GoClassUnibe/preferences/userPreferences.dart';
 import 'package:GoClassUnibe/requests/SQLServerRequest.dart';
 import 'package:flutter/material.dart';
 
 class RegistrationProvider with ChangeNotifier {
   List<Registration> _registrationList = [];
 
+  final _prefs = new UserPreferences();
   RegistrationProvider() {
     this.getRegistrationByID();
   }
 
   getRegistrationByID() async {
     try {
-      await SQLServerRequest().fetchRegistration().then((res) {
+      final id = await _prefs.studentID;
+      await SQLServerRequest().fetchRegistration(id.toString()).then((res) {
         if (res.statusCode == 200) {
           final decodedData = registrationFromJson(res.body);
           List<Registration> list = [];

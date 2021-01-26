@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:GoClassUnibe/constants/Title.dart';
 import 'package:GoClassUnibe/constants/UtilsText.dart';
 import 'package:GoClassUnibe/providers/PeriodProvider.dart';
@@ -8,7 +6,6 @@ import 'package:GoClassUnibe/providers/ScheduleProvider.dart';
 import 'package:GoClassUnibe/providers/StudentProvider.dart';
 import 'package:GoClassUnibe/widgets/generics/mainApp/CategoryText.dart';
 import 'package:GoClassUnibe/widgets/generics/mainApp/LoadingCircle.dart';
-import 'package:GoClassUnibe/widgets/generics/mainApp/MainCard.dart';
 import 'package:GoClassUnibe/widgets/generics/mainApp/MainCard2.dart';
 import 'package:GoClassUnibe/widgets/generics/mainApp/Modal.dart';
 import 'package:flutter/material.dart';
@@ -275,9 +272,11 @@ class CurrentAsignatureCard extends StatelessWidget {
                           ),
                         ))
                     .toList()));
-      } else if (scheduleProvider.getCurrentDay() == 'domingo' ||
-          scheduleProvider.getCurrentDay() == 'sábado' ||
-          scheduleProvider.getDashboardList().length == 0) {
+      } else if (
+          //scheduleProvider.getCurrentDay() == 'domingo' ||
+          //scheduleProvider.getCurrentDay() == 'sábado' ||
+          scheduleProvider.getDashboardList().length == 0
+          ) {
         return Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(children: [

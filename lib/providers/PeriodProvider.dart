@@ -1,5 +1,6 @@
 import 'package:GoClassUnibe/models/PeriodModel.dart';
 import 'package:GoClassUnibe/models/RegistrationModel.dart';
+import 'package:GoClassUnibe/preferences/userPreferences.dart';
 import 'package:GoClassUnibe/requests/SQLServerRequest.dart';
 import 'package:flutter/material.dart';
 
@@ -8,12 +9,14 @@ class PeriodProvider with ChangeNotifier {
   List<Registration> _registrationList = [];
   List<Period> _currentPeriod = [];
 
+  final _prefs = new UserPreferences();
   PeriodProvider() {
     this.getPeriodByID();
   }
   getPeriodByID() async {
     try {
-      await SQLServerRequest().fetchPeriod().then((res) {
+      final id = await _prefs.studentID;
+      await SQLServerRequest().fetchPeriod(id.toString()).then((res) {
         if (res.statusCode == 200) {
           final decodedData = periodFromJson(res.body);
           List<Period> list = [];
@@ -24,7 +27,7 @@ class PeriodProvider with ChangeNotifier {
         }
       });
 
-      await SQLServerRequest().fetchRegistration().then((res) {
+      await SQLServerRequest().fetchRegistration(id.toString()).then((res) {
         if (res.statusCode == 200) {
           final decodedData = registrationFromJson(res.body);
           List<Registration> list = [];

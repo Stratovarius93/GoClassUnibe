@@ -1,23 +1,23 @@
+import 'package:GoClassUnibe/constants/Colors.dart';
+import 'package:GoClassUnibe/constants/Fonts.dart';
 import 'package:GoClassUnibe/preferences/userPreferences.dart';
 import 'package:GoClassUnibe/providers/LoginProvider.dart';
 import 'package:GoClassUnibe/requests/AuthFirebase.dart';
-import 'package:GoClassUnibe/requests/SQLServerRequest.dart';
 import 'package:GoClassUnibe/utils/LoadingButton.dart';
 import 'package:GoClassUnibe/utils/modalError.dart';
 import 'package:GoClassUnibe/widgets/generics/homeApp/Background2.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/material.dart';
 import 'package:GoClassUnibe/widgets/generics/homeApp/Input.dart';
-import 'package:GoClassUnibe/constants/Colors.dart';
-import 'package:GoClassUnibe/widgets/generics/homeApp/Title.dart';
 import 'package:GoClassUnibe/widgets/generics/homeApp/LoginButton.dart';
 import 'package:GoClassUnibe/widgets/generics/homeApp/MiniText.dart';
+import 'package:GoClassUnibe/widgets/generics/homeApp/Title.dart';
+import 'package:flutter/gestures.dart';
+import 'package:flutter/material.dart';
+import 'package:ionicons/ionicons.dart';
 import 'package:provider/provider.dart';
 
 final _prefs = new UserPreferences();
 
-class LoginScreen extends StatelessWidget {
+class ChangeEmailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     LoginProvider loginProvider = Provider.of<LoginProvider>(context);
@@ -30,9 +30,7 @@ class LoginScreen extends StatelessWidget {
         }
       },
       child: Scaffold(
-        //resizeToAvoidBottomPadding: false,
-        //resizeToAvoidBottomInset: false,
-        backgroundColor: Colors.white,
+        resizeToAvoidBottomInset: false,
         body: Stack(
           children: <Widget>[
             Background2(
@@ -54,7 +52,7 @@ class LoginScreen extends StatelessWidget {
                           iconSize: 30.0,
                           onPressed: () {
                             Navigator.pushReplacementNamed(
-                                context, 'homeScreen');
+                                context, 'indexScreen');
                           },
                         ),
                       ))),
@@ -65,31 +63,38 @@ class LoginScreen extends StatelessWidget {
                 physics: BouncingScrollPhysics(),
                 children: <Widget>[
                   SizedBox(
-                    height: 10,
+                    height: 16,
                   ),
                   MainTitle(
                     colorText: Color.fromRGBO(22, 53, 96, 38),
-                    title: "Iniciar Sesión",
+                    title: "Cambiar email",
                   ),
                   SizedBox(
                     height: 20,
                   ),
-                  Image.asset('images/login2.png',
-                      height: MediaQuery.of(context).size.height * 0.35,
-                      width: MediaQuery.of(context).size.width * 0.35),
-                  SizedBox(
-                    height: 40,
+                  CircleAvatar(
+                    radius: 40,
+                    backgroundColor: colorAppYellow.withOpacity(0.8),
+                    child: Icon(
+                      Ionicons.mail_outline,
+                      color: colorAppBlue.withOpacity(0.8),
+                      size: 50,
+                    ),
                   ),
-                  CreateInput(
-                    obscureText: false,
-                    maxLength: 10,
-                    textInputType: TextInputType.number,
-                    title: "Ingrese su cédula",
-                    icon:
-                        new Icon(Icons.account_circle, color: colorAppSkyBlue),
-                    onchanged: (value) {
-                      loginProvider.setStudentID = int.parse(value);
-                    },
+                  SizedBox(
+                    height: 32,
+                  ),
+                  Center(
+                    child: Text(
+                      "Para cambiar tu correo electrónico es necesario que ingreses tu contraseña.",
+                      style: TextStyle(
+                          fontSize: 20,
+                          color: colorAppBlue,
+                          fontFamily: fontApp),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 32,
                   ),
                   CreateInput(
                     textInputType: TextInputType.text,
@@ -112,11 +117,13 @@ class LoginScreen extends StatelessWidget {
                             color: colorAppBlue,
                             colorText: colorInputBlueLight,
                             icon: new Icon(Icons.arrow_forward),
-                            Title: "Iniciar Sesión",
-                            onTap: () async {
-                              loginProvider.setStatus = true;
-                              _signIn(context, loginProvider);
-                            },
+                            Title: "Verificar",
+                            onTap: _validateButton(loginProvider)
+                                ? () async {
+                                    loginProvider.setStatus = true;
+                                    _signIn(context, loginProvider);
+                                  }
+                                : null,
                           ),
                         ),
                   CreateMiniText(
@@ -125,9 +132,9 @@ class LoginScreen extends StatelessWidget {
                       title2: 'Restaura aquí',
                       tapGestureRecognizer: TapGestureRecognizer()
                         ..onTap = () => Navigator.pushNamed(
-                            context, 'resetPasswordScreen')),
+                            context, 'resetPasswordScreen2')),
                   SizedBox(
-                      height: 16,
+                    height: 16,
                   )
                 ],
               ),
@@ -137,33 +144,35 @@ class LoginScreen extends StatelessWidget {
       ),
     );
   }
+}
 
-  _signIn(BuildContext context, LoginProvider loginProvider) async {
-    if (loginProvider.getPassword != null &&
-        loginProvider.getStudentID != null) {
-      final res =
-          await SQLServerRequest().getEmailByID(loginProvider.getStudentID);
-      print(res);
-      if (res != '') {
-        Map info = await AuthFirebaseRequest()
-            .fetchLogin(res, loginProvider.getPassword);
-        if (info['ok']) {
-          _prefs.studentID = loginProvider.getStudentID;
-          _prefs.studentEmail = res;
-          //SQLServerRequest().setStudentID = loginProvider.getStudentID;
-          Navigator.pushReplacementNamed(context, 'indexScreen');
-        } else {
-          showAlert(context, info['message']);
-        }
-        loginProvider.setEmail = res;
-      } else {
-        showAlert(context, 'Usuario o contrasena incorrectos');
-      }
-      loginProvider.setStatus = false;
+_signIn(BuildContext context, LoginProvider loginProvider) async {
+  _prefs.token = '';
+  if (loginProvider.getPassword != null) {
+    final _email = _prefs.studentEmail;
+    Map info = await AuthFirebaseRequest()
+        .fetchLogin(_email, loginProvider.getPassword);
+
+    if (info['ok']) {
+      loginProvider.setPassword = '';
+      loginProvider.setEmail = '';
+      Navigator.pushReplacementNamed(context, 'changeEmail2');
     } else {
-      showAlert(context,
-          'Campos vacíos. Asegúrate de llenar los campos para ingresar');
-      loginProvider.setStatus = false;
+      showAlert(context, info['message']);
     }
+
+    loginProvider.setStatus = false;
+  } else {
+    showAlert(
+        context, 'Campos vacíos. Asegúrate de llenar los campos para ingresar');
+    loginProvider.setStatus = false;
+  }
+}
+
+bool _validateButton(LoginProvider loginProvider) {
+  if (loginProvider.getPassword.length > 0) {
+    return true;
+  } else {
+    return false;
   }
 }

@@ -1,5 +1,7 @@
 import 'package:GoClassUnibe/constants/Fonts.dart';
 import 'package:GoClassUnibe/constants/Title.dart';
+import 'package:GoClassUnibe/preferences/userPreferences.dart';
+import 'package:GoClassUnibe/providers/LoginProvider.dart';
 import 'package:GoClassUnibe/providers/StudentProvider.dart';
 import 'package:GoClassUnibe/widgets/generics/mainApp/BigTitle.dart';
 import 'package:GoClassUnibe/widgets/generics/mainApp/LoadingCircle.dart';
@@ -8,106 +10,116 @@ import 'package:GoClassUnibe/constants/Colors.dart';
 import 'package:GoClassUnibe/widgets/generics/mainApp/CategoryText.dart';
 import 'package:GoClassUnibe/widgets/generics/mainApp/SettingsCard1.dart';
 import 'package:GoClassUnibe/widgets/generics/mainApp/SettingsCard2.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:provider/provider.dart';
 import 'package:scroll_glow_color/widget/scroll_glow_color.dart';
+
+final _prefs = new UserPreferences();
 
 class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final studentProvider = Provider.of<StudentProvider>(context);
-    return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        //title: 'MainApp',
-        home: Scaffold(
-          backgroundColor: colorAppBackground,
-          body: ScrollGlowColor(
-            color: colorGlow,
-            child: ListView(
-              physics: BouncingScrollPhysics(),
-              //shrinkWrap: true,
-              children: [
-                Container(
-                    padding: EdgeInsets.only(
-                        top: titlePaddingTop(context),
-                        left: 16,
-                        right: 16,
-                        bottom: 16),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        BigTitle(
-                          title: "Configuración",
-                        ),
-                        CategoryText(
-                          title: "Perfil",
-                        ),
-                        SizedBox(
-                          height: 16,
-                        ),
-                        (studentProvider.getStudent() == null)
-                            ?LoadingCircle(loadingText: 'Cargando perfil...',) 
-                            : _profileCircle(
-                                studentProvider.getStudent().name,
-                                studentProvider.getStudent().lastName,
-                                studentProvider.getStudent().studentId,
-                                context),
-                        SizedBox(
-                          height: 16,
-                        ),
-                        (studentProvider.getStudent() == null)
-                            ? SettingsCard1(
-                                email: 'correo',
-                                career: 'carrera',
-                                onTapPass: () {},
-                                onTapEmail: () {},
-                              )
-                            : SettingsCard1(
-                                email: 'scarlett@hotmail.es',
-                                career: studentProvider.getStudent().career,
-                                onTapPass: () {},
-                                onTapEmail: () {},
-                              ),
-                        SizedBox(
-                          height: 16,
-                        ),
-                        CategoryText(
-                          title: "Páginas web",
-                        ),
-                        SizedBox(
-                          height: 16,
-                        ),
-                        SettingsCard2(),
-                        SizedBox(
-                          height: 16,
-                        ),
-                        CategoryText(
-                          title: "Sesión",
-                        ),
-                        SizedBox(
-                          height: 16,
-                        ),
-                        Center(
-                          child: LogOutApp(),
-                        ),
-                        SizedBox(
-                          height: 16,
-                        ),
-                        Center(
-                          child: Text("GoClassUnibe V. 0.1",
-                              style: TextStyle(
-                                  fontFamily: fontApp,
-                                  color: colorAppTextLight,
-                                  fontSize: 16)),
-                        ),
-                        SizedBox(
-                          height: 16,
-                        ),
-                      ],
-                    ))
-              ],
-            ),
-          ),
-        ));
+    final loginProvider = Provider.of<LoginProvider>(context);
+    return Scaffold(
+      backgroundColor: colorAppBackground,
+      body: ScrollGlowColor(
+        color: colorGlow,
+        child: ListView(
+          physics: BouncingScrollPhysics(),
+          //shrinkWrap: true,
+          children: [
+            Container(
+                padding: EdgeInsets.only(
+                    top: titlePaddingTop(context),
+                    left: 16,
+                    right: 16,
+                    bottom: 16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    BigTitle(
+                      title: "Configuración",
+                    ),
+                    CategoryText(
+                      title: "Perfil",
+                    ),
+                    SizedBox(
+                      height: 16,
+                    ),
+                    (studentProvider.getStudent() == null)
+                        ? LoadingCircle(
+                            loadingText: 'Cargando perfil...',
+                          )
+                        : _profileCircle(
+                            studentProvider.getStudent().name,
+                            studentProvider.getStudent().lastName,
+                            studentProvider.getStudent().studentId,
+                            context),
+                    SizedBox(
+                      height: 16,
+                    ),
+                    (studentProvider.getStudent() == null &&
+                            loginProvider.getEmail == null)
+                        ? SettingsCard1(
+                            email: 'correo',
+                            career: 'carrera',
+                            onTapPass: () {},
+                            onTapEmail: () {},
+                          )
+                        : SettingsCard1(
+                            //email: loginProvider.getEmail??'cargando',
+                            email: _prefs.studentEmail,
+                            career: studentProvider.getStudent().career,
+                            onTapPass: () {
+                              Navigator.pushNamed(context, 'changePassword');
+                            },
+                            onTapEmail: () {
+                              Navigator.pushNamed(context, 'changeEmail');
+                            },
+                          ),
+                    SizedBox(
+                      height: 16,
+                    ),
+                    CategoryText(
+                      title: "Páginas web",
+                    ),
+                    SizedBox(
+                      height: 16,
+                    ),
+                    SettingsCard2(),
+                    SizedBox(
+                      height: 16,
+                    ),
+                    CategoryText(
+                      title: "Sesión",
+                    ),
+                    SizedBox(
+                      height: 16,
+                    ),
+                    Center(
+                      child: LogOutApp(),
+                    ),
+                    SizedBox(
+                      height: 16,
+                    ),
+                    Center(
+                      child: Text("GoClassUnibe V. 0.1",
+                          style: TextStyle(
+                              fontFamily: fontApp,
+                              color: colorAppTextLight,
+                              fontSize: 16)),
+                    ),
+                    SizedBox(
+                      height: 16,
+                    ),
+                  ],
+                ))
+          ],
+        ),
+      ),
+    );
   }
 
   Widget _profileCircle(String getName, String getLastName, int getIdNumber,
@@ -159,6 +171,7 @@ class LogOutApp extends StatefulWidget {
 class _LogOutAppState extends State<LogOutApp> {
   @override
   Widget build(BuildContext context) {
+    LoginProvider loginProvider = Provider.of<LoginProvider>(context);
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -176,9 +189,16 @@ class _LogOutAppState extends State<LogOutApp> {
           width: 16,
         ),
         InkWell(
-          onTap: (() {
-            print("Salir");
-          }),
+          onTap: () async {
+            await loginProvider.disposeLogin();
+            _prefs.studentID = 0;
+            _prefs.token = '';
+            _prefs.studentEmail = '';
+            //Navigator.pushReplacementNamed(context, 'homeScreen');
+            Phoenix.rebirth(context);
+            Navigator.popAndPushNamed(context, 'homeScreen');
+            //SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+          },
           child: Text("Cerrar Sesión",
               style: TextStyle(
                   color: colorAppGreen,

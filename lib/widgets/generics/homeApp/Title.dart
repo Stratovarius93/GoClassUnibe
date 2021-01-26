@@ -4,12 +4,12 @@ import 'package:GoClassUnibe/constants/Fonts.dart';
 
 class MainTitle extends StatelessWidget {
   final Color colorText;
-  final String Title;
+  final String title;
 
   const MainTitle({
     Key key,
     this.colorText,
-    this.Title,
+    this.title,
   }) : super(key: key);
 
   @override
@@ -20,7 +20,7 @@ class MainTitle extends StatelessWidget {
           SizedBox(
             height: 6,
           ),
-          Text(Title,
+          Text(title,
             style: TextStyle(
               fontFamily: fontApp,
               fontWeight: FontWeight.bold,

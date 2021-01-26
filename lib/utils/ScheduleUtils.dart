@@ -204,13 +204,6 @@ void moveToDay(List<ScheduleSignature> listFrom, List<ScheduleSignature> listTo,
   }
 }
 
-void showSnackBar(String message, BuildContext context) {
-  final snackBar = SnackBar(
-    content: Text(message),
-    behavior: SnackBarBehavior.floating,
-  );
-  Scaffold.of(context).showSnackBar(snackBar);
-}
 
 void showAlertDialog(
     BuildContext context, String title, String description, String action) {

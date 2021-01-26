@@ -1,3 +1,4 @@
+import 'package:GoClassUnibe/constants/Colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:GoClassUnibe/constants/Fonts.dart';
@@ -7,6 +8,7 @@ class CreateLoginButton extends StatelessWidget {
   final Icon icon;
   final Color color;
   final Color colorText;
+  final VoidCallback onTap;
 
   const CreateLoginButton({
     Key key,
@@ -14,35 +16,40 @@ class CreateLoginButton extends StatelessWidget {
     this.icon,
     this.color,
     this.colorText,
+    this.onTap,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.only(top:10.0,left: 40.0,right: 40.0,bottom: 20.0),
-      height: 80.0,
-      width: MediaQuery.of(context).size.width * 0.80,
+      height: 65.0,
       child: RaisedButton(
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text((Title),style: TextStyle(fontSize: 17.0, fontFamily: fontApp, fontWeight: FontWeight.bold,),),
-            Icon( Icons.arrow_forward, size: 20.0,
+            Text(
+              (Title),
+              style: TextStyle(
+                fontSize: 20.0,
+                fontFamily: fontApp,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(width: 16,),
+            Icon(
+              Icons.arrow_forward,
+              size: 20.0,
             ),
           ],
-
         ),
         color: color,
+        disabledColor: Colors.blueGrey.shade100,
         textColor: colorText,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(50),
         ),
-
-        onPressed: () {},
+        onPressed: onTap,
       ),
     );
   }
-
 }
-
-

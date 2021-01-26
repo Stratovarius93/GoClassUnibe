@@ -36,6 +36,10 @@ Color colorButtonYellow2 = Color(0xffffb93e);
 
 //input colors
 Color colorInput = Color(0xffE7EBF1);
+//input colors
+Color colorInputBlueLight = Colors.blue[50];
+Color colorInputGreenLight = Colors.teal[50];
+//Color colorInputPurpleLight = colorButtonPurpleLight1;
 
 //=======================
 //    Colors APP
