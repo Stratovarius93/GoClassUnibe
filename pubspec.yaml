@@ -31,6 +31,7 @@ dependencies:
   ionicons: ^0.0.3
   scroll_glow_color: ^0.1.2
   quiver: ^2.1.5
+  flutter_phoenix: ^0.1.0
   #flutter_localizations: # Add this line
     #sdk: flutter # Add this line
   # The following adds the Cupertino Icons font to your application.
@@ -38,16 +39,22 @@ dependencies:
   cupertino_icons: ^1.0.0
   http: ^0.12.2
   rive: ^0.6.4
+  shared_preferences: ^0.5.12+4
   # dev
   # dcdg: ^2.0.1
-  json_serializable: ^3.5.1
-  json_annotation: ^3.1.1
+  #json_serializable: ^3.5.1
+  #json_annotation: ^3.1.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   build_runner:
+  flutter_launcher_icons: "^0.8.0"
 
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/icon/icon.png"
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
