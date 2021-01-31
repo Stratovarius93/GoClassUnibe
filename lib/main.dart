@@ -16,7 +16,6 @@ import 'package:GoClassUnibe/widgets/screens/homeApp/ResetPassword2Screen.dart';
 import 'package:GoClassUnibe/widgets/screens/homeApp/ResetPasswordScreen.dart';
 import 'package:GoClassUnibe/widgets/screens/homeApp/SignUp.dart';
 import 'package:GoClassUnibe/widgets/screens/homeApp/SignUp2.dart';
-import 'package:GoClassUnibe/widgets/screens/homeApp/Validation.dart';
 import 'package:GoClassUnibe/widgets/screens/mainApp/ConnectingScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -55,9 +54,10 @@ class MyApp extends StatelessWidget {
 
     final prefs = new UserPreferences();
     //prefs.studentEmail = '';
-    print(prefs.studentID);
-    print(prefs.token);
-    print(prefs.studentEmail);
+    //print(prefs.studentID);
+    //print(prefs.token);
+    //print(prefs.studentEmail);
+    //print(prefs.url);
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
@@ -83,7 +83,7 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => ResetPasswordProvider(),
-        )
+        ),
       ],
       child: MaterialApp(
         theme: ThemeData(
@@ -94,7 +94,6 @@ class MyApp extends StatelessWidget {
         routes: {
           'signUpScreen': (BuildContext content) => SignUp(),
           'signUpScreen2': (BuildContext content) => SignUp2(),
-          'validationScreen': (BuildContext context) => ValidationScreen(),
           'loginScreen': (BuildContext context) => LoginScreen(),
           'homeScreen': (BuildContext context) => HomeScreen(),
           'indexScreen': (BuildContext context) => IndexScreen(),
@@ -103,8 +102,8 @@ class MyApp extends StatelessWidget {
           'resetPasswordScreen2': (BuildContext context) =>
               ResetPassword2Screen(),
           'changePassword': (BuildContext context) => ChangePassword(),
-          'changeEmail' : (BuildContext context) => ChangeEmailScreen(),
-          'changeEmail2' : (BuildContext context) => ChangeEmail2Screen(),
+          'changeEmail': (BuildContext context) => ChangeEmailScreen(),
+          'changeEmail2': (BuildContext context) => ChangeEmail2Screen(),
           ConnectingScreen.routeName: (BuildContext context) =>
               ConnectingScreen()
         },

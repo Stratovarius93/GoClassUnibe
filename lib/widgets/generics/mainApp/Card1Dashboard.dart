@@ -8,12 +8,14 @@ class Card1Dashboard extends StatelessWidget {
   final String teacherName;
   final String subjectTime;
   final String classRoom;
+  final Color color;
   const Card1Dashboard(
       {Key key,
       this.classRoom,
       this.teacherName,
       this.subjectTime,
-      this.subject})
+      this.subject,
+      this.color})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -24,10 +26,13 @@ class Card1Dashboard extends StatelessWidget {
       decoration: BoxDecoration(
           boxShadow: <BoxShadow>[boxShadowApp],
           borderRadius: BorderRadius.circular(16),
-          color: Colors.white),
+          color: color ?? Colors.white),
       child: Column(
         children: [
-          SignatureCard(subject: subject),
+          SignatureCard(
+            subject: subject,
+            color: color,
+          ),
           SizedBox(
             height: 16,
           ),
@@ -49,9 +54,11 @@ class SignatureCard extends StatelessWidget {
   const SignatureCard({
     Key key,
     @required this.subject,
+    this.color,
   }) : super(key: key);
 
   final String subject;
+  final Color color;
 
   @override
   Widget build(BuildContext context) {
@@ -60,9 +67,11 @@ class SignatureCard extends StatelessWidget {
         CircleAvatar(
           radius: 18,
           backgroundColor: colorAppYellow,
+          //backgroundColor: Colors.white,
           child: Icon(
             Icons.book,
             color: Colors.white,
+            //color: color ?? Colors.grey.withOpacity(0.5),
             size: 24,
           ),
         ),
@@ -72,9 +81,11 @@ class SignatureCard extends StatelessWidget {
         Expanded(
           child: Text(subject,
               style: TextStyle(
-                fontSize: 22,
+                //fontSize: 22,
+                fontSize: MediaQuery.of(context).size.width * 0.05,
                 fontWeight: FontWeight.bold,
                 color: colorAppTextDark,
+                //color: Colors.white,
                 fontFamily: fontApp,
               )),
         )
@@ -101,6 +112,7 @@ class TeacherCard extends StatelessWidget {
             fontFamily: fontApp,
             //fontStyle: FontStyle.italic,
             color: colorAppTextLight,
+            //color: Colors.white,
           )),
     );
   }
@@ -122,14 +134,17 @@ class ClassRoomCard extends StatelessWidget {
           Icon(
             Icons.location_on,
             color: colorAppGreen,
+            //color: Colors.white
           ),
           SizedBox(
             width: 8,
           ),
           Text(
-            classRoom,
+            classRoom ?? 'Desconocida',
             style: TextStyle(
-                fontFamily: fontApp, fontSize: 16, color: colorAppTextLight),
+                fontFamily: fontApp, fontSize: 16, color: colorAppTextLight
+                //color: Colors.white
+                ),
           )
         ],
       ),
@@ -151,20 +166,24 @@ class TimeCard extends StatelessWidget {
       padding: EdgeInsets.only(top: 4, bottom: 4, left: 8, right: 8),
       decoration: BoxDecoration(
           color: colorAppRed.withOpacity(0.2),
+          //color: Colors.white.withOpacity(0.2),
           borderRadius: BorderRadius.circular(16)),
       child: Row(
         children: [
           Icon(
             Icons.access_time,
             color: colorAppRed,
+            //color: Colors.white
           ),
           SizedBox(
             width: 8,
           ),
           Text(
             subjectTime,
-            style: TextStyle(
-                fontFamily: fontApp, fontSize: 16, color: colorAppRed),
+            style:
+                TextStyle(fontFamily: fontApp, fontSize: 16, color: colorAppRed
+                    //color: Colors.white
+                    ),
           )
         ],
       ),

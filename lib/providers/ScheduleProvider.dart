@@ -88,7 +88,6 @@ class ScheduleProvider with ChangeNotifier {
 
     this.connectionStatus = true;
     print('GSheets connected');
-
   }
 
   List<Schedule> _getScheduleList() => _scheduleList;
@@ -109,22 +108,28 @@ class ScheduleProvider with ChangeNotifier {
     List<ScheduleSignature> _list = [];
     switch (indexDay) {
       case 0:
-        _list = validateListDay(list, _weekDays[0]);
+        //_list = validateListDay(list, _weekDays[0]);
+        _list = _listDay0;
         break;
       case 1:
-        _list = validateListDay(list, _weekDays[1]);
+        //_list = validateListDay(list, _weekDays[1]);
+        _list = _listDay1;
         break;
       case 2:
-        _list = validateListDay(list, _weekDays[2]);
+        //_list = validateListDay(list, _weekDays[2]);
+        _list = _listDay2;
         break;
       case 3:
-        _list = validateListDay(list, _weekDays[3]);
+        //_list = validateListDay(list, _weekDays[3]);
+        _list = _listDay3;
         break;
       case 4:
-        _list = validateListDay(list, _weekDays[4]);
+        //_list = validateListDay(list, _weekDays[4]);
+        _list = _listDay4;
         break;
       default:
-        _list = validateListDay(list, _weekDays[0]);
+        //_list = validateListDay(list, _weekDays[0]);
+        _list = _listDay0;
         break;
     }
     _dashboardList = _list;

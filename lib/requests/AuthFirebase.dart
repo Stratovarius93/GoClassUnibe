@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:GoClassUnibe/preferences/userPreferences.dart';
+import 'package:GoClassUnibe/requests/SQLServerRequest.dart';
 import 'package:http/http.dart' as http;
 
 class AuthFirebaseRequest {
@@ -80,6 +81,24 @@ class AuthFirebaseRequest {
     if (decodeRes.containsKey('email')) {
       return true;
     } else {
+      return false;
+    }
+  }
+
+  Future<bool> fetchUrl() async {
+    final _prefs = new UserPreferences();
+    String url = 'https://testlogin-10b84-default-rtdb.firebaseio.com/url.json';
+    try {
+      final res = await http.get(url);
+      final decodeRes = json.decode(res.body);
+      String decodeRes2 = decodeRes;
+      if (decodeRes2.length > 0) {
+        _prefs.url = decodeRes2;
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
       return false;
     }
   }

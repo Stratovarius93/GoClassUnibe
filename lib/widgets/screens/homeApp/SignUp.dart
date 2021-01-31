@@ -1,6 +1,7 @@
 import 'package:GoClassUnibe/constants/Fonts.dart';
 import 'package:GoClassUnibe/models/StudentModel.dart';
 import 'package:GoClassUnibe/providers/SignUpProvider.dart';
+import 'package:GoClassUnibe/requests/AuthFirebase.dart';
 import 'package:GoClassUnibe/requests/SQLServerRequest.dart';
 import 'package:GoClassUnibe/utils/LoadingButton.dart';
 import 'package:GoClassUnibe/utils/modalError.dart';
@@ -59,7 +60,9 @@ class SignUp extends StatelessWidget {
               child: ListView(
                 physics: BouncingScrollPhysics(),
                 children: <Widget>[
-                  SizedBox(height: 16,),
+                  SizedBox(
+                    height: 16,
+                  ),
                   MainTitle(
                     colorText: Color.fromRGBO(22, 53, 96, 38),
                     title: "Registro de cuenta",
@@ -128,31 +131,43 @@ class SignUp extends StatelessWidget {
   }
 
   _validateID(BuildContext context, SignUpProvider signUpProvider) async {
-    if (signUpProvider.getStudentID != null) {
-      print(signUpProvider.getStudentID.toString());
-      Student student =
-          await SQLServerRequest().fetchStudentID(signUpProvider.getStudentID);
-      if (student == null) {
-        print('No existe el estudiante');
-        showAlert(
-            context, 'No eres estudiante de la UNIBE. Verifica bien tu cédula');
-      } else {
-        //print('Si existe el estudiante');
-        final res =
-            await SQLServerRequest().getEmailByID(signUpProvider.getStudentID);
-        if (res == '') {
-          signUpProvider.setStudent = student;
-          Navigator.pushNamed(context, 'signUpScreen2');
+    final authFirebaseRequest = AuthFirebaseRequest();
+
+    final res = await authFirebaseRequest.fetchUrl();
+    if (res) {
+      print(res);
+      if (signUpProvider.getStudentID != null) {
+        print(signUpProvider.getStudentID.toString());
+        Student student = await SQLServerRequest()
+            .fetchStudentID(signUpProvider.getStudentID);
+        if (student == null) {
+          print('No existe el estudiante');
+          showAlert(context,
+              'No eres estudiante de la UNIBE. Verifica bien tu cédula');
         } else {
-          showAlert(context, 'Ya existen un estudiante con ese número');
+          //print('Si existe el estudiante');
+          final res = await SQLServerRequest()
+              .getEmailByID(signUpProvider.getStudentID);
+          if (res == '') {
+            signUpProvider.setStudent = student;
+            Navigator.pushNamed(context, 'signUpScreen2');
+          } else {
+            showAlert(context, 'Ya existen un estudiante con ese número');
+          }
         }
+        signUpProvider.setStatus = false;
+        //signUpProvider.validateID(signUpProvider.getStudentID);
+      } else {
+        showAlert(context,
+            'Campo vacío. Asegúrate de llenar el campo para poder validar.');
+        signUpProvider.setStatus = false;
       }
       signUpProvider.setStatus = false;
-      //signUpProvider.validateID(signUpProvider.getStudentID);
+      //connectionProvider.state2 = false;
     } else {
-      showAlert(context,
-          'Campo vacío. Asegúrate de llenar el campo para poder validar.');
+      showAlertConnection(context, 'No se pudo obtener la URL');
       signUpProvider.setStatus = false;
+      //connectionProvider.state = false;
     }
   }
 }

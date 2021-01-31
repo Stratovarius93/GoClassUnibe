@@ -24,15 +24,15 @@ class DasshboardScreen extends StatefulWidget {
   _DasshboardScreenState createState() => _DasshboardScreenState();
 }
 
-List<String> list = ['Matetmaticas', 'Lenguaje'];
+int count = 0;
 
 class _DasshboardScreenState extends State<DasshboardScreen> {
   @override
   Widget build(BuildContext context) {
-    final periodprovider = Provider.of<PeriodProvider>(context);
-    final ratingProvider = Provider.of<RatingProvider>(context);
     final studentProvider = Provider.of<StudentProvider>(context);
     final scheduleProvider = Provider.of<ScheduleProvider>(context);
+    final periodprovider = Provider.of<PeriodProvider>(context);
+    final ratingProvider = Provider.of<RatingProvider>(context);
     if (studentProvider.getStudent() != null) {
       scheduleProvider.setCareer(studentProvider.getStudent().career);
     }
@@ -48,7 +48,7 @@ class _DasshboardScreenState extends State<DasshboardScreen> {
         }
       }
     }
-    
+
     return Scaffold(
       backgroundColor: colorAppBackground,
       body: ScrollGlowColor(
@@ -88,6 +88,7 @@ class _DasshboardScreenState extends State<DasshboardScreen> {
               ),
             ),
             CurrentAsignatureCard(scheduleProvider: scheduleProvider),
+            finalRive(context, scheduleProvider) ?? Container(),
             Padding(
               padding: const EdgeInsets.only(left: 16.0),
               child: CategoryText(title: "Inasistencias del último período"),
@@ -217,13 +218,11 @@ class _DasshboardScreenState extends State<DasshboardScreen> {
 }
 
 class CurrentAsignatureCard extends StatelessWidget {
+  final ScheduleProvider scheduleProvider;
   const CurrentAsignatureCard({
     Key key,
     @required this.scheduleProvider,
   }) : super(key: key);
-
-  final ScheduleProvider scheduleProvider;
-
   @override
   Widget build(BuildContext context) {
     if (scheduleProvider.getListFull().length > 0) {
@@ -232,82 +231,45 @@ class CurrentAsignatureCard extends StatelessWidget {
             physics: BouncingScrollPhysics(),
             scrollDirection: Axis.horizontal,
             child: Row(
-                children: scheduleProvider
-                    .getDashboardList()
-                    .map((item) => Padding(
-                          padding: const EdgeInsets.only(
-                              top: 20.0, bottom: 20.0, left: 16.0, right: 8.0),
-                          child: Align(
-                            alignment: Alignment.topLeft,
-                            child: InkWell(
-                              onTap: () {
-                                showModal(
-                                    context,
-                                    "Matetmaticas",
-                                    "8.1",
-                                    "8.2",
-                                    "8.3",
-                                    "8.3",
-                                    "1",
-                                    "2",
-                                    "3",
-                                    "6",
-                                    "REPROBADO");
-                              },
-                              child: Card1Dashboard(
-                                subject: toSentence(item.name),
-                                teacherName: (item.teacher == null)
-                                    ? 'No hay docente'
-                                    : item.teacher,
-                                subjectTime: (item.timeStart
-                                        .toString()
-                                        .padLeft(2, '0') +
-                                    ':00' +
-                                    ' - ' +
-                                    item.timeEnd.toString().padLeft(2, '0') +
-                                    ':00'),
-                                classRoom: item.classRoom,
-                              ),
-                            ),
-                          ),
-                        ))
-                    .toList()));
-      } else if (
-          //scheduleProvider.getCurrentDay() == 'domingo' ||
-          //scheduleProvider.getCurrentDay() == 'sábado' ||
-          scheduleProvider.getDashboardList().length == 0
-          ) {
-        return Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(children: [
-            Container(
-              //width: 400,
-              height: 200,
-              child: MyRiveAnimation(),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Column(children: [
-                Text(' No tienes clases hoy,',
-                    style: TextStyle(
-                        fontFamily: fontApp,
-                        color: colorAppSkyBlue,
-                        fontSize: 22)),
-                Text('descansa 😌',
-                    style: TextStyle(
-                        fontFamily: fontApp,
-                        color: colorAppSkyBlue,
-                        fontSize: 22)),
-              ]),
-            ),
-          ]),
-        );
+                children: scheduleProvider.getDashboardList().map((item) {
+              if (item.name != 'Default') {
+                return Padding(
+                  padding: const EdgeInsets.only(
+                      top: 20.0, bottom: 20.0, left: 16.0, right: 8.0),
+                  child: Align(
+                    alignment: Alignment.topLeft,
+                    child: InkWell(
+                      onTap: () {
+                        //showModal(context, "Matetmaticas", "8.1", "8.2", "8.3",
+                        //"8.3", "1", "2", "3", "6", "REPROBADO");
+                      },
+                      child: Card1Dashboard(
+                        subject: toSentence(item.name),
+                        //color: item.color,
+                        teacherName: (item.teacher == null)
+                            ? 'No hay docente'
+                            : item.teacher,
+                        subjectTime:
+                            (item.timeStart.toString().padLeft(2, '0') +
+                                ':00' +
+                                ' - ' +
+                                item.timeEnd.toString().padLeft(2, '0') +
+                                ':00'),
+                        classRoom: item.classRoom,
+                      ),
+                    ),
+                  ),
+                );
+              } else {
+                return Container();
+              }
+            }).toList()));
       }
     } else {
       return Padding(
         padding: const EdgeInsets.only(top: 30, bottom: 30),
         child: Container(
-            height: 150,
+          height: 150,
           child: LoadingCircle(
             loadingText: 'Cargando clase...',
           ),
@@ -364,4 +326,47 @@ class _MyRiveAnimationState extends State<MyRiveAnimation> {
           )
         : Container();
   }
+}
+
+Widget finalRive(BuildContext context, ScheduleProvider scheduleProvider) {
+  Widget widget;
+  if (scheduleProvider.getDashboardList().length > 0) {
+    for (var item in scheduleProvider.getDashboardList()) {
+      if (item.name == 'Default') {
+        count++;
+      }
+    }
+    if (count == 10) {
+      widget = Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(children: [
+          Container(
+            //width: 400,
+            height: 200,
+            child: MyRiveAnimation(),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(children: [
+              Text(' No tienes clases hoy,',
+                  style: TextStyle(
+                      fontFamily: fontApp,
+                      color: colorAppSkyBlue,
+                      fontSize: 22)),
+              Text('descansa 😌',
+                  style: TextStyle(
+                      fontFamily: fontApp,
+                      color: colorAppSkyBlue,
+                      fontSize: 22)),
+            ]),
+          ),
+        ]),
+      );
+    } else {
+      widget = Container();
+    }
+  }
+
+  count = 0;
+  return widget;
 }

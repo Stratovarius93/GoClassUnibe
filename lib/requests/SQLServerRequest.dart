@@ -10,23 +10,28 @@ class SQLServerRequest {
   //int _studentID = 1234567890;
 
   //final url = 'http://10.0.2.2:8080/api/';
-  final url = 'http://192.168.0.107:8080/api/';
+  //final url = 'http://192.168.0.107:8080/api/';
+  //final url = 'https://warm-dragon-17.loca.lt/api/';
   SQLServerRequest();
 
   Future<http.Response> fetchStudent(String studentID) {
-    return http.get(url + 'student/' + studentID);
+    final _prefs = new UserPreferences();
+    return http.get(_prefs.url + 'student/' + studentID);
   }
 
   Future<http.Response> fetchRating(String studentID) {
-    return http.get(url + 'ratings/' + studentID);
+    final _prefs = new UserPreferences();
+    return http.get(_prefs.url + 'ratings/' + studentID);
   }
 
   Future<http.Response> fetchPeriod(String studentID) {
-    return http.get(url + 'periods/' + studentID);
+    final _prefs = new UserPreferences();
+    return http.get(_prefs.url + 'periods/' + studentID);
   }
 
   Future<http.Response> fetchRegistration(String studentID) {
-    return http.get(url + 'registration/' + studentID);
+    final _prefs = new UserPreferences();
+    return http.get(_prefs.url + 'registration/' + studentID);
   }
 
   //int get getStudentID => _studentID;
@@ -35,7 +40,8 @@ class SQLServerRequest {
   //}
 
   Future<Student> fetchStudentID(int studentID) {
-    return http.get(url + 'student/' + studentID.toString()).then((res) {
+    final _prefs = new UserPreferences();
+    return http.get(_prefs.url + 'student/' + studentID.toString()).then((res) {
       if (res.statusCode == 200) {
         final decodedData = studentFromJson(res.body);
         if (decodedData.length > 0) {
@@ -44,6 +50,7 @@ class SQLServerRequest {
         }
         return null;
       } else {
+        print('Error de conexion');
         return null;
       }
     });
@@ -57,7 +64,7 @@ class SQLServerRequest {
     final _prefs = new UserPreferences();
     try {
       http.Response res = await http.post(
-        url + 'account',
+        _prefs.url + 'account',
         body: studentToDbToJson(studentToDb),
         headers: {
           "Content-Type": "application/json; charset=utf-8",
@@ -73,8 +80,9 @@ class SQLServerRequest {
   }
 
   Future<String> getEmailByID(int studentId) async {
+    final _prefs = new UserPreferences();
     String resEmail = '';
-    await http.get(url + 'account/$studentId').then((res) {
+    await http.get(_prefs.url + 'account/$studentId').then((res) {
       if (res.statusCode == 200) {
         final decodedData = emailByIdFromJson(res.body);
         if (decodedData.length > 0) {
@@ -83,16 +91,18 @@ class SQLServerRequest {
           resEmail = '';
         }
       } else {
-        throw Exception('Failed to load data');
+        //throw Exception('Failed to load data');
+        resEmail = 'Failed to load data';
       }
     });
     return resEmail;
   }
 
   Future<bool> updateEmailByID(int studentId, String email) async {
+    final _prefs = new UserPreferences();
     final _data = {"email": email};
     final res = await http.put(
-      url + 'account/update/$studentId',
+      _prefs.url + 'account/update/$studentId',
       body: json.encode(_data),
       headers: {
         "Content-Type": "application/json; charset=utf-8",
@@ -103,6 +113,19 @@ class SQLServerRequest {
       final containsKeyBool = decodedData[0].containsKey('email');
       return containsKeyBool;
     } else {
+      return false;
+    }
+  }
+
+  Future<bool> getState(int studentID) async {
+    final _prefs = new UserPreferences();
+    try {
+      final res =
+          await http.get(_prefs.url + 'student/' + studentID.toString());
+      final decodeData = json.decode(res.body);
+      print(decodeData);
+      return true;
+    } catch (e) {
       return false;
     }
   }

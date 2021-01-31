@@ -3,6 +3,7 @@ import 'package:GoClassUnibe/constants/Title.dart';
 import 'package:GoClassUnibe/preferences/userPreferences.dart';
 import 'package:GoClassUnibe/providers/LoginProvider.dart';
 import 'package:GoClassUnibe/providers/StudentProvider.dart';
+import 'package:GoClassUnibe/utils/signOut.dart';
 import 'package:GoClassUnibe/widgets/generics/mainApp/BigTitle.dart';
 import 'package:GoClassUnibe/widgets/generics/mainApp/LoadingCircle.dart';
 import 'package:flutter/material.dart';
@@ -10,8 +11,6 @@ import 'package:GoClassUnibe/constants/Colors.dart';
 import 'package:GoClassUnibe/widgets/generics/mainApp/CategoryText.dart';
 import 'package:GoClassUnibe/widgets/generics/mainApp/SettingsCard1.dart';
 import 'package:GoClassUnibe/widgets/generics/mainApp/SettingsCard2.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:provider/provider.dart';
 import 'package:scroll_glow_color/widget/scroll_glow_color.dart';
 
@@ -191,11 +190,7 @@ class _LogOutAppState extends State<LogOutApp> {
         InkWell(
           onTap: () async {
             await loginProvider.disposeLogin();
-            _prefs.studentID = 0;
-            _prefs.token = '';
-            _prefs.studentEmail = '';
-            //Navigator.pushReplacementNamed(context, 'homeScreen');
-            Phoenix.rebirth(context);
+            signOut(context);
             Navigator.popAndPushNamed(context, 'homeScreen');
             //SystemChannels.platform.invokeMethod('SystemNavigator.pop');
           },

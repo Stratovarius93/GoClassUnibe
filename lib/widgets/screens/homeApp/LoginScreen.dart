@@ -127,7 +127,7 @@ class LoginScreen extends StatelessWidget {
                         ..onTap = () => Navigator.pushNamed(
                             context, 'resetPasswordScreen')),
                   SizedBox(
-                      height: 16,
+                    height: 16,
                   )
                 ],
               ),
@@ -139,30 +139,42 @@ class LoginScreen extends StatelessWidget {
   }
 
   _signIn(BuildContext context, LoginProvider loginProvider) async {
-    if (loginProvider.getPassword != null &&
-        loginProvider.getStudentID != null) {
-      final res =
-          await SQLServerRequest().getEmailByID(loginProvider.getStudentID);
+    final authFirebaseRequest = AuthFirebaseRequest();
+    final res = await authFirebaseRequest.fetchUrl();
+
+    if (res) {
       print(res);
-      if (res != '') {
-        Map info = await AuthFirebaseRequest()
-            .fetchLogin(res, loginProvider.getPassword);
-        if (info['ok']) {
-          _prefs.studentID = loginProvider.getStudentID;
-          _prefs.studentEmail = res;
-          //SQLServerRequest().setStudentID = loginProvider.getStudentID;
-          Navigator.pushReplacementNamed(context, 'indexScreen');
+
+      if (loginProvider.getPassword != null &&
+          loginProvider.getStudentID != null) {
+        final res =
+            await SQLServerRequest().getEmailByID(loginProvider.getStudentID);
+        print(res);
+        if (res != '' && res != 'Failed to load data') {
+          Map info = await AuthFirebaseRequest()
+              .fetchLogin(res, loginProvider.getPassword);
+          if (info['ok']) {
+            _prefs.studentID = loginProvider.getStudentID;
+            _prefs.studentEmail = res;
+            //SQLServerRequest().setStudentID = loginProvider.getStudentID;
+            Navigator.pushReplacementNamed(context, 'indexScreen');
+          } else {
+            showAlert(context, info['message']);
+          }
+          loginProvider.setEmail = res;
+        } else if (res == 'Failed to load data') {
+          showAlertConnection(context, 'No se puede conectar con el servidor');
         } else {
-          showAlert(context, info['message']);
+          showAlert(context, 'Usuario o contrasena incorrectos');
         }
-        loginProvider.setEmail = res;
+        loginProvider.setStatus = false;
       } else {
-        showAlert(context, 'Usuario o contrasena incorrectos');
+        showAlert(context,
+            'Campos vacíos. Asegúrate de llenar los campos para ingresar');
+        loginProvider.setStatus = false;
       }
-      loginProvider.setStatus = false;
     } else {
-      showAlert(context,
-          'Campos vacíos. Asegúrate de llenar los campos para ingresar');
+      showAlertConnection(context, 'No se pudo obtener la URL');
       loginProvider.setStatus = false;
     }
   }

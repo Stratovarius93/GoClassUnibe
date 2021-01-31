@@ -33,6 +33,7 @@ List<ScheduleSignature> listDivider(
               timeStart: list[i].timeStart + j,
               timeEnd: (list[i].timeStart + j + 1),
               name: list[i].name,
+              teacher: list[i].teacher,
               classRoom: list[i].classRoom,
               color: list[i].color));
         }
@@ -194,6 +195,7 @@ void moveToDay(List<ScheduleSignature> listFrom, List<ScheduleSignature> listTo,
       //anadimos al segundo list
       listTo.removeAt(listFrom.length - 1);
       listTo.insert(0, item);
+      reorderTime(listTo, listIndex);
     } else {
       showAlertDialog(
           context,
@@ -203,7 +205,6 @@ void moveToDay(List<ScheduleSignature> listFrom, List<ScheduleSignature> listTo,
     }
   }
 }
-
 
 void showAlertDialog(
     BuildContext context, String title, String description, String action) {

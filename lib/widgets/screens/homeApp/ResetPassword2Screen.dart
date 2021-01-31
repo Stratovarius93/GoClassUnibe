@@ -1,21 +1,18 @@
 import 'package:GoClassUnibe/constants/Colors.dart';
 import 'package:GoClassUnibe/constants/Fonts.dart';
-import 'package:GoClassUnibe/preferences/userPreferences.dart';
 import 'package:GoClassUnibe/providers/ResetPasswordProvider.dart';
 import 'package:GoClassUnibe/requests/AuthFirebase.dart';
 import 'package:GoClassUnibe/utils/LoadingButton.dart';
 import 'package:GoClassUnibe/utils/Validators.dart';
 import 'package:GoClassUnibe/utils/modalError.dart';
+import 'package:GoClassUnibe/utils/signOut.dart';
 import 'package:GoClassUnibe/widgets/generics/homeApp/Background2.dart';
 import 'package:GoClassUnibe/widgets/generics/homeApp/Input.dart';
 import 'package:GoClassUnibe/widgets/generics/homeApp/LoginButton.dart';
 import 'package:GoClassUnibe/widgets/generics/homeApp/Title.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:provider/provider.dart';
-
-final _prefs = new UserPreferences();
 
 class ResetPassword2Screen extends StatelessWidget {
   @override
@@ -63,7 +60,9 @@ class ResetPassword2Screen extends StatelessWidget {
               child: ListView(
                 physics: BouncingScrollPhysics(),
                 children: <Widget>[
-                  SizedBox(height: 16,),
+                  SizedBox(
+                    height: 16,
+                  ),
                   MainTitle(
                     colorText: Color.fromRGBO(22, 53, 96, 38),
                     title: "Recuperar contraseña",
@@ -148,10 +147,7 @@ class ResetPassword2Screen extends StatelessWidget {
         _showAlert(context,
             'Te hemos enviado un correo con las instrucciones para recuperar tu contraseña',
             () {
-          _prefs.studentID = 0;
-          _prefs.token = '';
-          _prefs.studentEmail = '';
-          Phoenix.rebirth(context);
+          signOut(context);
           Navigator.popAndPushNamed(context, 'homeScreen');
         });
       } else {
@@ -188,7 +184,8 @@ void _showAlert(BuildContext context, String text, VoidCallback onTap) {
               onPressed: onTap,
               child: Text(
                 'Iniciar sesión',
-                style: TextStyle(fontFamily: fontApp, color: colorAppSkyBlue, fontSize: 18),
+                style: TextStyle(
+                    fontFamily: fontApp, color: colorAppSkyBlue, fontSize: 18),
               ))
         ],
       );

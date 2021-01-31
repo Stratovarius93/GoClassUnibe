@@ -67,7 +67,7 @@ class SettingsCard1 extends StatelessWidget {
                 style: TextStyle(
                     fontFamily: fontApp,
                     color: colorAppTextLight,
-                    fontSize: 18,
+                    fontSize: MediaQuery.of(context).size.width * 0.04,
                     fontWeight: FontWeight.w800),
               )
             ],

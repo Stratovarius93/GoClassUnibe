@@ -7,12 +7,12 @@ import 'package:GoClassUnibe/requests/SQLServerRequest.dart';
 import 'package:GoClassUnibe/utils/LoadingButton.dart';
 import 'package:GoClassUnibe/utils/Validators.dart';
 import 'package:GoClassUnibe/utils/modalError.dart';
+import 'package:GoClassUnibe/utils/signOut.dart';
 import 'package:GoClassUnibe/widgets/generics/homeApp/Background2.dart';
 import 'package:GoClassUnibe/widgets/generics/homeApp/Input.dart';
 import 'package:GoClassUnibe/widgets/generics/homeApp/LoginButton.dart';
 import 'package:GoClassUnibe/widgets/generics/homeApp/Title.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:provider/provider.dart';
 
@@ -153,10 +153,7 @@ _signIn(BuildContext context, LoginProvider loginProvider) async {
         _showAlert(context,
             'Para actualizar los cambios con tu nuevo correo, es necesario reiniciar la sesión.',
             () {
-          _prefs.studentID = 0;
-          _prefs.token = '';
-          _prefs.studentEmail = '';
-          Phoenix.rebirth(context);
+          signOut(context);
           Navigator.popAndPushNamed(context, 'homeScreen');
         });
       } else {
