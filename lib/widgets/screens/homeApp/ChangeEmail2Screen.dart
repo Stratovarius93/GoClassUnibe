@@ -89,7 +89,7 @@ class ChangeEmail2Screen extends StatelessWidget {
                     child: Text(
                       "A continuación ingresa tu nuevo correo electrónico",
                       style: TextStyle(
-                          fontSize: 20,
+                          fontSize: MediaQuery.of(context).size.width * 0.05,
                           color: colorAppBlue,
                           fontFamily: fontApp),
                     ),

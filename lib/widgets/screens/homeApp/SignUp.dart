@@ -76,7 +76,7 @@ class SignUp extends StatelessWidget {
                     child: Text(
                       "Para crear una cuenta, necesitamos verificar que eres estudiante de la UNIB.E",
                       style: TextStyle(
-                          fontSize: 20,
+                          fontSize: MediaQuery.of(context).size.width * 0.05,
                           color: colorAppBlue,
                           fontFamily: fontApp),
                     ),

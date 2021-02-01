@@ -88,7 +88,7 @@ class ChangeEmailScreen extends StatelessWidget {
                     child: Text(
                       "Para cambiar tu correo electrónico es necesario que ingreses tu contraseña.",
                       style: TextStyle(
-                          fontSize: 20,
+                          fontSize: MediaQuery.of(context).size.width * 0.05,
                           color: colorAppBlue,
                           fontFamily: fontApp),
                     ),

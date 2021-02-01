@@ -86,7 +86,7 @@ class ResetPassword2Screen extends StatelessWidget {
                     child: Text(
                       "Para recuperar tu contraseña te enviaremos un correo con un link para que puedas hacerlo.",
                       style: TextStyle(
-                          fontSize: 20,
+                          fontSize: MediaQuery.of(context).size.width * 0.045,
                           color: colorAppBlue,
                           fontFamily: fontApp),
                     ),

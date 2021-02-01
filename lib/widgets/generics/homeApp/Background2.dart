@@ -10,7 +10,7 @@ class Background2 extends StatelessWidget {
   const Background2({Key key, this.color1, this.color2}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    imageSize = MediaQuery.of(context).size.width * 0.5;
+    imageSize = MediaQuery.of(context).size.width * 0.35;
     return Scaffold(
       body: CustomPAnimated1(
         color1: color1,

@@ -66,7 +66,9 @@ class ResetPasswordScreen extends StatelessWidget {
               child: ListView(
                 physics: BouncingScrollPhysics(),
                 children: <Widget>[
-                  SizedBox(height: 16,),
+                  SizedBox(
+                    height: 16,
+                  ),
                   MainTitle(
                     colorText: Color.fromRGBO(22, 53, 96, 38),
                     title: "Recuperar contraseña",
@@ -90,7 +92,7 @@ class ResetPasswordScreen extends StatelessWidget {
                     child: Text(
                       "Para recuperar tu contraseña te enviaremos un correo con un link para que puedas hacerlo.",
                       style: TextStyle(
-                          fontSize: 20,
+                          fontSize: MediaQuery.of(context).size.width * 0.045,
                           color: colorAppBlue,
                           fontFamily: fontApp),
                     ),
