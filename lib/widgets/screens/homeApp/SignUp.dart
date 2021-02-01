@@ -134,6 +134,7 @@ class SignUp extends StatelessWidget {
     final authFirebaseRequest = AuthFirebaseRequest();
 
     final res = await authFirebaseRequest.fetchUrl();
+    print(res);
     if (res) {
       print(res);
       if (signUpProvider.getStudentID != null) {

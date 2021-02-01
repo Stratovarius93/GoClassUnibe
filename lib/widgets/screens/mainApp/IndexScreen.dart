@@ -1,4 +1,3 @@
-import 'package:GoClassUnibe/constants/Fonts.dart';
 import 'package:GoClassUnibe/constants/Sizes.dart';
 import 'package:GoClassUnibe/providers/StudentProvider.dart';
 import 'package:flutter/material.dart';
@@ -7,9 +6,11 @@ import 'package:GoClassUnibe/widgets/screens/mainApp/DasshboardScreen.dart';
 import 'package:GoClassUnibe/widgets/screens/mainApp/RatingsScreen.dart';
 import 'package:GoClassUnibe/widgets/screens/mainApp/SettingsScreen.dart';
 import 'package:GoClassUnibe/constants/Colors.dart';
+import 'package:flutter/services.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:provider/provider.dart';
+import 'package:rive/rive.dart';
 
 class IndexScreen extends StatelessWidget {
   @override
@@ -18,7 +19,7 @@ class IndexScreen extends StatelessWidget {
     if (studentProvider.connectionStatus == true) {
       return HomeMenu();
     } else {
-      return connectingScreen();
+      return connectingScreen(context);
     }
   }
 }
@@ -114,39 +115,54 @@ class ElementItemIcon {
   ElementItemIcon(this.iconData, this.iconDataOutline, this.name);
 }
 
-Widget connectingScreen() {
-  TextStyle _textStyle1 = TextStyle(
-      fontFamily: fontApp,
-      color: colorAppTextDark,
-      fontSize: 25,
-      fontWeight: FontWeight.bold);
-
-  TextStyle _textStyle2 = TextStyle(
-    fontFamily: fontApp,
-    color: colorAppTextLight,
-    fontSize: 20,
-  );
-
+Widget connectingScreen(BuildContext context) {
   return Scaffold(
-    body: Container(
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            CircularProgressIndicator(
-              valueColor: AlwaysStoppedAnimation<Color>(colorAppTextLight),
-            ),
-            SizedBox(
-              height: 16,
-            ),
-            Text(
-              'Cargando ...',
-              style: _textStyle1,
-            ),
-          ],
-        ),
-      ),
-    ),
+    backgroundColor: Colors.white,
+    body: Center(
+        child: Container(
+            width: MediaQuery.of(context).size.width * 0.3,
+            height: MediaQuery.of(context).size.width * 0.3,
+            child: LoaderUnibeRiv())),
   );
+}
+
+class LoaderUnibeRiv extends StatefulWidget {
+  @override
+  _LoaderUnibeRivState createState() => _LoaderUnibeRivState();
+}
+
+class _LoaderUnibeRivState extends State<LoaderUnibeRiv> {
+  final riveFileName = 'images/loaderunibe.riv';
+  Artboard _artboard;
+
+  @override
+  void initState() {
+    _loadRiveFile();
+    super.initState();
+  }
+
+  // loads a Rive file
+  void _loadRiveFile() async {
+    final bytes = await rootBundle.load(riveFileName);
+    final file = RiveFile();
+
+    if (file.import(bytes)) {
+      // Select an animation by its name
+      setState(() => _artboard = file.mainArtboard
+        ..addController(
+          SimpleAnimation('loaderUI'),
+        ));
+    }
+  }
+
+  /// Show the rive file, when loaded
+  @override
+  Widget build(BuildContext context) {
+    return _artboard != null
+        ? Rive(
+            artboard: _artboard,
+            fit: BoxFit.cover,
+          )
+        : Container();
+  }
 }

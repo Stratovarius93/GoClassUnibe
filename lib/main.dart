@@ -16,7 +16,6 @@ import 'package:GoClassUnibe/widgets/screens/homeApp/ResetPassword2Screen.dart';
 import 'package:GoClassUnibe/widgets/screens/homeApp/ResetPasswordScreen.dart';
 import 'package:GoClassUnibe/widgets/screens/homeApp/SignUp.dart';
 import 'package:GoClassUnibe/widgets/screens/homeApp/SignUp2.dart';
-import 'package:GoClassUnibe/widgets/screens/mainApp/ConnectingScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:GoClassUnibe/widgets/screens/mainApp/IndexScreen.dart';
@@ -104,8 +103,6 @@ class MyApp extends StatelessWidget {
           'changePassword': (BuildContext context) => ChangePassword(),
           'changeEmail': (BuildContext context) => ChangeEmailScreen(),
           'changeEmail2': (BuildContext context) => ChangeEmail2Screen(),
-          ConnectingScreen.routeName: (BuildContext context) =>
-              ConnectingScreen()
         },
         //home: IndexScreen()
       ),
